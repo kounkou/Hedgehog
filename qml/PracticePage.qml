@@ -420,6 +420,7 @@ Rectangle {
                     color: themeObject.textColor
                     padding: 10
                     antialiasing: true
+                    wrapMode: Text.Wrap
                     visible: !quizComplete
                     background: Rectangle {
                         color: themeObject.textAreaBackgroundColor
