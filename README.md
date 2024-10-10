@@ -11,7 +11,8 @@ In an AI-driven world, algorithms and data structures remain critical for optimi
 
 ### Architecture 
 
-<img width="973" alt="Screenshot 2024-10-09 at 9 17 02 PM" src="https://github.com/user-attachments/assets/2534ffad-d36a-4d6d-b8bd-b4d53d1aba66">
+<img width="883" alt="Screenshot 2024-10-10 at 10 09 29 AM" src="https://github.com/user-attachments/assets/5e366cdb-2a63-46a4-a075-0f7f079f1083">
+
 
 ### Porcupine features
 
