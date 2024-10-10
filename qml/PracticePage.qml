@@ -36,6 +36,7 @@ Rectangle {
     property string expectedAnswer: ""
     property var questionsData: []
     property string aiComment: ""
+    property string api_key: ""
 
     color: themeObject.backgroundColor
 
@@ -82,13 +83,12 @@ Rectangle {
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", url, true);
                 xhr.setRequestHeader("Content-Type", "application/json");
-                xhr.setRequestHeader("Authorization", "Bearer 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");
+                xhr.setRequestHeader("Authorization", "Bearer " + api_key);
 
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
                         if (xhr.status === 200) {
                             var response = JSON.parse(xhr.responseText);
-                            console.log("---> Response from API: ", response);
                             root.aiComment = response[0].generated_text;
                         } else {
                             console.log("Error: ", xhr.statusText);
