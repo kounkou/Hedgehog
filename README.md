@@ -1,45 +1,36 @@
-# Context
 
-In the era of ChatGPT, is it still necessary to learn programming, and spend time learning about Algorithms and
-data structures for interviews? This question is becoming very hard to answer, and I suspect knowing algorithms and data structures
-are still important to reason about problems in a smart way. I suspect some of you might 
-have different opinions,... Please share your opinion.
+<!-- <img width="1042" alt="Screenshot 2024-10-09 at 9 05 36 PM" src="https://github.com/user-attachments/assets/909485fd-68d4-4c96-8535-add125f29a51"> -->
+<img width="1042" alt="Screenshot 2024-10-09 at 9 05 49 PM" src="https://github.com/user-attachments/assets/88f62063-929b-49cf-abf7-6fd9018d0238">
+<!-- <img width="1042" alt="Screenshot 2024-10-09 at 9 05 56 PM" src="https://github.com/user-attachments/assets/74cfff1b-5700-4429-b0d4-97c1eeecf056"> -->
 
-# Deliberate practice
+# Porcupine
 
-However, if you agree with me, one methodology for practicing algorithms and datastructures that I like is Deliberate practice. Let's ask `ChatGPT`...
+In an AI-driven world, algorithms and data structures remain critical for optimizing, debugging, and understanding systems at a deeper level. While AI tools can automate many aspects of coding, they cannot replace the fundamental knowledge required to create, understand, and refine complex software solutions effectively.
 
-Deliberate practice is a highly structured form of practice designed to improve performance in a specific skill or domain. Unlike regular practice, which often involves repeating tasks, deliberate practice focuses on specific, well-defined goals, constant feedback, and activities just beyond one's current level of competence. The concept was popularized by psychologist Anders Ericsson, who emphasized the importance of practicing in a way that challenges your abilities, with continuous improvement as the goal.
+# How it works
 
-### Key Elements of Deliberate Practice:
-1. **Clear Goals**: Each practice session is designed to improve a particular aspect of performance. The goals are specific, measurable, and focus on small steps toward mastery.
-   
-2. **Focused Attention**: Deliberate practice requires complete concentration and full engagement. It’s not about mindless repetition but about consciously working to improve specific skills.
+### Architecture 
 
-3. **Feedback and Adjustment**: Immediate feedback is essential in deliberate practice. This could come from a coach, mentor, or self-evaluation. The key is to make adjustments based on this feedback.
+<img width="973" alt="Screenshot 2024-10-09 at 9 17 02 PM" src="https://github.com/user-attachments/assets/2534ffad-d36a-4d6d-b8bd-b4d53d1aba66">
 
-4. **Challenging Tasks**: The activities practiced are intentionally difficult, pushing the person beyond their comfort zone and current abilities, promoting growth and learning.
+### Porcupine features
 
-5. **Consistent Practice**: Deliberate practice is repetitive, with frequent opportunities to try, fail, learn, and improve over time.
+Porcupine is a user-friendly tool designed to help users tackle challenges and track their progress. It offers a clean interface and efficient features to streamline solving challenges.
+Key features of Porcupine include:
 
-### Benefits of Deliberate Practice:
-- **Faster Skill Improvement**: Deliberate practice targets areas of weakness, leading to more rapid and efficient learning.
-- **Enhanced Problem Solving**: By consistently pushing boundaries, practitioners develop better problem-solving strategies and a deeper understanding of the domain.
-- **Expert-Level Performance**: This method is considered one of the most effective ways to achieve expert performance in fields like music, sports, programming, or academic disciplines.
-
-Deliberate practice can be applied to almost any skill, but it requires a long-term commitment, a willingness to embrace discomfort, and perseverance to achieve mastery.
-
-# Screens
-
-# How to install
-
-
+- A timer to keep users focused and engaged.
+- The ability to pause and resume the timer, automatically restarting when the user begins editing again, ensuring flexibility during interrupted sessions.
+- Language options, currently supporting C++ and Golang, with potential for easy expansion to more languages.
+- Light and dark themes to reduce eye strain and enhance comfort.
+- A solution display with a toggle to switch between the user's submitted code and the expected solution.
+- The ability to skip a question and proceed to the next one.
+- An option to retry the same question, encouraging continued learning and improvement.
 
 # How to contribute
 
-- Step 1: Implement your algorithm
-- Step 2: Head to https://carbon.now.sh and paste the code
-- Step 3: Use a tool to transform the image to 600x600
-- Step 4: Head to https://lingojam.com/TexttoOneLine and use your code to transform the algorithm to a 1 liner
-- Step 5: Add to logic/questions.js following other codes
-- Step 6: Create a pull request, and get it merged, voilà
+We welcome your contributions! You can get involved by:
+
+- Proposing and developing new features
+- Assisting with the addition of algorithms
+
+Your support is greatly appreciated!
