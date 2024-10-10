@@ -26,6 +26,14 @@ Key features of Porcupine include:
 - The ability to skip a question and proceed to the next one.
 - An option to retry the same question, encouraging continued learning and improvement.
 
+# How to build and execute Porcupine
+
+You will need Qt installation to build Porcupine, after what you can do
+
+```bash
+qmake && make
+```
+
 # How to contribute
 
 We welcome your contributions! You can get involved by:
