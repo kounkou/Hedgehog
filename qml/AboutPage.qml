@@ -45,7 +45,7 @@ Rectangle {
 
                     Text {
                         id: headerText
-                        text: "About Porcupine"
+                        text: "About Hedgehog"
                         font.pixelSize: 24
                         color: themeObject.textColor
                         font.bold: true
@@ -61,7 +61,7 @@ Rectangle {
                 radius: 10
 
                 Text {
-                    text: "Why you should use Porcupine ?"
+                    text: "Why you should use Hedgehog ?"
                     font.pixelSize: 24
                     anchors.centerIn: parent
                     color: themeObject.textColor
@@ -76,7 +76,7 @@ Rectangle {
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 TextArea {
-                    id: aboutPorcupine
+                    id: aboutHedgehog
                     width: parent.width // Set the width explicitly
                     height: parent.height
                     font.family: "Courier New"
