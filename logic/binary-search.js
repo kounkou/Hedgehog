@@ -1,8 +1,8 @@
 var binarySearchQuestions = [
     {
         id: "5",
-        placeHolderCpp: "void binarySearch(vector<int>& nums, int t) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
-        placeHolderGo: "func binarySearch(nums []int, t int) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+        placeHolderCpp: "int binarySearch(vector<int>& nums, int t) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+        placeHolderGo: "func binarySearch(nums []int, t int) int {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
         difficulty: "Easy", question: "Binary search",
         answerImage: "../code-snipets/binary_search.png",
         answerCpp: `int binarySearch(vector<int>& nums, int t) {
@@ -20,7 +20,8 @@ var binarySearchQuestions = [
             lo = mi + 1;
         }
     }
-	return -1;
+
+    return -1;
 }`,
         answerGo: `func binarySearch(nums []int, t int) int {
 	lo := 0
@@ -28,6 +29,7 @@ var binarySearchQuestions = [
 
 	for lo <= hi {
 		mi := lo + (hi-lo)/2
+
 		if nums[mi] == t {
 			return mi
 		} else if nums[mi] > t {
@@ -36,6 +38,7 @@ var binarySearchQuestions = [
 			lo = mi + 1
 		}
 	}
+
 	return -1
 }
 `}

@@ -6,7 +6,8 @@ TEMPLATE = app
 TARGET = deliberate_practice
 INCLUDEPATH += .
 
-QT += core gui qml webengine
+QT += core gui qml
+# QT += webengine
 
 # You can make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.

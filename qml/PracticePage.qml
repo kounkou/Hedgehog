@@ -1,7 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
-import QtWebView 1.1
+// import QtWebView 1.1
 import "handler.js" as QuestionsHandler
 
 import "bfs-recursive.js" as BfsRecursive
@@ -625,7 +625,7 @@ Rectangle {
 
                     Button {
                         id: nextButton
-                        text: "Continue"
+                        text: "Skip"
                         visible: !quizComplete
                         width: 200
                         height: 50
@@ -691,18 +691,18 @@ Rectangle {
                     color: "transparent"
                     visible: false
 
-                    WebView {
-                        id: adView
-                        anchors.fill: parent
-                        url: Qt.resolvedUrl("adsense-ad.html")
-                        onLoadingChanged: {
-                            if (loadRequest.status === WebView.LoadSucceededStatus) {
-                                console.log("Ad loaded successfully");
-                            } else if (loadRequest.status === WebView.LoadFailedStatus) {
-                                console.error("Failed to load the ad");
-                            }
-                        }
-                    }
+                    // WebView {
+                    //     id: adView
+                    //     anchors.fill: parent
+                    //     url: Qt.resolvedUrl("adsense-ad.html")
+                    //     onLoadingChanged: {
+                    //         if (loadRequest.status === WebView.LoadSucceededStatus) {
+                    //             console.log("Ad loaded successfully");
+                    //         } else if (loadRequest.status === WebView.LoadFailedStatus) {
+                    //             console.error("Failed to load the ad");
+                    //         }
+                    //     }
+                    // }
                 }
 
                 Text {

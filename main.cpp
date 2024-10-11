@@ -1,10 +1,10 @@
 #include <QGuiApplication>
 #include <QIcon>
 #include <QQmlApplicationEngine>
-#include <QtWebEngine/QtWebEngine>
+// #include <QtWebEngine/QtWebEngine>
 
 int main(int argc, char *argv[]) {
-    QtWebEngine::initialize();
+    // QtWebEngine::initialize();
 
     QGuiApplication app(argc, argv);
 

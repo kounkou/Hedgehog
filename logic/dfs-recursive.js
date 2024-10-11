@@ -32,6 +32,7 @@ var dfsQuestions = [
 
     for x := len(graph[node]) - 1; x >= 0; x-- {
         nextNode:= graph[node][x]
+        
         if !visited[nextNode] {
             stk = append(stk, nextNode)
         }

@@ -7,22 +7,22 @@ var dfsQuestions = [
         answerImage: "../code-snipets/dfs_iterative.png",
         answerCpp: `
 void dfs(int start) {
-        map<int, bool> visited;
-        stack<int> stk;
-        stk.push(start);
+    map<int, bool> visited;
+    stack<int> stk;
+    stk.push(start);
 
-        while(!stk.empty()) {
-            int node = stk.top();
-            stk.pop();
-            if(visited[node]) continue;
-            cout << node;
-visited[node] = true;
+    while(!stk.empty()) {
+        int node = stk.top();
+        stk.pop();
+        if(visited[node]) continue;
+        cout << node;
+        visited[node] = true;
 
-for (int x = graph[node].size() - 1; x >= 0; --x) {
+        for (int x = graph[node].size() - 1; x >= 0; --x) {
             int nextNode = graph[node][x];
-    if (visited[nextNode]) continue;
-    stk.push(nextNode);
-}
+            if (visited[nextNode]) continue;
+            stk.push(nextNode);
+        }
     }
 }`,
         answerGo: `
@@ -43,6 +43,7 @@ func dfs(start int) {
 
     for x := len(graph[node]) - 1; x >= 0; x-- {
         nextNode:= graph[node][x]
+        
         if !visited[nextNode] {
             stk = append(stk, nextNode)
         }

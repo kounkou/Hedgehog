@@ -27,7 +27,7 @@ void kmp(const string& t, const string& p) {
     vector<int> lps = getLps(p);    
     while (i<st) {
         if (t[i] == p[j]) i++, j++;        
-        if (j == m) cout << \"found at \" << i - j << '\n\', j = lps[j - 1];        
+        if (j == m) cout << \"found at \" << i - j, j = lps[j - 1];        
         else if (i < n && t[i] != p[j]) j ? j = lps[j - 1] : i++;    
     }
 }`, answerGo: `undefined`,
