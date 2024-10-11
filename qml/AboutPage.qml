@@ -31,7 +31,7 @@ Rectangle {
                 width: parent.width
                 height: 150
                 color: themeObject.buttonColor
-                radius: 10
+                radius: 15
 
                 Column {
                     anchors.fill: parent
@@ -41,6 +41,7 @@ Rectangle {
                         text: "🦔"
                         font.pixelSize: 50
                         anchors.horizontalCenter: parent.horizontalCenter
+                        font.family: "Noto Color Emoji"
                     }
 
                     Text {
@@ -58,7 +59,7 @@ Rectangle {
                 width: parent.width
                 height: 50
                 color: themeObject.buttonColor
-                radius: 10
+                radius: 15
 
                 Text {
                     text: "Why you should use Hedgehog ?"
@@ -72,7 +73,7 @@ Rectangle {
                 width: parent.width // Set the width explicitly
                 height: 1600
                 color: themeObject.buttonColor
-                radius: 10
+                radius: 15
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 TextArea {
@@ -121,7 +122,7 @@ Rectangle {
                     visible: !quizComplete
                     background: Rectangle {
                         color: themeObject.textAreaBackgroundColor
-                        border.width: 1
+                        border.width: 0
                         border.color: themeObject.textAreaBorderColor
                         radius: 15
                     }
@@ -132,7 +133,7 @@ Rectangle {
                 width: parent.width
                 height: 50
                 color: themeObject.buttonColor
-                radius: 10
+                radius: 15
 
                 Text {
                     text: "What is spaced repetition"
@@ -146,7 +147,7 @@ Rectangle {
                 width: parent.width
                 height: 1300
                 color: themeObject.buttonColor
-                radius: 10
+                radius: 15
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 TextArea {
@@ -195,7 +196,7 @@ Rectangle {
                     visible: !quizComplete
                     background: Rectangle {
                         color: themeObject.textAreaBackgroundColor
-                        border.width: 1
+                        border.width: 0
                         border.color: themeObject.textAreaBorderColor
                         radius: 15
                     }
@@ -224,7 +225,7 @@ Rectangle {
 
                 background: Rectangle {
                     radius: 15
-                    border.width: 1
+                    border.width: 0
                     border.color: themeObject.buttonColor
                     color: {
                         return homeButton.hovered ? themeObject.buttonHoveredColor : themeObject.buttonColor
