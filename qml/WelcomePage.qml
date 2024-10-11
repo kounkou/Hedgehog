@@ -22,7 +22,7 @@ Rectangle {
         }
 
         Text {
-            text: "Welcome to Porcupine"
+            text: "Welcome to Hedgehog"
             font.pixelSize: 24
             font.bold: true
             color: themeObject.textColor
@@ -59,9 +59,9 @@ Rectangle {
         // }
 
         CustomButton {
-            id: aboutPorcupine
+            id: aboutHedgehog
 
-            buttonText: "About Porcupine"
+            buttonText: "About Hedgehog"
             page: aboutPage
         }
 
