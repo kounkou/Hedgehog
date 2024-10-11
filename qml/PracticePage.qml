@@ -627,7 +627,7 @@ Rectangle {
 
                     Button {
                         id: nextButton
-                        text: "Skip"
+                        text: "Next"
                         visible: !quizComplete
                         width: 200
                         height: 50

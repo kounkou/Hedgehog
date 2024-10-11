@@ -3,7 +3,7 @@ var kmpQuestions = [
         id: "6",
         placeHolderCpp: "vector<int> getLps(const string& p) {\n    ...\n}\n\nvoid kmp(const string& t, const string& p) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n",
         placeHolderGo: "func getLps(p string) []int {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
-        difficulty: "Medium",
+        difficulty: "Hard",
         question: "KMP (Knuth-Morris-Pratt) algorithm",
         answerImage: "../code-snipets/kmp.png",
         answerCpp: `
