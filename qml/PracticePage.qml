@@ -12,6 +12,7 @@ import "dfs-iterative.js" as DfsIterative
 import "dijkstra.js" as Dijkstra
 import "binary-search.js" as BinarySearch
 import "kmp.js" as Kmp
+import "kadane.js" as Kadane
 
 Rectangle {
     id: root
@@ -49,6 +50,7 @@ Rectangle {
             .concat(Dijkstra.dijkstraQuestions)
             .concat(BinarySearch.binarySearchQuestions)
             .concat(Kmp.kmpQuestions)
+            .concat(Kadane.kadaneQuestions)
         console.log("Total questions loaded: ", questionsData.length);
     }
 

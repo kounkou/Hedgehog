@@ -23,5 +23,6 @@
         <file alias="dijkstra.js">logic/dijkstra.js</file>
         <file alias="binary-search.js">logic/binary-search.js</file>
         <file alias="kmp.js">logic/kmp.js</file>
+        <file alias="kadane.js">logic/kadane.js</file>
     </qresource>
 </RCC>
