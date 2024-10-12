@@ -10,7 +10,6 @@ ApplicationWindow {
     minimumHeight: 600
     maximumHeight: 650
 
-    title: "Vault"
     color: themeObject.backgroundColor
 
     Theme {
