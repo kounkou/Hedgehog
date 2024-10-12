@@ -443,7 +443,7 @@ Rectangle {
                     Rectangle {
                         id: clock
                         height: 25
-                        width: 170
+                        width: clockText.width + 20
                         opacity: countdownTimer.running ? 1 : 0.5
                         color: {
                             if (timerValue < 30) {
@@ -460,6 +460,7 @@ Rectangle {
                         anchors.margins: 10
 
                         Text {
+                            id: clockText
                             text: (visitedNumbers.length + 1) + "/" + QuestionsHandler.getTotalQuestions(questionsData) + " 🕦 Time left: " + timerValue + "s"
                             Layout.alignment: Qt.AlignRight
                             font.pixelSize: 14
