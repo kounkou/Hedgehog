@@ -265,6 +265,7 @@ Rectangle {
 
                                 Text {
                                     id: questionLabel
+                                    font.family: "Noto Color Emoji"
                                     text: model.similarity === "Highly Similar" 
                                     ? "👏"
                                     : model.similarity === "Moderately Similar" 
@@ -302,6 +303,7 @@ Rectangle {
                     Layout.alignment: Qt.AlignHCenter
                     color: themeObject.textColor
                     visible: quizComplete
+                    font.family: "Noto Color Emoji"
                 }
 
                 Text {
@@ -319,6 +321,7 @@ Rectangle {
                     font.pixelSize: 100
                     Layout.alignment: Qt.AlignHCenter
                     visible: quizComplete
+                    font.family: "Noto Color Emoji"
                 }
 
                 RowLayout {
@@ -462,6 +465,7 @@ Rectangle {
                             font.pixelSize: 14
                             anchors.centerIn: parent
                             font.bold: true
+                            font.family: "Noto Color Emoji"
                             color: themeObject.textColor
                         }
                     }
