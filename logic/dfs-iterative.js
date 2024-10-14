@@ -1,8 +1,11 @@
 var dfsQuestions = [
     {
         id: "4",
+        category: "DFS",
         placeHolderCpp: `void dfs(int start) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func dfs(start int) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
+        spaceComplexity: "O(E + V)",
+        timeComplexity: "O(E + V)",
         difficulty: "Medium", question: "DFS (Depth first search) iterative",
         answerImage: "../code-snipets/dfs_iterative.png",
         answerCpp: `
@@ -11,10 +14,10 @@ void dfs(int start) {
     stack<int> stk;
     stk.push(start);
 
-    while(!stk.empty()) {
+    while (!stk.empty()) {
         int node = stk.top();
         stk.pop();
-        if(visited[node]) continue;
+        if (visited[node]) continue;
         cout << node;
         visited[node] = true;
 

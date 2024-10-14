@@ -1,15 +1,18 @@
 var dijkstraQuestions = [
     {
         id: "6",
+        category: "Graph",
         placeHolderCpp: "vector<int> dijkstra(vector<PairType> graph[], int V, int src) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
         placeHolderGo: "func dijkstra(graph [][]PairType, V, src int) []int {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+        spaceComplexity: "O(N)",
+        timeComplexity: "O(E + V)logV",
         difficulty: "Medium",
         question: "Dijkstra",
         answerImage: "",
         answerCpp: `
 typedef pair<int, int> PairType;
 
-vector<int> dijkstra(vector<PairType> graph[], int V, int src) {
+vector<int> dijkstra(vector<PairType>& graph[], int V, int src) {
     priority_queue<PairType, vector<PairType>, greater<PairType>> pq;
     vector<int> dist(V, INT_MAX);
     dist[src] = 0;
@@ -30,8 +33,7 @@ vector<int> dijkstra(vector<PairType> graph[], int V, int src) {
         }
     }
     return dist;
-}
-`,
+}`,
         answerGo: `
 func dijkstra(graph [][]PairType, V, src int) []int {
 	dist := make([]int, V)

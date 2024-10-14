@@ -10,9 +10,20 @@ import "bfs-iterative.js" as BfsIterative
 import "dsu.js" as Dsu
 import "dfs-iterative.js" as DfsIterative
 import "dijkstra.js" as Dijkstra
-import "binary-search.js" as BinarySearch
 import "kmp.js" as Kmp
 import "kadane.js" as Kadane
+
+import "binary-search.js" as BinarySearch
+import "linear-search.js" as LinearSearch
+import "jump-search.js" as JumpSearch
+import "interpolation-search.js" as InterpolationSearch
+
+import "line-intersection.js" as LineIntersection
+import "area-triangle-heron.js" as AreaTriangleHeron
+import "convex-hull.js" as ConvexHull
+import "merge-interval.js" as MergeIntervals
+import "insert-interval.js" as InsertInterval
+import "min-meeting-room.js" as MinMeetingRoom
 
 Rectangle {
     id: root
@@ -38,20 +49,45 @@ Rectangle {
     property var questionsData: []
     property string aiComment: ""
     property string api_key: ""
+    
+    property var session: null
 
     color: themeObject.backgroundColor
 
     Component.onCompleted: {
-        questionsData = BfsRecursive.bfsQuestions
+        var allQuestionsData = BfsRecursive.bfsQuestions
             .concat(DfsRecursive.dfsQuestions)
             .concat(BfsIterative.bfsQuestions)
             .concat(Dsu.DsuQuestions)
             .concat(DfsIterative.dfsQuestions)
             .concat(Dijkstra.dijkstraQuestions)
-            .concat(BinarySearch.binarySearchQuestions)
-            .concat(Kmp.kmpQuestions)
+            
             .concat(Kadane.kadaneQuestions)
-        console.log("Total questions loaded: ", questionsData.length);
+
+            .concat(LineIntersection.question)
+            .concat(AreaTriangleHeron.question)
+            .concat(ConvexHull.question)
+
+            .concat(MergeIntervals.question)
+            .concat(InsertInterval.question)
+            .concat(MinMeetingRoom.question)
+
+            .concat(Kmp.kmpQuestions)
+            .concat(BinarySearch.binarySearchQuestions)
+            .concat(JumpSearch.jumpSearchQuestions)
+            .concat(InterpolationSearch.interpolationSearchQuestions)
+            .concat(LinearSearch.linearSearchQuestions);
+
+        if (session.selectedCategories && session.selectedCategories.length > 0) {
+            questionsData = allQuestionsData.filter(function(question) {
+                return session.selectedCategories.includes(question.category);
+            });
+        } else {
+            session.selectedCategories = []
+            questionsData = allQuestionsData;
+        }
+
+        console.log("---> questionsData ", questionsData)
     }
 
     Rectangle {
@@ -418,7 +454,7 @@ Rectangle {
                     Layout.fillWidth: true
                     height: 200
                     readOnly: submitted
-                    placeholderText: QuestionsHandler.getQuestionPlaceHolder(questionsData, currentLanguage, currentQuestionIndex)
+                    placeholderText: QuestionsHandler.getQuestionPlaceHolder(questionsData, currentLanguage, currentQuestionIndex, session)
                     font.family: "Courier New"
                     font.pixelSize: 14
                     font.bold: true
@@ -663,7 +699,7 @@ Rectangle {
 
                     Button {
                         id: homeButton
-                        text: "Go to Home"
+                        text: "Return"
                         width: 200
                         height: 50
                         onClicked: {

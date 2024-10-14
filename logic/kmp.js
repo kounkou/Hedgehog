@@ -1,6 +1,7 @@
 var kmpQuestions = [
     {
         id: "6",
+        category: "String",
         placeHolderCpp: "vector<int> getLps(const string& p) {\n    ...\n}\n\nvoid kmp(const string& t, const string& p) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n",
         placeHolderGo: "func getLps(p string) []int {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
         difficulty: "Hard",
@@ -12,7 +13,7 @@ vector<int> getLps(const string& p) {
     vector<int> lps(sp, 0);
     int i = 1, j = 0;
     
-    while (i<sp) {
+    while (i < sp) {
         if (p[i] == p[j]) lps[i++] = ++j;        
         else if (j>0)     j = lps[j-1];        
         else              lps[i++] = 0;
@@ -24,8 +25,9 @@ void kmp(const string& t, const string& p) {
     int st = t.length();    
     int sp = p.length();    
     int i = 0, j = 0;    
-    vector<int> lps = getLps(p);    
-    while (i<st) {
+    vector<int> lps = getLps(p);
+
+    while (i < st) {
         if (t[i] == p[j]) i++, j++;        
         if (j == m) cout << \"found at \" << i - j, j = lps[j - 1];        
         else if (i < n && t[i] != p[j]) j ? j = lps[j - 1] : i++;    

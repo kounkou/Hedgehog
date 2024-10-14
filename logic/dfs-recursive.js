@@ -1,8 +1,11 @@
 var dfsQuestions = [
     {
         id: "3",
+        category: "DFS",
         placeHolderCpp: `void dfs(int node) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func dfs(node int) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
+        spaceComplexity: "O(E + V)",
+        timeComplexity: "O(E + V)",
         difficulty: "Easy",
         question: "DFS (Depth first search) recursive",
         answerImage: "../code-snipe ts/dfs_recursive.png",

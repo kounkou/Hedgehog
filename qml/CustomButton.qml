@@ -10,7 +10,7 @@ Button {
 
     width: 200
     height: 50
-    anchors.horizontalCenter: parent.horizontalCenter
+    // anchors.horizontalCenter: parent.horizontalCenter
 
     onClicked: {
         stackView.push(page)

@@ -119,7 +119,6 @@ Rectangle {
                     padding: 10
                     antialiasing: true
                     wrapMode: Text.Wrap
-                    visible: !quizComplete
                     background: Rectangle {
                         color: themeObject.textAreaBackgroundColor
                         border.width: 0
@@ -193,7 +192,6 @@ Rectangle {
                     padding: 10
                     antialiasing: true
                     wrapMode: Text.Wrap
-                    visible: !quizComplete
                     background: Rectangle {
                         color: themeObject.textAreaBackgroundColor
                         border.width: 0
