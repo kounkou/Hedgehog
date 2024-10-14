@@ -1,8 +1,11 @@
 var binarySearchQuestions = [
     {
         id: "5",
+        category: "Binary Search",
         placeHolderCpp: "int binarySearch(vector<int>& nums, int t) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
         placeHolderGo: "func binarySearch(nums []int, t int) int {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+        spaceComplexity: "O(1)",
+        timeComplexity: "O(logN)",
         difficulty: "Easy", question: "Binary search",
         answerImage: "../code-snipets/binary_search.png",
         answerCpp: `int binarySearch(vector<int>& nums, int t) {

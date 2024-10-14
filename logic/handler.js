@@ -1,13 +1,34 @@
-//     // { id: "7", difficulty: "Medium", question: "Maximum subarray sum (Kadane's Algorithm)", answerImage: "../code-snipets/kadane.png", answer: "int kadane(vector<vector<int>>& nums) {   if (nums.size() <= 0)      return 0;      int lm = nums[0], gm = INT_MIN;      for (int i=0; i<nums.size(); ++i) {      lm = max(nums[i], nums[i] + lm);      gm = max(gm, lm);   }      return gm;}" },
 //     // { id: "8", difficulty: "Medium", question: "Coin change", answerImage: "../code-snipets/coin_change.png", answer: "int coinChange(vector<int>& coins, int x) {    if (x <= 0) return 0;    int best = INT_MAX;    for (auto& c : coins) {         if (x - c >= 0) {              int res = coinChange(coins, x - c);              if (res >= 0 && res < best) {                 best = res + 1;              }          }     }     return best == INT_MAX ? -1 : best;}" },
 
-function getQuestionPlaceHolder(questionsData, currentLanguage, questionIndex) {
+function getQuestionPlaceHolder(questionsData, currentLanguage, questionIndex, session) {
+    // If no category is selected, assume all categories are selected
+    const selectedCategories = session.selectedCategories.length === 0
+        ? questionsData.map(question => question.category) // Take all categories
+        : session.selectedCategories;
+
     if (questionIndex < questionsData.length) {
-        if (currentLanguage === "C++") {
-            return questionsData[questionIndex].placeHolderCpp
-        } else if (currentLanguage === "Go") {
-            return questionsData[questionIndex].placeHolderGo
+        const question = questionsData[questionIndex];
+
+        // Check if the current question's category is in the selected categories
+        const isCategorySelected = selectedCategories.includes(question.category);
+
+        if (isCategorySelected) {
+            if (currentLanguage === "C++") {
+                return question.placeHolderCpp;
+            } else if (currentLanguage === "Go") {
+                return question.placeHolderGo;
+            }
+        } else {
+            return "No questions available for the selected categories";
         }
+    } else {
+        return "No more questions";
+    }
+}
+
+function getCategory(questionsData, questionIndex) {
+    if (questionIndex < questionsData.length) {
+        return questionsData[questionIndex].category
     } else {
         return "No more questions"
     }

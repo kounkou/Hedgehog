@@ -1,8 +1,11 @@
 var DsuQuestions = [
     {
         id: "9",
+        category: "Disjoint Set",
         placeHolderCpp: `class DSU {\n    ...\n};\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: "undefined",
+        spaceComplexity: "O(N)",
+        timeComplexity: "O(M x α(N))", // α() is the inverse Ackerman function
         difficulty: "Medium",
         question: "Disjoint Set Union",
         answerImage: "../code-snipets/dsu.png",

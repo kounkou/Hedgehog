@@ -1,9 +1,11 @@
 var bfsQuestions = [
     {
         id: "2",
+        category: "BFS",
         placeHolderCpp: `void bfs(int start) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func bfs(start int) {{\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
-
+        spaceComplexity: "O(E + V)",
+        timeComplexity: "O(E + V)",
         difficulty: "Medium",
         question: "BFS (Bread first search) iterative",
         answerImage: "../code-snipets/bfs_iterative.png",

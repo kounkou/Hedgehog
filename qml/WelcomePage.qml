@@ -10,6 +10,7 @@ Rectangle {
     width: parent.width
     height: parent.height
     color: themeObject.backgroundColor
+    anchors.horizontalCenter: parent.horizontalCenter
 
     Column {
         spacing: 20
@@ -39,6 +40,7 @@ Rectangle {
 
         CustomButton {
             id: startPractice
+            anchors.horizontalCenter: parent.horizontalCenter
 
             buttonText: "Start Practicing"
             page: practicePage
@@ -60,7 +62,16 @@ Rectangle {
         // }
 
         CustomButton {
+            id: questionSelection
+            anchors.horizontalCenter: parent.horizontalCenter
+            
+            buttonText: "Select category"
+            page: categoryPage
+        }
+
+        CustomButton {
             id: aboutHedgehog
+            anchors.horizontalCenter: parent.horizontalCenter
 
             buttonText: "About Hedgehog"
             page: aboutPage

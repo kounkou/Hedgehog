@@ -1,8 +1,11 @@
 var bfsQuestions = [
     {
         id: "1",
+        category: "BFS",
         placeHolderCpp: `void bfs(vector<int>& level, map<int, bool>& visited) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func bfs(level []int, visited map[int]bool) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
+        spaceComplexity: "O(E + V)",
+        timeComplexity: "O(E + V)",
         difficulty: "Medium",
         question: "BFS (Bread first search) recursive",
         answerImage: "../code-snipets/bfs_recursive.png",

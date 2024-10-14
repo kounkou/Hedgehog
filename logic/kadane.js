@@ -1,7 +1,8 @@
 var kadaneQuestions = [
     {
         id: "7",
-        placeHolderCpp: `int kadane(vector<int> nums) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
+        category: "DP",
+        placeHolderCpp: `int kadane(vector<int>& nums) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func kadane(nums []int) int {{\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         difficulty: "Medium",
         question: "Maximum subarray sum (Kadane's Algorithm)",
