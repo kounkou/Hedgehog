@@ -13,42 +13,41 @@ Rectangle {
     property var selectedCategories: []
     property bool isCategorySelected: false
 
-ListModel {
-    id: categoryModel
-    ListElement { name: "Searching";            selected: false; enabled: true }
-    ListElement { name: "Combinatorics";        selected: false; enabled: false }
-    ListElement { name: "Game Theory";          selected: false; enabled: false }
-    ListElement { name: "Mathematics";          selected: false; enabled: false }
-    ListElement { name: "Geometry";             selected: false; enabled: true }
-    ListElement { name: "String";               selected: false; enabled: true }
-    ListElement { name: "Greedy";               selected: false; enabled: false }
-    ListElement { name: "Tree";                 selected: false; enabled: false }
-    ListElement { name: "Graph";                selected: false; enabled: true }
-    ListElement { name: "Sorting";              selected: false; enabled: false }
-    ListElement { name: "Recursion";            selected: false; enabled: false }
-    ListElement { name: "Linked List";          selected: false; enabled: false }
-    ListElement { name: "Backtracking";         selected: false; enabled: false }
-    ListElement { name: "Bit Manipulation";     selected: false; enabled: false }
-    ListElement { name: "DP";                   selected: false; enabled: true }
-    ListElement { name: "Intervals";            selected: false; enabled: true }
-    ListElement { name: "Trie";                 selected: false; enabled: false }
-    ListElement { name: "BFS";                  selected: false; enabled: true }
-    ListElement { name: "Union-Find";           selected: false; enabled: false }
-    ListElement { name: "Binary Search";        selected: false; enabled: true }
-    ListElement { name: "Two Pointers";         selected: false; enabled: false }
-    ListElement { name: "Sliding Window";       selected: false; enabled: false }
-    ListElement { name: "Heap";                 selected: false; enabled: false }
-    ListElement { name: "Segment Tree";         selected: false; enabled: false }
-    ListElement { name: "Divide and Conquer";   selected: false; enabled: false }
-    ListElement { name: "Topological Sorting";  selected: false; enabled: false }
-    ListElement { name: "Sieve Eratosthenes";   selected: false; enabled: false }
-    ListElement { name: "Disjoint Set";         selected: false; enabled: true }
-    ListElement { name: "Knapsack";             selected: false; enabled: false }
-    ListElement { name: "Fibonacci";            selected: false; enabled: false }
-    ListElement { name: "Pigeonhole Principle"; selected: false; enabled: false }
-    ListElement { name: "DFS";                  selected: false; enabled: true }
-}
-
+    ListModel {
+        id: categoryModel
+        ListElement { name: "Backtracking";         selected: false; enabled: false }
+        ListElement { name: "BFS";                  selected: false; enabled: true }
+        ListElement { name: "Binary Search";        selected: false; enabled: true }
+        ListElement { name: "Bit Manipulation";     selected: false; enabled: false }
+        ListElement { name: "Combinatorics";        selected: false; enabled: false }
+        ListElement { name: "DFS";                  selected: false; enabled: true }
+        ListElement { name: "Divide and Conquer";   selected: false; enabled: false }
+        ListElement { name: "Disjoint Set";         selected: false; enabled: true }
+        ListElement { name: "DP";                   selected: false; enabled: true }
+        ListElement { name: "Fibonacci";            selected: false; enabled: false }
+        ListElement { name: "Game Theory";          selected: false; enabled: false }
+        ListElement { name: "Geometry";             selected: false; enabled: true }
+        ListElement { name: "Greedy";               selected: false; enabled: false }
+        ListElement { name: "Graph";                selected: false; enabled: true }
+        ListElement { name: "Heap";                 selected: false; enabled: false }
+        ListElement { name: "Intervals";            selected: false; enabled: true }
+        ListElement { name: "Knapsack";             selected: false; enabled: false }
+        ListElement { name: "Linked List";          selected: false; enabled: false }
+        ListElement { name: "Mathematics";          selected: false; enabled: false }
+        ListElement { name: "Pigeonhole Principle"; selected: false; enabled: false }
+        ListElement { name: "Recursion";            selected: false; enabled: false }
+        ListElement { name: "Searching";            selected: false; enabled: true }
+        ListElement { name: "Segment Tree";         selected: false; enabled: false }
+        ListElement { name: "Sieve Eratosthenes";   selected: false; enabled: false }
+        ListElement { name: "Sliding Window";       selected: false; enabled: false }
+        ListElement { name: "Sorting";              selected: false; enabled: false }
+        ListElement { name: "String";               selected: false; enabled: true }
+        ListElement { name: "Topological Sorting";  selected: false; enabled: false }
+        ListElement { name: "Tree";                 selected: false; enabled: false }
+        ListElement { name: "Trie";                 selected: false; enabled: false }
+        ListElement { name: "Two Pointers";         selected: false; enabled: false }
+        ListElement { name: "Union-Find";           selected: false; enabled: false }
+    }
 
     ScrollView {
         width: parent.width / 1.5

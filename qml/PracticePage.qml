@@ -389,6 +389,7 @@ Rectangle {
                         id: languageComboBox
                         model: [ "C++", "Go" ]
                         currentIndex: 0
+                        visible: !quizComplete
 
                         MouseArea {
                             id: comboBoxMouseArea
@@ -415,13 +416,13 @@ Rectangle {
                             color: themeObject.textColor
                         }
 
-                        Component.onCompleted: {
-                            var maxText = model.reduce(function(a, b) { 
-                                return a.length > b.length ? a : b; 
-                            });
-                            var metrics = Qt.fontMetrics(font);
-                            width = metrics.width(maxText) + 30;
-                        }
+                        // Component.onCompleted: {
+                        //     var maxText = model.reduce(function(a, b) { 
+                        //         return a.length > b.length ? a : b; 
+                        //     });
+                        //     var metrics = Qt.fontMetrics(font);
+                        //     width = metrics.width(maxText) + 30;
+                        // }
 
                         onActivated: {
                             currentLanguage = languageComboBox.currentText
@@ -434,6 +435,7 @@ Rectangle {
                         font.bold: true
                         text: themeObject.theme === "light" ? "Light Theme" : "Dark Theme"
                         checked: themeObject.theme === "dark"
+                        visible: !quizComplete
                         onCheckedChanged: {
                             themeObject.theme = checked ? "dark" : "light"
                         }
