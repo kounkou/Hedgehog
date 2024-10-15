@@ -4,12 +4,15 @@ var question = [
         category: "Intervals",
         placeHolderCpp: `vector<Interval> insertInterval(vector<Interval>& intervals, Interval newInterval) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: ``,
+        spaceComplexity: "O()",
+        timeComplexity: "O()",
         difficulty: "Medium",
         question: "Insert interval",
         answerImage: "",
         answerCpp: `vector<Interval> insertInterval(vector<Interval>& intervals, Interval newInterval) {
     vector<Interval> result;
-    int i = 0, n = intervals.size();
+    int i = 0;
+    int n = intervals.size();
 
     while (i < n && intervals[i].end < newInterval.start) {
         result.push_back(intervals[i++]);

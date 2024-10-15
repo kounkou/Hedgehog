@@ -4,6 +4,8 @@ var question = [
         category: "Searching",
         placeHolderCpp: `bool doIntersect(Point p1, Point q1, Point p2, Point q2) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: ``,
+        spaceComplexity: "O()",
+        timeComplexity: "O()",
         difficulty: "Easy",
         question: "Line intersection",
         answerImage: "",
