@@ -4,6 +4,8 @@ var linearSearchQuestions = [
         category: "String",
         placeHolderCpp: `{\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `{\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
+        spaceComplexity: "O()",
+        timeComplexity: "O()",
         difficulty: "Hard",
         question: "Rabin-Karp",
         answerImage: "",

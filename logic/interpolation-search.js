@@ -4,6 +4,8 @@ var interpolationSearchQuestions = [
         category: "Searching",
         placeHolderCpp: `int interpolationSearch(const std::vector<int>& arr, int target) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func interpolationSearch(nums []int, target int) int {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
+        spaceComplexity: "O()",
+        timeComplexity: "O()",
         difficulty: "Easy",
         question: "Interpolation search",
         answerImage: "",

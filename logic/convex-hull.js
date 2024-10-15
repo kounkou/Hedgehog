@@ -4,6 +4,8 @@ var question = [
         category: "Geometry",
         placeHolderCpp: `vector<Point> convexHull(vector<Point>& points) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: ``,
+        spaceComplexity: "O()",
+        timeComplexity: "O()",
         difficulty: "Hard",
         question: "Convex Hull",
         answerImage: "",

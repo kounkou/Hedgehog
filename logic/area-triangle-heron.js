@@ -4,6 +4,8 @@ var question = [
         category: "Geometry",
         placeHolderCpp: `double areaOfTriangle(Point a, Point b, Point c) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: ``,
+        spaceComplexity: "O()",
+        timeComplexity: "O()",
         difficulty: "Medium",
         question: "Area triangle Heron",
         answerImage: "",

@@ -4,6 +4,8 @@ var jumpSearchQuestions = [
         category: "Searching",
         placeHolderCpp: `int jumpSearch(const vector<int>& nums, int target) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func jumpSearch(nums []int, target int) int {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
+        spaceComplexity: "O()",
+        timeComplexity: "O()",
         difficulty: "Easy",
         question: "Jump search",
         answerImage: "",

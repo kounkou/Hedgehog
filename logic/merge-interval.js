@@ -4,6 +4,8 @@ var question = [
         category: "Intervals",
         placeHolderCpp: `vector<Interval> mergeIntervals(vector<Interval>& intervals) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: ``,
+        spaceComplexity: "O(N)",
+        timeComplexity: "O(NlogN)",
         difficulty: "Medium",
         question: "Merge intervals",
         answerImage: "",
@@ -18,7 +20,7 @@ var question = [
     
     merged.push_back(intervals[0]);
     
-    for (int i = 1; i < intervals.size(); i++) {
+    for (int i = 1; i < intervals.size(); ++i) {
         if (merged.back().end >= intervals[i].start) {
             merged.back().end = max(merged.back().end, intervals[i].end);
         } else {

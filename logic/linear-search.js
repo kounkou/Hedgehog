@@ -4,6 +4,8 @@ var linearSearchQuestions = [
         category: "Searching",
         placeHolderCpp: `int linearSearch(const vector<int>& nums, int target) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func linearSearch(nums []int, target int) int {{\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
+        spaceComplexity: "O()",
+        timeComplexity: "O()",
         difficulty: "Easy",
         question: "Linear search",
         answerImage: "",
