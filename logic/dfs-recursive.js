@@ -1,7 +1,7 @@
 var dfsQuestions = [
     {
         id: "3",
-        category: "DFS",
+        category: "Graph",
         placeHolderCpp: `void dfs(int node) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func dfs(node int) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         spaceComplexity: "O(E + V)",

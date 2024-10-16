@@ -24,6 +24,7 @@ import "convex-hull.js" as ConvexHull
 import "merge-interval.js" as MergeIntervals
 import "insert-interval.js" as InsertInterval
 import "min-meeting-room.js" as MinMeetingRoom
+import "trie.js" as Trie
 
 Rectangle {
     id: root
@@ -76,6 +77,9 @@ Rectangle {
             .concat(BinarySearch.binarySearchQuestions)
             .concat(JumpSearch.jumpSearchQuestions)
             .concat(InterpolationSearch.interpolationSearchQuestions)
+            
+            .concat(Trie.question)
+            
             .concat(LinearSearch.linearSearchQuestions);
 
         if (session.selectedCategories && session.selectedCategories.length > 0) {

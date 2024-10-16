@@ -8,7 +8,7 @@ ApplicationWindow {
     minimumWidth: 930
     maximumWidth: 930
     minimumHeight: 600
-    maximumHeight: 650
+    maximumHeight: 600
 
     color: themeObject.backgroundColor
 
