@@ -82,16 +82,14 @@ Rectangle {
             
             .concat(LinearSearch.linearSearchQuestions);
 
-        if (session.selectedCategories && session.selectedCategories.length > 0) {
+        if (sessionObject.selectedCategories && sessionObject.selectedCategories.length > 0) {
             questionsData = allQuestionsData.filter(function(question) {
-                return session.selectedCategories.includes(question.category);
+                return sessionObject.selectedCategories.includes(question.category);
             });
         } else {
-            session.selectedCategories = []
+            sessionObject.selectedCategories = []
             questionsData = allQuestionsData;
         }
-
-        console.log("---> questionsData ", questionsData)
     }
 
     Rectangle {
@@ -117,7 +115,7 @@ Rectangle {
             }
 
             function submitPrompt(prompt) {
-                var url = "https://api-inference.huggingface.co/models/gpt2";
+                var url = "https://api-inference.huggingface.co/models/llama-3.1-Nemotron-70b-instruct";
                 var jsonData = {
                     "inputs": prompt
                 };
@@ -148,7 +146,7 @@ Rectangle {
                 root.submittedAnswer = userAnswer
 
                 var prompt = "\nWhat is a brief difference between \n\n ```\n" + expectedAnswer + "\n```\n\n and \n\n```\n" + userAnswer + "\n```"
-                // submitPrompt(prompt);
+                submitPrompt(prompt);
 
                 if (currentQuestionIndex < QuestionsHandler.getTotalQuestions(questionsData)) {
                     const result = QuestionsHandler.getLevenshteinDistance(userAnswer.trim(), expectedAnswer)
@@ -176,7 +174,7 @@ Rectangle {
             }
 
             function showSolution() {
-                answerInput.text = root.expectedAnswer // + "\n" + root.aiComment
+                answerInput.text = root.expectedAnswer + "\n" + root.aiComment
             }
 
             function showSubmission() {
@@ -460,7 +458,7 @@ Rectangle {
                     Layout.fillWidth: true
                     height: 200
                     readOnly: submitted
-                    placeholderText: QuestionsHandler.getQuestionPlaceHolder(questionsData, currentLanguage, currentQuestionIndex, session)
+                    placeholderText: QuestionsHandler.getQuestionPlaceHolder(questionsData, currentLanguage, currentQuestionIndex, sessionObject.selectedCategories)
                     font.family: "Courier New"
                     font.pixelSize: 14
                     font.bold: true

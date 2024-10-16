@@ -12,8 +12,8 @@ ApplicationWindow {
 
     color: themeObject.backgroundColor
 
-    property var session: {
-        selectedCategories: []
+    Session {
+        id: sessionObject
     }
 
     Theme {
@@ -31,7 +31,6 @@ ApplicationWindow {
     Component {
         id: welcomePage
         WelcomePage{
-            theme: root.themeObject
         }
     }
 
@@ -44,7 +43,7 @@ ApplicationWindow {
     Component {
         id: practicePage
         PracticePage{
-            session: root.session
+            session: sessionObject.session
         }
     }
 
@@ -69,7 +68,6 @@ ApplicationWindow {
     Component { 
         id: categoryPage
         CategoryPage{
-            session: root.session
         }
     }
 }

@@ -9,41 +9,47 @@ Rectangle {
     property string theme: "light"
     color: themeObject.backgroundColor
 
-    property var session: null
-    property var selectedCategories: []
     property bool isCategorySelected: false
+    property ListModel categoryModel: ListModel {}
 
-    ListModel {
-        id: categoryModel
-        ListElement { name: "Backtracking";         selected: false; enabled: false }
-        ListElement { name: "Graph";                selected: false; enabled: true }
-        ListElement { name: "Binary Search";        selected: false; enabled: true }
-        ListElement { name: "Bit Manipulation";     selected: false; enabled: false }
-        ListElement { name: "Combinatorics";        selected: false; enabled: false }
-        ListElement { name: "Divide and Conquer";   selected: false; enabled: false }
-        ListElement { name: "Disjoint Set";         selected: false; enabled: true }
-        ListElement { name: "DP";                   selected: false; enabled: true }
-        ListElement { name: "Fibonacci";            selected: false; enabled: false }
-        ListElement { name: "Game Theory";          selected: false; enabled: false }
-        ListElement { name: "Geometry";             selected: false; enabled: true }
-        ListElement { name: "Greedy";               selected: false; enabled: false }
-        ListElement { name: "Graph";                selected: false; enabled: true }
-        ListElement { name: "Heap";                 selected: false; enabled: false }
-        ListElement { name: "Intervals";            selected: false; enabled: true }
-        ListElement { name: "Linked List";          selected: false; enabled: false }
-        ListElement { name: "Mathematics";          selected: false; enabled: false }
-        ListElement { name: "Pigeonhole Principle"; selected: false; enabled: false }
-        ListElement { name: "Recursion";            selected: false; enabled: false }
-        ListElement { name: "Searching";            selected: false; enabled: true }
-        ListElement { name: "Segment Tree";         selected: false; enabled: false }
-        ListElement { name: "Sliding Window";       selected: false; enabled: false }
-        ListElement { name: "Sorting";              selected: false; enabled: false }
-        ListElement { name: "String";               selected: false; enabled: true }
-        ListElement { name: "Topological Sorting";  selected: false; enabled: false }
-        ListElement { name: "Tree";                 selected: false; enabled: false }
-        ListElement { name: "Trie";                 selected: false; enabled: true }
-        ListElement { name: "Two Pointers";         selected: false; enabled: false }
-        ListElement { name: "Union-Find";           selected: false; enabled: false }
+    Component.onCompleted: {
+        categoryModel.append({ name: "Backtracking",         selected: false, enabled: false });
+        categoryModel.append({ name: "Graph",                selected: false, enabled: true });
+        categoryModel.append({ name: "Binary Search",        selected: false, enabled: true });
+        categoryModel.append({ name: "Bit Manipulation",     selected: false, enabled: false });
+        categoryModel.append({ name: "Combinatorics",        selected: false, enabled: false });
+        categoryModel.append({ name: "Divide and Conquer",   selected: false, enabled: false });
+        categoryModel.append({ name: "Disjoint Set",         selected: false, enabled: true });
+        categoryModel.append({ name: "DP",                   selected: false, enabled: true });
+        categoryModel.append({ name: "Game Theory",          selected: false, enabled: false });
+        categoryModel.append({ name: "Geometry",             selected: false, enabled: true });
+        categoryModel.append({ name: "Greedy",               selected: false, enabled: false });
+        categoryModel.append({ name: "Heap",                 selected: false, enabled: false });
+        categoryModel.append({ name: "Intervals",            selected: false, enabled: true });
+        categoryModel.append({ name: "Linked List",          selected: false, enabled: false });
+        categoryModel.append({ name: "Mathematics",          selected: false, enabled: false });
+        categoryModel.append({ name: "Pigeonhole",           selected: false, enabled: false });
+        categoryModel.append({ name: "Recursion",            selected: false, enabled: false });
+        categoryModel.append({ name: "Searching",            selected: false, enabled: true });
+        categoryModel.append({ name: "Segment Tree",         selected: false, enabled: false });
+        categoryModel.append({ name: "Sliding Window",       selected: false, enabled: false });
+        categoryModel.append({ name: "Sorting",              selected: false, enabled: false });
+        categoryModel.append({ name: "String",               selected: false, enabled: true });
+        categoryModel.append({ name: "Topological Sorting",  selected: false, enabled: false });
+        categoryModel.append({ name: "Tree",                 selected: false, enabled: false });
+        categoryModel.append({ name: "Trie",                 selected: false, enabled: true });
+        categoryModel.append({ name: "Two Pointers",         selected: false, enabled: false });
+        categoryModel.append({ name: "Union-Find",           selected: false, enabled: false });
+
+        for (let i = 0; i < sessionObject.selectedCategories.length; i++) {
+            let category = sessionObject.selectedCategories[i];
+
+            for (let j = 0; j < categoryModel.count; j++) {
+                if (categoryModel.get(j).name === category) {
+                    categoryModel.setProperty(j, "selected", categoryModel.get(j).enabled);
+                }
+            }
+        }
     }
 
     ScrollView {
@@ -130,20 +136,18 @@ Rectangle {
                                 model.selected = !model.selected;
 
                                 if (model.selected) {
-                                    selectedCategories.push(model.name);
-                                    session.selectedCategories = selectedCategories
+                                    sessionObject.selectedCategories.push(model.name);
                                     isCategorySelected = true
                                 } else {
-                                    const index = session.selectedCategories.indexOf(model.name);
+                                    const index = sessionObject.selectedCategories.indexOf(model.name);
                                     if (index > -1) {
-                                        selectedCategories.splice(index, 1);
-                                        session.selectedCategories = selectedCategories
+                                        sessionObject.selectedCategories.splice(index, 1);
                                     }
                                 }
 
-                                if (session.selectedCategories.length === 0) {
+                                if (sessionObject.selectedCategories.length === 0) {
                                     isCategorySelected = false
-                                }                               
+                                }
                             }
                         }
                     }

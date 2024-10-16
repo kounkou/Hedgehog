@@ -10,6 +10,7 @@
         <file alias="PracticePage.qml">qml/PracticePage.qml</file>
         <file alias="AboutPage.qml">qml/AboutPage.qml</file>
         <file alias="CategoryPage.qml">qml/CategoryPage.qml</file>
+        <file alias="Session.qml">qml/Session.qml</file>
         <file alias="handler.js">logic/handler.js</file>
         
         <file alias="adsense-ad.html">qml/adsense-ad.html</file>
