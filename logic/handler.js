@@ -1,16 +1,16 @@
 //     // { id: "8", difficulty: "Medium", question: "Coin change", answerImage: "../code-snipets/coin_change.png", answer: "int coinChange(vector<int>& coins, int x) {    if (x <= 0) return 0;    int best = INT_MAX;    for (auto& c : coins) {         if (x - c >= 0) {              int res = coinChange(coins, x - c);              if (res >= 0 && res < best) {                 best = res + 1;              }          }     }     return best == INT_MAX ? -1 : best;}" },
 
-function getQuestionPlaceHolder(questionsData, currentLanguage, questionIndex, session) {
+function getQuestionPlaceHolder(questionsData, currentLanguage, questionIndex, selectedCategories) {
     // If no category is selected, assume all categories are selected
-    const selectedCategories = session.selectedCategories.length === 0
+    const categories = selectedCategories.length === 0
         ? questionsData.map(question => question.category) // Take all categories
-        : session.selectedCategories;
+        : selectedCategories;
 
     if (questionIndex < questionsData.length) {
         const question = questionsData[questionIndex];
 
         // Check if the current question's category is in the selected categories
-        const isCategorySelected = selectedCategories.includes(question.category);
+        const isCategorySelected = categories.includes(question.category);
 
         if (isCategorySelected) {
             if (currentLanguage === "C++") {
