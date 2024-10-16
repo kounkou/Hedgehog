@@ -36,6 +36,8 @@
         <file alias="jump-search.js">logic/jump-search.js</file>
         <file alias="interpolation-search.js">logic/interpolation-search.js</file>
 
+        <file alias="trie.js">logic/trie.js</file>
+
         <file alias="convex-hull.js">logic/convex-hull.js</file>
         <file alias="line-intersection.js">logic/line-intersection.js</file>
         <file alias="area-triangle-heron.js">logic/area-triangle-heron.js</file>

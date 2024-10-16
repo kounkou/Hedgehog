@@ -1,7 +1,7 @@
 var bfsQuestions = [
     {
         id: "2",
-        category: "BFS",
+        category: "Graph",
         placeHolderCpp: `void bfs(int start) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func bfs(start int) {{\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         spaceComplexity: "O(E + V)",
