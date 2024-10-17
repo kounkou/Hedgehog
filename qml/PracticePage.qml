@@ -10,8 +10,11 @@ import "bfs-iterative.js" as BfsIterative
 import "dsu.js" as Dsu
 import "dfs-iterative.js" as DfsIterative
 import "dijkstra.js" as Dijkstra
-import "kmp.js" as Kmp
 import "kadane.js" as Kadane
+
+import "kmp.js" as Kmp
+import "lcp.js" as LCP
+import "rabin-karp.js" as RabinKarp
 
 import "binary-search.js" as BinarySearch
 import "linear-search.js" as LinearSearch
@@ -25,6 +28,14 @@ import "merge-interval.js" as MergeIntervals
 import "insert-interval.js" as InsertInterval
 import "min-meeting-room.js" as MinMeetingRoom
 import "trie.js" as Trie
+import "fractional-knapsack.js" as FractionalKnapsack
+import "sieve.js" as Sieve
+import "gcd.js" as GCD
+import "fast-exponentiation.js" as FastExponentiation
+import "insert-at-end.js" as InsertAtEnd
+import "remove-element.js" as RemoveElement
+import "ancestor.js" as Ancestor
+import "factorial.js" as Factorial
 
 Rectangle {
     id: root
@@ -56,14 +67,14 @@ Rectangle {
     color: themeObject.backgroundColor
 
     Component.onCompleted: {
-        var allQuestionsData = BfsRecursive.bfsQuestions
-            .concat(DfsRecursive.dfsQuestions)
-            .concat(BfsIterative.bfsQuestions)
-            .concat(Dsu.DsuQuestions)
-            .concat(DfsIterative.dfsQuestions)
-            .concat(Dijkstra.dijkstraQuestions)
+        var allQuestionsData = BfsRecursive.question
+            .concat(DfsRecursive.question)
+            .concat(BfsIterative.question)
+            .concat(Dsu.question)
+            .concat(DfsIterative.question)
+            .concat(Dijkstra.question)
             
-            .concat(Kadane.kadaneQuestions)
+            .concat(Kadane.question)
 
             .concat(LineIntersection.question)
             .concat(AreaTriangleHeron.question)
@@ -73,14 +84,29 @@ Rectangle {
             .concat(InsertInterval.question)
             .concat(MinMeetingRoom.question)
 
-            .concat(Kmp.kmpQuestions)
-            .concat(BinarySearch.binarySearchQuestions)
-            .concat(JumpSearch.jumpSearchQuestions)
-            .concat(InterpolationSearch.interpolationSearchQuestions)
+            .concat(Kmp.question)
+            .concat(LCP.question)
+            .concat(RabinKarp.question)
+
+            .concat(BinarySearch.question)
+            .concat(JumpSearch.question)
+            .concat(InterpolationSearch.question)
             
             .concat(Trie.question)
+
+            .concat(FractionalKnapsack.question)
+
+            .concat(InsertAtEnd.question)
+            .concat(RemoveElement.question)
+            .concat(Ancestor.question)
+
+            .concat(Factorial.question)
+
+            .concat(Sieve.question)
+            .concat(GCD.question)
+            .concat(FastExponentiation.question)
             
-            .concat(LinearSearch.linearSearchQuestions);
+            .concat(LinearSearch.question);
 
         if (sessionObject.selectedCategories && sessionObject.selectedCategories.length > 0) {
             questionsData = allQuestionsData.filter(function(question) {
@@ -233,7 +259,7 @@ Rectangle {
                 questionLabel.text = (currentQuestionIndex + 1) + ". Implement a " + QuestionsHandler.getQuestion(questionsData, currentQuestionIndex)
                 userAnswer = ""
                 answerInput.text = ""
-                timerValue = timeLimit
+                timerValue = QuestionsHandler.getQuestionDifficulty(questionsData, currentQuestionIndex) === "Hard" ? 2*timeLimit : timeLimit
                 countdownTimer.start()
                 resultText.enabled = false
                 answerInput.readOnly = false
@@ -242,7 +268,7 @@ Rectangle {
 
             function resetTest() {
                 resultText.enabled = false
-                timerValue = timeLimit
+                timerValue = QuestionsHandler.getQuestionDifficulty(questionsData, currentQuestionIndex) === "Hard" ? 2*timeLimit : timeLimit
                 countdownTimer.start()
                 quizComplete = false
                 resultsModel.clear()
@@ -298,7 +324,7 @@ Rectangle {
                             Rectangle {
                                 width: 30
                                 height: 30
-                                radius: 15
+                                radius: 10
                                 color: "transparent"
 
                                 Text {
@@ -375,7 +401,7 @@ Rectangle {
                             }
                             return themeObject.buttonHardColor
                         }
-                        radius: 15
+                        radius: 10
                         visible: !quizComplete
 
                         Text {
@@ -401,7 +427,7 @@ Rectangle {
                         }
 
                         background: Rectangle {
-                            radius: 15
+                            radius: 10
                             color: comboBoxMouseArea.containsMouse ? themeObject.buttonHoveredColor : themeObject.buttonColor
                             border.color: themeObject.buttonBorderColor
                             border.width: 1
@@ -471,7 +497,7 @@ Rectangle {
                         color: themeObject.textAreaBackgroundColor
                         border.width: 1
                         border.color: themeObject.textAreaBorderColor
-                        radius: 15
+                        radius: 10
                     }
                     onTextChanged: {
                         userAnswer = text
@@ -494,14 +520,16 @@ Rectangle {
                                     return themeObject.backgroundColor
                                 }
                             }
-                        radius: 15
+                        radius: 10
                         anchors.bottom: parent.bottom
                         anchors.right: parent.right
                         anchors.margins: 10
 
                         Text {
                             id: clockText
-                            text: (visitedNumbers.length + 1) + "/" + QuestionsHandler.getTotalQuestions(questionsData) + " 🕦 Time left: " + timerValue + "s"
+                            text: (visitedNumbers.length + 1) + "/" + QuestionsHandler.getTotalQuestions(questionsData) + " 🕦 Time left: " + (
+                                QuestionsHandler.getQuestionDifficulty(questionsData, currentQuestionIndex) === "Hard" ? timerValue : timerValue
+                            ) + "s"
                             Layout.alignment: Qt.AlignRight
                             font.pixelSize: 14
                             anchors.centerIn: parent
@@ -516,10 +544,10 @@ Rectangle {
                         
                         height: 25
                         width: viewSubmissionText.width + 20
-                        color: themeObject.buttonMediumColor
+                        color: themeObject.buttonActionColor
                         opacity: submitted ? 1 : 0.5
                         enabled: submitted
-                        radius: 15
+                        radius: 10
                         anchors.top: parent.top
                         anchors.right: parent.right
                         anchors.margins: 10
@@ -530,7 +558,7 @@ Rectangle {
                             anchors.centerIn: parent
                             font.pixelSize: 14
                             font.bold: true
-                            color: themeObject.textColor
+                            color: "#F7F7F7"
                         }
 
                         MouseArea {
@@ -572,7 +600,7 @@ Rectangle {
                         }
 
                         background: Rectangle {
-                            radius: 15
+                            radius: 10
                             border.width: 1
                             border.color: themeObject.buttonColor
                             color: {
@@ -586,7 +614,7 @@ Rectangle {
                         text: countdownTimer.running ? qsTr("Pause timer") : qsTr("Resume timer")
                         onClicked: d.pauseStartTimer()
                         Layout.alignment: Qt.AlignRight
-                        visible: !submitted
+                        enabled: !submitted
                         width: 200
                         height: 50
 
@@ -601,7 +629,7 @@ Rectangle {
                         }
 
                         background: Rectangle {
-                            radius: 15
+                            radius: 10
                             border.width: 1
                             border.color: themeObject.buttonColor
                             color: {
@@ -630,7 +658,7 @@ Rectangle {
                         }
 
                         background: Rectangle {
-                            radius: 15
+                            radius: 10
                             border.width: 1
                             border.color: themeObject.buttonColor
                             color: {
@@ -661,7 +689,7 @@ Rectangle {
                         }
 
                         background: Rectangle {
-                            radius: 15
+                            radius: 10
                             border.width: 1
                             border.color: themeObject.buttonColor
                             color: {
@@ -692,7 +720,7 @@ Rectangle {
                         }
 
                         background: Rectangle {
-                            radius: 15
+                            radius: 10
                             border.width: 1
                             border.color: themeObject.buttonColor
                             color: {
@@ -721,7 +749,7 @@ Rectangle {
                         }
 
                         background: Rectangle {
-                            radius: 15
+                            radius: 10
                             border.width: 1
                             border.color: themeObject.buttonColor
                             color: {

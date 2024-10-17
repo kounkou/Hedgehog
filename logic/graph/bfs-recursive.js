@@ -1,4 +1,4 @@
-var bfsQuestions = [
+var question = [
     {
         id: "1",
         category: "Graph",

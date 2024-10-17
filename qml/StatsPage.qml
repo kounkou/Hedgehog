@@ -145,7 +145,7 @@ Rectangle {
 
         Button {
             id: homeButton
-            text: "Go to Home"
+            text: "Go to home"
             width: 200
             height: 50
             onClicked: {
@@ -163,7 +163,7 @@ Rectangle {
             }
 
             background: Rectangle {
-                radius: 15
+                radius: 10
                 border.width: 1
                 border.color: themeObject.buttonColor
                 color: {

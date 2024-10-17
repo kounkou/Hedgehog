@@ -1,4 +1,4 @@
-var binarySearchQuestions = [
+var question = [
     {
         id: "5",
         category: "Binary Search",

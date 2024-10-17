@@ -1,4 +1,4 @@
-var linearSearchQuestions = [
+var question = [
     {
         id: "16",
         category: "",

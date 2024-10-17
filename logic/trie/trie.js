@@ -3,7 +3,7 @@ var question = [
         id: "20",
         category: "Trie",
         placeHolderCpp: `class Trie {\n    ...\n};\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
-        placeHolderGo: `{\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
+        placeHolderGo: `type TrieNode struct {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         difficulty: "Medium",
         question: "Trie",
         answerImage: "",
@@ -51,6 +51,42 @@ private:
     unique_ptr<TrieNode> root;
 };
 `,
-        answerGo: ``
+        answerGo: `type TrieNode struct {
+    End     bool
+    Children map[rune]*TrieNode
+}
+
+type Trie struct {
+    Root *TrieNode
+}
+
+func NewTrie() *Trie {
+    return &Trie{Root: &TrieNode{Children: make(map[rune]*TrieNode)}}
+}
+
+func (t *Trie) Insert(word string) {
+    temp := t.Root
+
+    for _, c := range word {
+        if _, exists := temp.Children[c]; !exists {
+            temp.Children[c] = &TrieNode{Children: make(map[rune]*TrieNode)}
+        }
+        temp = temp.Children[c]
+    }
+    temp.End = true
+}
+
+func (t *Trie) Search(word string) bool {
+    temp := t.Root
+
+    for _, c := range word {
+        if next, exists := temp.Children[c]; exists {
+            temp = next
+        } else {
+            return false
+        }
+    }
+    return temp.End
+}`
     }
 ]

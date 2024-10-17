@@ -1,4 +1,4 @@
-var interpolationSearchQuestions = [
+var question = [
     {
         id: "10",
         category: "Searching",
@@ -30,6 +30,31 @@ int interpolationSearch(const vector<int>& arr, int t) {
 
     return -1;
 }
-`, answerGo: ``
+`, answerGo: `func interpolationSearch(nums []int, target int) int {
+    n := len(nums)
+    lo, hi := 0, n-1
+
+    for lo <= hi && target >= nums[lo] && target <= nums[hi] {
+        if nums[hi] == nums[lo] {
+            if nums[lo] == target {
+                return lo
+            }
+            return -1
+        }
+
+        pos := lo + (hi-lo)*(target-nums[lo])/(nums[hi]-nums[lo])
+
+        if nums[pos] == target {
+            return pos
+        }
+        if nums[pos] < target {
+            lo = pos + 1
+        } else {
+            hi = pos - 1
+        }
+    }
+
+    return -1
+}`
     }
 ]
