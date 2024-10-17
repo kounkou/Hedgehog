@@ -1,7 +1,16 @@
 
-<!-- <img width="1042" alt="Screenshot 2024-10-09 at 9 05 36 PM" src="https://github.com/user-attachments/assets/909485fd-68d4-4c96-8535-add125f29a51"> -->
-<img width="1042" alt="Screenshot 2024-10-09 at 9 05 49 PM" src="https://github.com/user-attachments/assets/88f62063-929b-49cf-abf7-6fd9018d0238">
-<!-- <img width="1042" alt="Screenshot 2024-10-09 at 9 05 56 PM" src="https://github.com/user-attachments/assets/74cfff1b-5700-4429-b0d4-97c1eeecf056"> -->
+<img width="1042" alt="Screenshot 2024-10-17 at 9 00 37 AM" src="https://github.com/user-attachments/assets/1a6426ba-cdc0-40d1-b9e6-5b5040408e3c">
+<img width="1042" alt="Screenshot 2024-10-17 at 9 00 29 AM" src="https://github.com/user-attachments/assets/52ed9a00-e67f-4ed1-a2d9-477b04eb9554">
+<img width="1042" alt="Screenshot 2024-10-17 at 8 59 40 AM" src="https://github.com/user-attachments/assets/33eb2bf6-88e5-4bc5-8165-766f718f8e03">
+
+# Platforms
+
+- MacOS   (Full compatibility)
+- Linux   (Testing in progress)
+- Windows (Not tested)
+
+For the best experience, I currently recommend using Hedgehog on macOS for its optimal look and feel. That said, you can still run the application on Linux and Windows without any issues. I'm actively refining the styles for both platforms to ensure a polished experience across all operating systems.
+
 
 # Hedgehog
 
