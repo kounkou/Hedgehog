@@ -3,7 +3,7 @@ var question = [
         id: "13",
         category: "Geometry",
         placeHolderCpp: `vector<Point> convexHull(vector<Point>& points) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
-        placeHolderGo: ``,
+        placeHolderGo: `func convexHull(points []Point) []Point {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         spaceComplexity: "O()",
         timeComplexity: "O()",
         difficulty: "Hard",
@@ -43,6 +43,45 @@ vector<Point> convexHull(vector<Point>& points) {
 
     return hull;
 }
-`, answerGo: ``
+`, answerGo: `func orientation(p, q, r Point) int {
+    val := (q.Y - p.Y) * (r.X - q.X) - (q.X - p.X) * (r.Y - q.Y)
+    if val == 0 {
+        return 0
+    }
+    if val > 0 {
+        return 1
+    }
+    return 2
+}
+
+func convexHull(points []Point) []Point {
+    sort.Slice(points, func(i, j int) bool {
+        if points[i].X == points[j].X {
+            return points[i].Y < points[j].Y
+        }
+        return points[i].X < points[j].X
+    })
+
+    hull := []Point{}
+
+    for _, p := range points {
+        for len(hull) >= 2 && orientation(hull[len(hull)-2], hull[len(hull)-1], p) != 2 {
+            hull = hull[:len(hull)-1]
+        }
+        hull = append(hull, p)
+    }
+
+    t := len(hull) + 1
+    for i := len(points) - 1; i >= 0; i-- {
+        p := points[i]
+        for len(hull) >= t && orientation(hull[len(hull)-2], hull[len(hull)-1], p) != 2 {
+            hull = hull[:len(hull)-1]
+        }
+        hull = append(hull, p)
+    }
+    hull = hull[:len(hull)-1]
+
+    return hull
+}`
     }
 ]

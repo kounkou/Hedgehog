@@ -1,4 +1,4 @@
-var dfsQuestions = [
+var question = [
     {
         id: "3",
         category: "Graph",

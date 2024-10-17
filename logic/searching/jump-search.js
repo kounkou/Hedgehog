@@ -1,4 +1,4 @@
-var jumpSearchQuestions = [
+var question = [
     {
         id: "11",
         category: "Searching",
@@ -30,6 +30,33 @@ int jumpSearch(const vector<int>& arr, int target) {
         }
     }
     return -1;
-}`, answerGo: ``
+}`, answerGo: `func jumpSearch(nums []int, target int) int {
+    n := len(nums)
+    step := int(math.Sqrt(float64(n)))
+    prev := 0
+
+    for nums[min(step, n)-1] < target {
+        prev = step
+        step += int(math.Sqrt(float64(n)))
+
+        if prev >= n {
+            return -1
+        }
+    }
+
+    for i := prev; i < min(step, n); i++ {
+        if nums[i] == target {
+            return i
+        }
+    }
+    return -1
+}
+
+func min(a, b int) int {
+    if a < b {
+        return a
+    }
+    return b
+}`
     }
 ]

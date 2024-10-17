@@ -1,4 +1,4 @@
-var kadaneQuestions = [
+var question = [
     {
         id: "7",
         category: "DP",

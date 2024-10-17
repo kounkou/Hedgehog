@@ -23,13 +23,13 @@ Rectangle {
         categoryModel.append({ name: "DP",                   selected: false, enabled: true });
         categoryModel.append({ name: "Game Theory",          selected: false, enabled: false });
         categoryModel.append({ name: "Geometry",             selected: false, enabled: true });
-        categoryModel.append({ name: "Greedy",               selected: false, enabled: false });
+        categoryModel.append({ name: "Greedy",               selected: false, enabled: true });
         categoryModel.append({ name: "Heap",                 selected: false, enabled: false });
         categoryModel.append({ name: "Intervals",            selected: false, enabled: true });
-        categoryModel.append({ name: "Linked List",          selected: false, enabled: false });
-        categoryModel.append({ name: "Mathematics",          selected: false, enabled: false });
+        categoryModel.append({ name: "Linked List",          selected: false, enabled: true });
+        categoryModel.append({ name: "Mathematics",          selected: false, enabled: true });
         categoryModel.append({ name: "Pigeonhole",           selected: false, enabled: false });
-        categoryModel.append({ name: "Recursion",            selected: false, enabled: false });
+        categoryModel.append({ name: "Recursion",            selected: false, enabled: true });
         categoryModel.append({ name: "Searching",            selected: false, enabled: true });
         categoryModel.append({ name: "Segment Tree",         selected: false, enabled: false });
         categoryModel.append({ name: "Sliding Window",       selected: false, enabled: false });
@@ -40,6 +40,7 @@ Rectangle {
         categoryModel.append({ name: "Trie",                 selected: false, enabled: true });
         categoryModel.append({ name: "Two Pointers",         selected: false, enabled: false });
         categoryModel.append({ name: "Union-Find",           selected: false, enabled: false });
+        categoryModel.append({ name: "Others",               selected: false, enabled: false });
 
         for (let i = 0; i < sessionObject.selectedCategories.length; i++) {
             let category = sessionObject.selectedCategories[i];
@@ -47,6 +48,7 @@ Rectangle {
             for (let j = 0; j < categoryModel.count; j++) {
                 if (categoryModel.get(j).name === category) {
                     categoryModel.setProperty(j, "selected", categoryModel.get(j).enabled);
+                    isCategorySelected = true;
                 }
             }
         }
@@ -73,7 +75,7 @@ Rectangle {
                 width: parent.width
                 height: 50
                 color: "transparent"
-                radius: 15
+                radius: 10
 
                 Text {
                     text: "Select algorithm categories"
@@ -94,7 +96,7 @@ Rectangle {
                     delegate: Rectangle {
                         width: 150
                         height: 30
-                        radius: 15
+                        radius: 10
                         property bool isHovered: false
                         enabled: model.enabled
                         color: {
@@ -104,7 +106,7 @@ Rectangle {
                             if (isHovered && !model.selected) {
                                 return themeObject.buttonHoveredColor;
                             } else if (isHovered && model.selected || model.selected) {
-                                return themeObject.buttonMediumColor;
+                                return themeObject.buttonActionColor;
                             } else {
                                 return themeObject.buttonColor;
                             }
@@ -112,10 +114,10 @@ Rectangle {
 
                         Text {
                             id: categoryText
-                            text: model.name
+                            text: model.enabled ? model.name : "🔒"
                             font.pixelSize: 14
                             font.bold: true
-                            color: themeObject.textColor
+                            color: model.selected ? "#F7F7F7" : themeObject.textColor
                             anchors.centerIn: parent
                         }
 
@@ -154,6 +156,28 @@ Rectangle {
                 }
             }
 
+            TextArea {
+                id: infos
+                width: parent.width
+                height: 150
+                font.family: "Courier New"
+                font.pixelSize: 14
+                font.bold: false
+                color: themeObject.textColor
+                textFormat: TextEdit.RichText
+                readOnly: true
+                text: ""
+                padding: 10
+                antialiasing: true
+                wrapMode: Text.Wrap
+                background: Rectangle {
+                    color: "transparent"
+                    border.width: 0
+                    border.color: themeObject.textAreaBorderColor
+                    radius: 10
+                }
+            }
+
             RowLayout {
                 spacing: 20
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -169,7 +193,7 @@ Rectangle {
                 CustomButton {
                     id: home
 
-                    buttonText: "Close session"
+                    buttonText: "Go to home"
                     page: welcomePage
                 }
             }

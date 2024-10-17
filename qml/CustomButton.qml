@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+import QtGraphicalEffects 1.15
 
 Button {
     id: root
@@ -27,7 +28,8 @@ Button {
     }
 
     background: Rectangle {
-        radius: 15
+        id: button
+        radius: 10
         border.width: 1
         border.color: themeObject.buttonColor
         color: {
@@ -40,7 +42,7 @@ Button {
         anchors.margins: 8
         border.color: themeObject.buttonHardColor
         border.width: 1
-        radius: 15
+        radius: 10
         visible: root.isBetaTagEnabled
         height: 20
         width: 40

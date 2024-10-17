@@ -31,7 +31,7 @@ Rectangle {
                 width: parent.width
                 height: 150
                 color: themeObject.buttonColor
-                radius: 15
+                radius: 10
 
                 Column {
                     anchors.fill: parent
@@ -59,7 +59,7 @@ Rectangle {
                 width: parent.width
                 height: 50
                 color: themeObject.buttonColor
-                radius: 15
+                radius: 10
 
                 Text {
                     text: "Why you should use Hedgehog ?"
@@ -73,7 +73,7 @@ Rectangle {
                 width: parent.width // Set the width explicitly
                 height: 1600
                 color: themeObject.buttonColor
-                radius: 15
+                radius: 10
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 TextArea {
@@ -123,7 +123,7 @@ Rectangle {
                         color: themeObject.textAreaBackgroundColor
                         border.width: 0
                         border.color: themeObject.textAreaBorderColor
-                        radius: 15
+                        radius: 10
                     }
                 }
             }
@@ -132,7 +132,7 @@ Rectangle {
                 width: parent.width
                 height: 50
                 color: themeObject.buttonColor
-                radius: 15
+                radius: 10
 
                 Text {
                     text: "What is spaced repetition"
@@ -146,7 +146,7 @@ Rectangle {
                 width: parent.width
                 height: 1300
                 color: themeObject.buttonColor
-                radius: 15
+                radius: 10
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 TextArea {
@@ -196,38 +196,28 @@ Rectangle {
                         color: themeObject.textAreaBackgroundColor
                         border.width: 0
                         border.color: themeObject.textAreaBorderColor
-                        radius: 15
+                        radius: 10
                     }
                 }
             }
 
-            Button {
-                id: homeButton
-                text: "Go to Home"
-                width: 200
-                height: 50
+            RowLayout {
+                spacing: 20
                 anchors.horizontalCenter: parent.horizontalCenter
-                onClicked: {
-                    stackView.pop(2)
+
+                CustomButton {
+                    id: startPractice
+
+                    enabled: isCategorySelected
+                    buttonText: "Start Practicing"
+                    page: practicePage
                 }
 
-                contentItem: Text {
-                    text: homeButton.text
-                    font: homeButton.font
-                    opacity: enabled ? 1.0 : 0.3
-                    color: themeObject.textColor
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideRight
-                }
+                CustomButton {
+                    id: home
 
-                background: Rectangle {
-                    radius: 15
-                    border.width: 0
-                    border.color: themeObject.buttonColor
-                    color: {
-                        return homeButton.hovered ? themeObject.buttonHoveredColor : themeObject.buttonColor
-                    }
+                    buttonText: "Go to home"
+                    page: welcomePage
                 }
             }
         }

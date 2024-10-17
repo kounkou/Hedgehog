@@ -105,7 +105,7 @@ Rectangle {
             }
 
             background: Rectangle {
-                radius: 15
+                radius: 10
                 border.width: 1
                 border.color: themeObject.buttonColor
                 color: themeObject.buttonColor
@@ -114,7 +114,7 @@ Rectangle {
 
         Button {
             id: backButton
-            text: "Go to Home"
+            text: "Go to home"
             width: 200
             height: 50
             Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
@@ -134,7 +134,7 @@ Rectangle {
             }
 
             background: Rectangle {
-                radius: 15
+                radius: 10
                 border.width: 1
                 border.color: themeObject.buttonColor
                 color: {

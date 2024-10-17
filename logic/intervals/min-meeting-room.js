@@ -3,7 +3,7 @@ var question = [
         id: "18",
         category: "Intervals",
         placeHolderCpp: `int minMeetingRooms(vector<Interval>& intervals) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
-        placeHolderGo: ``,
+        placeHolderGo: `func minMeetingRooms(intervals [][]int) int {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         spaceComplexity: "O()",
         timeComplexity: "O()",
         difficulty: "Medium",
@@ -33,6 +33,34 @@ var question = [
     return rooms;
 }
 `,
-        answerGo: ``
+        answerGo: `func minMeetingRooms(intervals [][]int) int {
+    if len(intervals) == 0 {
+        return 0
+    }
+
+    startTimes := make([]int, len(intervals))
+    endTimes := make([]int, len(intervals))
+
+    for i, interval := range intervals {
+        startTimes[i] = interval[0]
+        endTimes[i] = interval[1]
+    }
+
+    sort.Ints(startTimes)
+    sort.Ints(endTimes)
+
+    rooms := 0
+    j := 0
+
+    for i := 0; i < len(startTimes); i++ {
+        if startTimes[i] < endTimes[j] {
+            rooms++
+        } else {
+            j++
+        }
+    }
+
+    return rooms
+}`
     }
 ]

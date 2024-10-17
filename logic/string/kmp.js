@@ -1,4 +1,4 @@
-var kmpQuestions = [
+var question = [
     {
         id: "6",
         category: "String",
@@ -34,6 +34,50 @@ void kmp(const string& t, const string& p) {
         if (j == m) cout << \"found at \" << i - j, j = lps[j - 1];        
         else if (i < n && t[i] != p[j]) j ? j = lps[j - 1] : i++;    
     }
-}`, answerGo: `undefined`,
+}`, answerGo: `func getLps(p string) []int {
+    sp := len(p)
+    lps := make([]int, sp)
+    j := 0
+
+    for i := 1; i < sp; {
+        if p[i] == p[j] {
+            j++
+            lps[i] = j
+            i++
+        } else {
+            if j != 0 {
+                j = lps[j-1]
+            } else {
+                lps[i] = 0
+                i++
+            }
+        }
+    }
+    return lps
+}
+
+func kmp(t, p string) {
+    st := len(t)
+    sp := len(p)
+    lps := getLps(p)
+    j := 0
+
+    for i := 0; i < st; {
+        if p[j] == t[i] {
+            i++
+            j++
+        }
+        if j == sp {
+            fmt.Printf("found at %d\n", i-j)
+            j = lps[j-1]
+        } else if i < st && p[j] != t[i] {
+            if j != 0 {
+                j = lps[j-1]
+            } else {
+                i++
+            }
+        }
+    }
+}`,
     },
 ]

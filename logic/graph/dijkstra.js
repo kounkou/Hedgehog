@@ -1,4 +1,4 @@
-var dijkstraQuestions = [
+var question = [
     {
         id: "6",
         category: "Graph",
