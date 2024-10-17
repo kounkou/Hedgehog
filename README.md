@@ -16,11 +16,13 @@ For the best experience, I currently recommend using Hedgehog on macOS for its o
 
 In an AI-driven world, algorithms and data structures remain critical for optimizing, debugging, and understanding systems at a deeper level. While AI tools can automate many aspects of coding, they cannot replace the fundamental knowledge required to create, understand, and refine complex software solutions effectively.
 
+
 # How it works
 
 ### Architecture 
 
-<img width="883" alt="Screenshot 2024-10-10 at 10 09 29 AM" src="https://github.com/user-attachments/assets/5e366cdb-2a63-46a4-a075-0f7f079f1083">
+
+<img width="944" alt="Screenshot 2024-10-17 at 9 06 55 AM" src="https://github.com/user-attachments/assets/5bfa2b2a-ea8c-4774-8f2d-f4230b9265cd">
 
 
 ### Hedgehog features
@@ -38,7 +40,7 @@ Key features of Hedgehog include:
 
 # How to build and execute Hedgehog
 
-You will need Qt installation to build Hedgehog, after what you can do
+You will need Qt installation for your platform to build and launch Hedgehog, after what you can launch below commands which will generate the binary file
 
 ```bash
 qmake && make
