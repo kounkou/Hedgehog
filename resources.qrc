@@ -47,6 +47,9 @@
 
         <file alias="fractional-knapsack.js">logic/greedy/fractional-knapsack.js</file>
 
+        <file alias="heap-sort.js">logic/heap/heap-sort.js</file>
+        <file alias="insert-heap.js">logic/heap/insert-heap.js</file>
+
         <file alias="insert-at-end.js">logic/linked-list/insert-at-end.js</file>
         <file alias="remove-element.js">logic/linked-list/remove-element.js</file>
         <file alias="ancestor.js">logic/linked-list/ancestor.js</file>

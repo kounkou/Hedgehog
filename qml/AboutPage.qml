@@ -31,6 +31,8 @@ Rectangle {
                 width: parent.width
                 height: 150
                 color: themeObject.buttonColor
+                border.width: 1
+                border.color: themeObject.buttonBorderColor
                 radius: 10
 
                 Column {
@@ -59,6 +61,8 @@ Rectangle {
                 width: parent.width
                 height: 50
                 color: themeObject.buttonColor
+                border.width: 1
+                border.color: themeObject.buttonBorderColor
                 radius: 10
 
                 Text {
@@ -133,6 +137,8 @@ Rectangle {
                 height: 50
                 color: themeObject.buttonColor
                 radius: 10
+                border.width: 1
+                border.color: themeObject.buttonBorderColor
 
                 Text {
                     text: "What is spaced repetition"

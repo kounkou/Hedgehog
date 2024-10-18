@@ -30,10 +30,6 @@ public:
         temp->end = true;
     }
 
-    void insert(const string& word) {
-
-    }
-
     bool search(const string& word) {
         const TrieNode* temp = root.get();
 
