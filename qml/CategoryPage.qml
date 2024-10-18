@@ -24,7 +24,7 @@ Rectangle {
         categoryModel.append({ name: "Game Theory",          selected: false, enabled: false });
         categoryModel.append({ name: "Geometry",             selected: false, enabled: true });
         categoryModel.append({ name: "Greedy",               selected: false, enabled: true });
-        categoryModel.append({ name: "Heap",                 selected: false, enabled: false });
+        categoryModel.append({ name: "Heap",                 selected: false, enabled: true });
         categoryModel.append({ name: "Intervals",            selected: false, enabled: true });
         categoryModel.append({ name: "Linked List",          selected: false, enabled: true });
         categoryModel.append({ name: "Mathematics",          selected: false, enabled: true });
@@ -97,6 +97,8 @@ Rectangle {
                         width: 150
                         height: 30
                         radius: 10
+                        border.width: 1
+                        border.color: themeObject.buttonBorderColor
                         property bool isHovered: false
                         enabled: model.enabled
                         color: {
@@ -108,7 +110,7 @@ Rectangle {
                             } else if (isHovered && model.selected || model.selected) {
                                 return themeObject.buttonActionColor;
                             } else {
-                                return themeObject.buttonColor;
+                                return themeObject.categoryColor;
                             }
                         }
 

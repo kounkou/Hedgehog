@@ -36,6 +36,8 @@ import "insert-at-end.js" as InsertAtEnd
 import "remove-element.js" as RemoveElement
 import "ancestor.js" as Ancestor
 import "factorial.js" as Factorial
+import "heap-sort.js" as HeapSort
+import "insert-heap.js" as InsertHeap
 
 Rectangle {
     id: root
@@ -105,6 +107,9 @@ Rectangle {
             .concat(Sieve.question)
             .concat(GCD.question)
             .concat(FastExponentiation.question)
+
+            .concat(HeapSort.question)
+            .concat(InsertHeap.question)
             
             .concat(LinearSearch.question);
 
@@ -506,6 +511,14 @@ Rectangle {
                         }
                     }
 
+                    palette {
+                        highlight: "#B4D5FE"
+                        highlightedText: "#202020"
+                    }
+
+                    property bool processing: false
+                    selectByMouse: true
+
                     Rectangle {
                         id: clock
                         height: 25
@@ -554,10 +567,10 @@ Rectangle {
 
                         Text {
                             id: viewSubmissionText
-                            text: root.showSolution ? "View your submission" : "View solution"
+                            text: root.showSolution ? "View submission" : "View solution"
                             anchors.centerIn: parent
                             font.pixelSize: 14
-                            font.bold: true
+                            font.bold: false
                             color: "#F7F7F7"
                         }
 
@@ -602,7 +615,7 @@ Rectangle {
                         background: Rectangle {
                             radius: 10
                             border.width: 1
-                            border.color: themeObject.buttonColor
+                            border.color: themeObject.buttonBorderColor
                             color: {
                                 return validate.hovered ? themeObject.buttonHoveredColor : themeObject.buttonColor
                             }
@@ -615,6 +628,7 @@ Rectangle {
                         onClicked: d.pauseStartTimer()
                         Layout.alignment: Qt.AlignRight
                         enabled: !submitted
+                        visible: !quizComplete
                         width: 200
                         height: 50
 
@@ -631,7 +645,7 @@ Rectangle {
                         background: Rectangle {
                             radius: 10
                             border.width: 1
-                            border.color: themeObject.buttonColor
+                            border.color: themeObject.buttonBorderColor
                             color: {
                                 return pause.hovered ? themeObject.buttonHoveredColor : themeObject.buttonColor
                             }
@@ -660,7 +674,7 @@ Rectangle {
                         background: Rectangle {
                             radius: 10
                             border.width: 1
-                            border.color: themeObject.buttonColor
+                            border.color: themeObject.buttonBorderColor
                             color: {
                                 return redo.hovered ? themeObject.buttonHoveredColor : themeObject.buttonColor
                             }
@@ -691,7 +705,7 @@ Rectangle {
                         background: Rectangle {
                             radius: 10
                             border.width: 1
-                            border.color: themeObject.buttonColor
+                            border.color: themeObject.buttonBorderColor
                             color: {
                                 return restartButton.hovered ? themeObject.buttonHoveredColor : themeObject.buttonColor
                             }
@@ -722,7 +736,7 @@ Rectangle {
                         background: Rectangle {
                             radius: 10
                             border.width: 1
-                            border.color: themeObject.buttonColor
+                            border.color: themeObject.buttonBorderColor
                             color: {
                                 return nextButton.hovered ? themeObject.buttonHoveredColor : themeObject.buttonColor
                             }
@@ -751,7 +765,7 @@ Rectangle {
                         background: Rectangle {
                             radius: 10
                             border.width: 1
-                            border.color: themeObject.buttonColor
+                            border.color: themeObject.buttonBorderColor
                             color: {
                                 return homeButton.hovered ? themeObject.buttonHoveredColor : themeObject.buttonColor
                             }

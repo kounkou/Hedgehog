@@ -31,7 +31,7 @@ Button {
         id: button
         radius: 10
         border.width: 1
-        border.color: themeObject.buttonColor
+        border.color: themeObject.buttonBorderColor
         color: {
             return root.hovered ? themeObject.buttonHoveredColor : themeObject.buttonColor
         }
