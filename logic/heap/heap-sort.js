@@ -5,18 +5,20 @@ var question = [
         placeHolderCpp: `void heapify(vector<int>& arr, int n, int i) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func heapify(arr []int, n, i int) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         difficulty: "Medium",
-        question: "Heap sort implementation",
+        question: "Heap sort",
         answerImage: "",
         answerCpp: `void heapify(vector<int>& arr, int n, int i) {
     int largest = i;
-    int left = 2 * i + 1;
+    int left  = 2 * i + 1;
     int right = 2 * i + 2;
 
-    if (left < n && arr[left] > arr[largest])
+    if (left < n && arr[left] > arr[largest]) {
         largest = left;
+    }
 
-    if (right < n && arr[right] > arr[largest])
+    if (right < n && arr[right] > arr[largest]) {
         largest = right;
+    }
 
     if (largest != i) {
         swap(arr[i], arr[largest]);
@@ -25,8 +27,9 @@ var question = [
 }
 
 void heapSort(vector<int>& arr, int n) {
-    for (int i = n / 2 - 1; i >= 0; i--)
+    for (int i = n / 2 - 1; i >= 0; i--) {
         heapify(arr, n, i);
+    }
 
     for (int i = n - 1; i > 0; i--) {
         swap(arr[0], arr[i]);

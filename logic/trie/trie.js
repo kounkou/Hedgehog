@@ -4,7 +4,7 @@ var question = [
         category: "Trie",
         placeHolderCpp: `class Trie {\n    ...\n};\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `type TrieNode struct {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
-        difficulty: "Medium",
+        difficulty: "Hard",
         question: "Trie",
         answerImage: "",
         answerCpp: `struct TrieNode {
@@ -31,7 +31,7 @@ public:
     }
 
     bool search(const string& word) {
-        const TrieNode* temp = root.get();
+        TrieNode* temp = root.get();
 
         for (char c : word) {
             if (temp->children.find(c) != temp->children.end()) {
