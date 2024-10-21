@@ -11,11 +11,12 @@
         <file alias="AboutPage.qml">qml/AboutPage.qml</file>
         <file alias="CategoryPage.qml">qml/CategoryPage.qml</file>
         <file alias="Session.qml">qml/Session.qml</file>
+        <file alias="LoginPage.qml">qml/LoginPage.qml</file>
         <file alias="handler.js">logic/handler.js</file>
         
         <file alias="adsense-ad.html">qml/adsense-ad.html</file>
         
-        <file alias="icon.icns">images/app_icon.icns</file>
+        <!-- <file alias="icon.icns">images/app_icon.icns</file> -->
 
         <file alias="bfs-recursive.js">logic/graph/bfs-recursive.js</file>
         <file alias="dfs-recursive.js">logic/graph/dfs-recursive.js</file>
@@ -23,9 +24,13 @@
         <file alias="dfs-iterative.js">logic/graph/dfs-iterative.js</file>
         <file alias="dijkstra.js">logic/graph/dijkstra.js</file>
 
+        <file alias="backtracking.js">logic/backtracking/nqueens.js</file>
+
         <file alias="dsu.js">logic/disjoint-set/dsu.js</file>
 
         <file alias="kadane.js">logic/dp/kadane.js</file>
+
+        <file alias="topological-sorting.js">logic/topological-sorting/topological-sorting.js</file>
 
         <file alias="merge-interval.js">logic/intervals/merge-interval.js</file>
         <file alias="insert-interval.js">logic/intervals/insert-interval.js</file>
@@ -46,6 +51,12 @@
         <file alias="factorial.js">logic/recursion/factorial.js</file>
 
         <file alias="fractional-knapsack.js">logic/greedy/fractional-knapsack.js</file>
+
+        <file alias="check-power-of-two.js">logic/bit-manipulation/check-power-of-two.js</file>
+        <file alias="count-set-bit.js">logic/bit-manipulation/count-set-bit.js</file>
+        <file alias="reverse-bits.js">logic/bit-manipulation/reverse-bits.js</file>
+
+        <file alias="max-sub-array.js">logic/sliding-window/max-sub-array.js</file>
 
         <file alias="heap-sort.js">logic/heap/heap-sort.js</file>
         <file alias="insert-heap.js">logic/heap/insert-heap.js</file>

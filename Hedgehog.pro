@@ -7,7 +7,7 @@ TARGET = Hedgehog
 INCLUDEPATH += .
 
 QT += core gui qml
-# QT += webengine
+QT += webengine
 
 # You can make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -18,4 +18,7 @@ QT += core gui qml
 
 # Input
 SOURCES += main.cpp
+#           StatusSyntaxHighlighter.cpp
+
+# HEADERS += StatusSyntaxHighlighter.h
 RESOURCES += resources.qrc

@@ -1,12 +1,15 @@
 #include <QGuiApplication>
 #include <QIcon>
 #include <QQmlApplicationEngine>
-// #include <QtWebEngine/QtWebEngine>
+#include <QtWebEngine/QtWebEngine>
+// #include "mysyntaxhighlighter.h"
 
 int main(int argc, char *argv[]) {
-    // QtWebEngine::initialize();
+    QtWebEngine::initialize();
 
     QGuiApplication app(argc, argv);
+
+    // qmlRegisterType<MySyntaxHighlighter>("CustomSyntax", 1, 0, "MySyntaxHighlighter");
 
     app.setWindowIcon(QIcon("qrc:/app_icon.icns"));
 
