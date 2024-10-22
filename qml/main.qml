@@ -5,10 +5,17 @@ import QtQuick.Layouts 1.15
 ApplicationWindow {
     id: root
     visible: true
+<<<<<<< Updated upstream
     minimumWidth: 950
     maximumWidth: 950
     minimumHeight: 600
     maximumHeight: 600
+=======
+    minimumWidth: 1100
+    maximumWidth: 1100
+    minimumHeight: 700
+    maximumHeight: 700
+>>>>>>> Stashed changes
 
     color: themeObject.backgroundColor
 

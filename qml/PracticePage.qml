@@ -2,6 +2,12 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 // import QtWebView 1.1
+<<<<<<< Updated upstream
+=======
+// import CustomSyntax 1.0
+import org.sample 1.0
+
+>>>>>>> Stashed changes
 import "handler.js" as QuestionsHandler
 
 import "bfs-recursive.js" as BfsRecursive
@@ -340,7 +346,7 @@ Rectangle {
                                     : model.similarity === "Moderately Similar" 
                                     ? "👍"
                                     : "👎"
-                                    font.pixelSize: 24
+                                    font.pixelSize: 40
                                     color: themeObject.textColor
                                     font.bold: true
                                     anchors.centerIn: parent
@@ -511,6 +517,11 @@ Rectangle {
                         }
                     }
 
+<<<<<<< Updated upstream
+=======
+                    Component.onCompleted: documentHandler.setDocument(answerInput.textDocument, themeObject.theme)
+
+>>>>>>> Stashed changes
                     palette {
                         highlight: "#B4D5FE"
                         highlightedText: "#202020"
