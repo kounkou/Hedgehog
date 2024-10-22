@@ -35,7 +35,7 @@ Rectangle {
         categoryModel.append({ name: "Sliding Window",       selected: false, enabled: true });
         categoryModel.append({ name: "Sorting",              selected: false, enabled: false });
         categoryModel.append({ name: "String",               selected: false, enabled: true });
-        categoryModel.append({ name: "Topological Sorting",  selected: false, enabled: true });
+        categoryModel.append({ name: "Topo. Sort",  selected: false, enabled: true });
         categoryModel.append({ name: "Tree",                 selected: false, enabled: false });
         categoryModel.append({ name: "Trie",                 selected: false, enabled: true });
         categoryModel.append({ name: "Two Pointers",         selected: false, enabled: false });
