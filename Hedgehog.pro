@@ -6,7 +6,10 @@ TEMPLATE = app
 TARGET = Hedgehog
 INCLUDEPATH += .
 
-QT += core gui qml
+
+CONFIG += c++11
+
+QT += core gui qml widgets
 QT += webengine
 
 # You can make your code fail to compile if you use deprecated APIs.
@@ -17,8 +20,12 @@ QT += webengine
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 # Input
-SOURCES += main.cpp
-#           StatusSyntaxHighlighter.cpp
 
-# HEADERS += StatusSyntaxHighlighter.h
+SOURCES += src/main.cpp \
+           src/highlighter.cpp \
+           src/documenthandler.cpp
+
+HEADERS += includes/highlighter.h \
+           includes/documenthandler.h 
+
 RESOURCES += resources.qrc

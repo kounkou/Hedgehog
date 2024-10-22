@@ -2,7 +2,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 // import QtWebView 1.1
-// import CustomSyntax 1.0
+import org.sample 1.0
 
 import "handler.js" as QuestionsHandler
 
@@ -363,7 +363,7 @@ Rectangle {
                                     : model.similarity === "Moderately Similar" 
                                     ? "👍"
                                     : "👎"
-                                    font.pixelSize: 24
+                                    font.pixelSize: 40
                                     color: themeObject.textColor
                                     font.bold: true
                                     anchors.centerIn: parent
@@ -541,11 +541,7 @@ Rectangle {
                         }
                     }
 
-                    // Component.onCompleted: {
-                    //     var highlighter = MySyntaxHighlighter {
-                    //         parent: answerInput.textDocument
-                    //     }
-                    // }
+                    Component.onCompleted: documentHandler.setDocument(answerInput.textDocument, themeObject.theme)
 
                     palette {
                         highlight: "#B4D5FE"

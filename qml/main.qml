@@ -5,10 +5,11 @@ import QtQuick.Layouts 1.15
 ApplicationWindow {
     id: root
     visible: true
+
     minimumWidth: 1100
-    // maximumWidth: 950
-    minimumHeight: 900
-    // maximumHeight: 600
+    maximumWidth: 1100
+    minimumHeight: 700
+    maximumHeight: 700
 
     color: themeObject.backgroundColor
 
