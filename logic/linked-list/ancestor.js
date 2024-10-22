@@ -18,7 +18,7 @@ ListNode* findAncestor(ListNode* head, int target) {
 
     while (head != nullptr) {
         if (head->val == target) {
-            return prev;  // The ancestor is the previous node
+            return prev;
         }
         prev = head;
         head = head->next;
