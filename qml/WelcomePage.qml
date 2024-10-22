@@ -19,7 +19,7 @@ Rectangle {
         Text {
             text: "🦔"
             font.pixelSize: 100
-            // font.family: "Noto Color Emoji"
+            font.family: "Noto Color Emoji"
             anchors.horizontalCenter: parent.horizontalCenter
         }
 
