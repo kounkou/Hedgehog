@@ -392,6 +392,7 @@ Rectangle {
                         return celebrate + "Score " + correctAnswers + "/" + QuestionsHandler.getTotalQuestions(questionsData) + " questions" + celebrate
                     }
                     font.pixelSize: 24
+                    font.family: "Noto Color Emoji"
                     Layout.alignment: Qt.AlignHCenter
                     color: themeObject.textColor
                     visible: quizComplete
@@ -410,6 +411,7 @@ Rectangle {
                 Text {
                     id: endOfQuizImage
                     text: "🦔"
+                    font.family: "Noto Color Emoji"
                     font.pixelSize: 100
                     Layout.alignment: Qt.AlignHCenter
                     visible: quizComplete
@@ -572,7 +574,7 @@ Rectangle {
 
                         Text {
                             id: clockText
-                            text: (visitedNumbers.length + 1) + "/" + QuestionsHandler.getTotalQuestions(questionsData) + " 🕦 Time left: " + (
+                            text: (visitedNumbers.length + 1) + "/" + QuestionsHandler.getTotalQuestions(questionsData) + " Time left: " + (
                                 QuestionsHandler.getQuestionDifficulty(questionsData, currentQuestionIndex) === "Hard" ? timerValue : timerValue
                             ) + "s"
                             Layout.alignment: Qt.AlignRight
