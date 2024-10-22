@@ -1,6 +1,6 @@
 
 <img width="1042" alt="Screenshot 2024-10-17 at 9 00 37 AM" src="https://github.com/user-attachments/assets/1a6426ba-cdc0-40d1-b9e6-5b5040408e3c">
-<img width="1042" alt="Screenshot 2024-10-17 at 9 00 29 AM" src="https://github.com/user-attachments/assets/52ed9a00-e67f-4ed1-a2d9-477b04eb9554">
+<img width="1212" alt="Screenshot 2024-10-21 at 10 52 29 AM" src="https://github.com/user-attachments/assets/900adde4-081b-4ff6-9ca4-fac33a824119">
 <img width="1042" alt="Screenshot 2024-10-17 at 8 59 40 AM" src="https://github.com/user-attachments/assets/33eb2bf6-88e5-4bc5-8165-766f718f8e03">
 
 # Platforms
@@ -21,8 +21,7 @@ In an AI-driven world, algorithms and data structures remain critical for optimi
 
 ### Architecture 
 
-
-<img width="944" alt="Screenshot 2024-10-17 at 9 06 55 AM" src="https://github.com/user-attachments/assets/5bfa2b2a-ea8c-4774-8f2d-f4230b9265cd">
+<img width="1001" alt="Screenshot 2024-10-18 at 9 35 34 AM" src="https://github.com/user-attachments/assets/60c035a0-26d8-499f-b1b4-6fc337985b22">
 
 
 ### Hedgehog features

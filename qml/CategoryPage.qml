@@ -5,7 +5,7 @@ import QtQuick.Layouts 1.15
 Rectangle {
     id: categoryPage
     width: parent.width
-    height: parent.height - 10
+    height: parent.height
     property string theme: "light"
     color: themeObject.backgroundColor
 
@@ -13,10 +13,10 @@ Rectangle {
     property ListModel categoryModel: ListModel {}
 
     Component.onCompleted: {
-        categoryModel.append({ name: "Backtracking",         selected: false, enabled: false });
+        categoryModel.append({ name: "Backtracking",         selected: false, enabled: true });
         categoryModel.append({ name: "Graph",                selected: false, enabled: true });
         categoryModel.append({ name: "Binary Search",        selected: false, enabled: true });
-        categoryModel.append({ name: "Bit Manipulation",     selected: false, enabled: false });
+        categoryModel.append({ name: "Bit Manipulation",     selected: false, enabled: true });
         categoryModel.append({ name: "Combinatorics",        selected: false, enabled: false });
         categoryModel.append({ name: "Divide and Conquer",   selected: false, enabled: false });
         categoryModel.append({ name: "Disjoint Set",         selected: false, enabled: true });
@@ -32,15 +32,18 @@ Rectangle {
         categoryModel.append({ name: "Recursion",            selected: false, enabled: true });
         categoryModel.append({ name: "Searching",            selected: false, enabled: true });
         categoryModel.append({ name: "Segment Tree",         selected: false, enabled: false });
-        categoryModel.append({ name: "Sliding Window",       selected: false, enabled: false });
+        categoryModel.append({ name: "Sliding Window",       selected: false, enabled: true });
         categoryModel.append({ name: "Sorting",              selected: false, enabled: false });
         categoryModel.append({ name: "String",               selected: false, enabled: true });
-        categoryModel.append({ name: "Topological Sorting",  selected: false, enabled: false });
+        categoryModel.append({ name: "Topological Sorting",  selected: false, enabled: true });
         categoryModel.append({ name: "Tree",                 selected: false, enabled: false });
         categoryModel.append({ name: "Trie",                 selected: false, enabled: true });
         categoryModel.append({ name: "Two Pointers",         selected: false, enabled: false });
         categoryModel.append({ name: "Union-Find",           selected: false, enabled: false });
-        categoryModel.append({ name: "Others",               selected: false, enabled: false });
+        categoryModel.append({ name: "Matrix",               selected: false, enabled: false });
+        categoryModel.append({ name: "Database",             selected: false, enabled: false });
+        categoryModel.append({ name: "Shell",                selected: false, enabled: false });
+
 
         for (let i = 0; i < sessionObject.selectedCategories.length; i++) {
             let category = sessionObject.selectedCategories[i];
@@ -55,13 +58,12 @@ Rectangle {
     }
 
     ScrollView {
-        width: parent.width / 1.5
+        width: parent.width - 300
         height: parent.height
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
-        anchors.topMargin: 10
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 10
+        anchors.leftMargin: 10
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
         ScrollBar.vertical.policy: ScrollBar.AlwaysOff
 
@@ -76,12 +78,14 @@ Rectangle {
                 height: 50
                 color: "transparent"
                 radius: 10
+                anchors.horizontalCenter: parent.horizontalCenter
 
                 Text {
                     text: "Select algorithm categories"
                     font.pixelSize: 24
                     anchors.centerIn: parent
                     color: themeObject.textColor
+                    anchors.horizontalCenter: parent.horizontalCenter
                 }
             }
 
@@ -92,6 +96,7 @@ Rectangle {
 
                 Repeater {
                     model: categoryModel
+                    anchors.horizontalCenter: parent.horizontalCenter
 
                     delegate: Rectangle {
                         width: 150
@@ -101,6 +106,7 @@ Rectangle {
                         border.color: themeObject.buttonBorderColor
                         property bool isHovered: false
                         enabled: model.enabled
+                        
                         color: {
                             if (!model.enabled) {
                                 opacity = 0.5

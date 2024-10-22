@@ -2,12 +2,8 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 // import QtWebView 1.1
-<<<<<<< Updated upstream
-=======
-// import CustomSyntax 1.0
 import org.sample 1.0
 
->>>>>>> Stashed changes
 import "handler.js" as QuestionsHandler
 
 import "bfs-recursive.js" as BfsRecursive
@@ -44,6 +40,12 @@ import "ancestor.js" as Ancestor
 import "factorial.js" as Factorial
 import "heap-sort.js" as HeapSort
 import "insert-heap.js" as InsertHeap
+import "check-power-of-two.js" as CheckPowerOfTwo
+import "count-set-bit.js" as CountSetBit
+import "reverse-bits.js" as ReverseBits
+import "max-sub-array.js" as MaxSubArray
+import "topological-sorting.js" as TopologicalSorting
+import "backtracking.js" as BackTracking
 
 Rectangle {
     id: root
@@ -116,6 +118,16 @@ Rectangle {
 
             .concat(HeapSort.question)
             .concat(InsertHeap.question)
+
+            .concat(MaxSubArray.question)
+
+            .concat(CheckPowerOfTwo.question)
+            .concat(CountSetBit.question)
+            .concat(ReverseBits.question)
+
+            .concat(TopologicalSorting.question)
+
+            .concat(BackTracking.question)
             
             .concat(LinearSearch.question);
 
@@ -138,6 +150,11 @@ Rectangle {
 
         QtObject {
             id: d
+
+            function openContextMenu(x, y) {
+                console.log("---> in openContextMenu")
+                contextMenu.popup(x, y)
+            }
 
             function pauseStartTimer() {
                 if (countdownTimer.running) {
@@ -340,7 +357,7 @@ Rectangle {
 
                                 Text {
                                     id: questionLabel
-                                    font.family: "Noto Color Emoji"
+                                    // font.family: "Noto Color Emoji"
                                     text: model.similarity === "Highly Similar" 
                                     ? "👏"
                                     : model.similarity === "Moderately Similar" 
@@ -359,7 +376,7 @@ Rectangle {
                 Text {
                     id: questionLabel
                     text: (currentQuestionIndex + 1) +  ". Implement a " + QuestionsHandler.getQuestion(questionsData, currentQuestionIndex)
-                    font.pixelSize: 14
+                    font.pixelSize: 24
                     font.bold: true
                     color: themeObject.textColor
                     visible: !quizComplete
@@ -378,7 +395,7 @@ Rectangle {
                     Layout.alignment: Qt.AlignHCenter
                     color: themeObject.textColor
                     visible: quizComplete
-                    font.family: "Noto Color Emoji"
+                    // font.family: "Noto Color Emoji"
                 }
 
                 Text {
@@ -396,7 +413,7 @@ Rectangle {
                     font.pixelSize: 100
                     Layout.alignment: Qt.AlignHCenter
                     visible: quizComplete
-                    font.family: "Noto Color Emoji"
+                    // font.family: "Noto Color Emoji"
                 }
 
                 RowLayout {
@@ -424,11 +441,16 @@ Rectangle {
                         }
                     }
 
+                    Item {
+                        Layout.fillWidth: true
+                    }
+
                     ComboBox {
                         id: languageComboBox
                         model: [ "C++", "Go" ]
                         currentIndex: 0
                         visible: !quizComplete
+                        Layout.alignment: Qt.AlignRight
 
                         MouseArea {
                             id: comboBoxMouseArea
@@ -469,31 +491,31 @@ Rectangle {
                         }
                     }
 
-                    Switch {
-                        id: themeToggle
-                        font.bold: true
-                        text: themeObject.theme === "light" ? "Light Theme" : "Dark Theme"
-                        checked: themeObject.theme === "dark"
-                        visible: !quizComplete
-                        onCheckedChanged: {
-                            themeObject.theme = checked ? "dark" : "light"
-                        }
+                    // Switch {
+                    //     id: themeToggle
+                    //     font.bold: true
+                    //     text: themeObject.theme === "light" ? "Light Theme" : "Dark Theme"
+                    //     checked: themeObject.theme === "dark"
+                    //     visible: !quizComplete
+                    //     onCheckedChanged: {
+                    //         themeObject.theme = checked ? "dark" : "light"
+                    //     }
 
-                        contentItem: Text {
-                            text: themeToggle.text
-                            font: themeToggle.font
-                            opacity: enabled ? 1.0 : 0.3
-                            color: themeObject.textColor
-                            verticalAlignment: Text.AlignVCenter
-                            leftPadding: themeToggle.indicator.width + themeToggle.spacing
-                        }
-                    }
+                    //     contentItem: Text {
+                    //         text: themeToggle.text
+                    //         font: themeToggle.font
+                    //         opacity: enabled ? 1.0 : 0.3
+                    //         color: themeObject.textColor
+                    //         verticalAlignment: Text.AlignVCenter
+                    //         leftPadding: themeToggle.indicator.width + themeToggle.spacing
+                    //     }
+                    // }
                 }
 
                 TextArea {
                     id: answerInput
                     Layout.fillWidth: true
-                    height: 200
+                    // height: 200
                     readOnly: submitted
                     placeholderText: QuestionsHandler.getQuestionPlaceHolder(questionsData, currentLanguage, currentQuestionIndex, sessionObject.selectedCategories)
                     font.family: "Courier New"
@@ -504,11 +526,13 @@ Rectangle {
                     antialiasing: true
                     wrapMode: Text.Wrap
                     visible: !quizComplete
+
                     background: Rectangle {
                         color: themeObject.textAreaBackgroundColor
                         border.width: 1
                         border.color: themeObject.textAreaBorderColor
                         radius: 10
+                        width: root.width - 20
                     }
                     onTextChanged: {
                         userAnswer = text
@@ -517,11 +541,8 @@ Rectangle {
                         }
                     }
 
-<<<<<<< Updated upstream
-=======
                     Component.onCompleted: documentHandler.setDocument(answerInput.textDocument, themeObject.theme)
 
->>>>>>> Stashed changes
                     palette {
                         highlight: "#B4D5FE"
                         highlightedText: "#202020"
@@ -558,44 +579,8 @@ Rectangle {
                             font.pixelSize: 14
                             anchors.centerIn: parent
                             font.bold: true
-                            font.family: "Noto Color Emoji"
+                            // font.family: "Noto Color Emoji"
                             color: themeObject.textColor
-                        }
-                    }
-
-                    Rectangle {
-                        id: viewSubmission
-                        
-                        height: 25
-                        width: viewSubmissionText.width + 20
-                        color: themeObject.buttonActionColor
-                        opacity: submitted ? 1 : 0.5
-                        enabled: submitted
-                        radius: 10
-                        anchors.top: parent.top
-                        anchors.right: parent.right
-                        anchors.margins: 10
-
-                        Text {
-                            id: viewSubmissionText
-                            text: root.showSolution ? "View submission" : "View solution"
-                            anchors.centerIn: parent
-                            font.pixelSize: 14
-                            font.bold: false
-                            color: "#F7F7F7"
-                        }
-
-                        MouseArea {
-                            anchors.fill: parent
-                            
-                            onClicked: {
-                                root.showSolution = !root.showSolution
-                                if (root.showSolution) {
-                                    d.showSolution()
-                                } else {
-                                    d.showSubmission()
-                                }
-                            }
                         }
                     }
                 }
@@ -603,45 +588,20 @@ Rectangle {
                 RowLayout {
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
 
-                    Button {
-                        id: validate
-                        text: qsTr("Submit")
-                        onClicked: d.validateAnswer(currentLanguage)
-                        Layout.alignment: Qt.AlignRight
-                        visible: !quizComplete
-                        enabled: !submitted && answerInput.length > 0
-                        width: 200
-                        height: 50
-
-                        contentItem: Text {
-                            text: validate.text
-                            font: validate.font
-                            opacity: enabled ? 1.0 : 0.3
-                            color: themeObject.textColor
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            elide: Text.ElideRight
-                        }
-
-                        background: Rectangle {
-                            radius: 10
-                            border.width: 1
-                            border.color: themeObject.buttonBorderColor
-                            color: {
-                                return validate.hovered ? themeObject.buttonHoveredColor : themeObject.buttonColor
-                            }
-                        }
+                    Item {
+                        Layout.fillWidth: true
                     }
 
                     Button {
                         id: pause
                         text: countdownTimer.running ? qsTr("Pause timer") : qsTr("Resume timer")
                         onClicked: d.pauseStartTimer()
-                        Layout.alignment: Qt.AlignRight
+                        Layout.alignment: Qt.AlignHCenter
                         enabled: !submitted
                         visible: !quizComplete
                         width: 200
                         height: 50
+                        font.bold: true
 
                         contentItem: Text {
                             text: pause.text
@@ -667,10 +627,11 @@ Rectangle {
                         id: redo
                         text: qsTr("Retry")
                         onClicked: d.goToQuestion(currentQuestionIndex)
-                        Layout.alignment: Qt.AlignRight
+                        Layout.alignment: Qt.AlignHCenter
                         visible: !quizComplete
                         width: 200
                         height: 50
+                        font.bold: true
 
                         contentItem: Text {
                             text: redo.text
@@ -698,6 +659,8 @@ Rectangle {
                         visible: quizComplete
                         width: 200
                         height: 50
+                        font.bold: true
+                        Layout.alignment: Qt.AlignHCenter
 
                         onClicked: {
                             d.resetTest()
@@ -729,6 +692,9 @@ Rectangle {
                         visible: !quizComplete
                         width: 200
                         height: 50
+                        font.bold: true
+                        Layout.alignment: Qt.AlignHCenter
+
                         onClicked: {
                             d.goToNextQuestion()
                             d.updateLanguage(currentLanguage)
@@ -759,6 +725,9 @@ Rectangle {
                         text: "Return"
                         width: 200
                         height: 50
+                        font.bold: true
+                        Layout.alignment: Qt.AlignHCenter
+
                         onClicked: {
                             stackView.pop(2)
                         }
@@ -779,6 +748,79 @@ Rectangle {
                             border.color: themeObject.buttonBorderColor
                             color: {
                                 return homeButton.hovered ? themeObject.buttonHoveredColor : themeObject.buttonColor
+                            }
+                        }
+                    }
+
+                    Item {
+                        Layout.fillWidth: true
+                    }
+
+                    Rectangle {
+                        id: viewSubmission
+                        
+                        height: 25
+                        width: viewSubmissionText.width + 20
+                        color: themeObject.buttonColor
+                        opacity: submitted ? 1 : 0.5
+                        enabled: submitted
+                        radius: 10
+                        visible: !quizComplete
+                        // anchors.top: parent.top
+                        // anchors.right: parent.right
+                        // anchors.margins: 10
+
+                        Text {
+                            id: viewSubmissionText
+                            text: root.showSolution ? "View submission" : "View solution"
+                            anchors.centerIn: parent
+                            font.pixelSize: 14
+                            font.bold: true
+                            color: themeObject.textColor
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+
+                            onClicked: {
+                                root.showSolution = !root.showSolution
+                                if (root.showSolution) {
+                                    d.showSolution()
+                                } else {
+                                    d.showSubmission()
+                                }
+                            }
+                        }
+                    }
+
+                    Button {
+                        id: validate
+                        text: qsTr("Submit")
+                        onClicked: d.validateAnswer(currentLanguage)
+                        Layout.alignment: Qt.AlignRight
+                        visible: !quizComplete
+                        enabled: !submitted && answerInput.length > 0
+                        opacity: enabled ? 1 : 0.5
+                        width: 200
+                        height: 50
+                        font.bold: true
+
+                        contentItem: Text {
+                            text: validate.text
+                            font: validate.font
+                            opacity: enabled ? 1.0 : 0.5
+                            color: "#F7F7F7"
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            elide: Text.ElideRight
+                        }
+
+                        background: Rectangle {
+                            radius: 10
+                            border.width: 1
+                            border.color: themeObject.buttonBorderColor
+                            color: {
+                                return validate.hovered ? themeObject.buttonSubmitHoveredColor : themeObject.buttonSubmitColor
                             }
                         }
                     }

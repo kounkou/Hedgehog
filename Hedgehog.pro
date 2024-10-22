@@ -6,15 +6,11 @@ TEMPLATE = app
 TARGET = Hedgehog
 INCLUDEPATH += .
 
-<<<<<<< Updated upstream
-QT += core gui qml
-# QT += webengine
-=======
+
 CONFIG += c++11
 
 QT += core gui qml widgets
 QT += webengine
->>>>>>> Stashed changes
 
 # You can make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -24,9 +20,7 @@ QT += webengine
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 # Input
-<<<<<<< Updated upstream
-SOURCES += main.cpp
-=======
+
 SOURCES += src/main.cpp \
            src/highlighter.cpp \
            src/documenthandler.cpp
@@ -34,5 +28,4 @@ SOURCES += src/main.cpp \
 HEADERS += includes/highlighter.h \
            includes/documenthandler.h 
 
->>>>>>> Stashed changes
 RESOURCES += resources.qrc

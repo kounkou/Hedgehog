@@ -13,6 +13,7 @@ var question = [
     for (int i = 0; i < k; ++i) {
         windowSum += nums[i];
     }
+    
     maxSum = windowSum;
 
     for (int i = k; i < nums.size(); ++i) {
@@ -28,10 +29,12 @@ var question = [
     for i := 0; i < k; i++ {
         windowSum += nums[i]
     }
+    
     maxSum = windowSum
 
     for i := k; i < len(nums); i++ {
         windowSum += nums[i] - nums[i-k]
+        
         if windowSum > maxSum {
             maxSum = windowSum
         }

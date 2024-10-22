@@ -43,7 +43,7 @@ Rectangle {
                         text: "🦔"
                         font.pixelSize: 50
                         anchors.horizontalCenter: parent.horizontalCenter
-                        font.family: "Noto Color Emoji"
+                        // font.family: "Noto Color Emoji"
                     }
 
                     Text {

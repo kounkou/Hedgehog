@@ -11,7 +11,6 @@ Button {
 
     width: 200
     height: 50
-    // anchors.horizontalCenter: parent.horizontalCenter
 
     onClicked: {
         stackView.push(page)
@@ -19,7 +18,7 @@ Button {
 
     contentItem: Text {
         text: root.buttonText
-        font: root.font
+        font.bold: true
         opacity: enabled ? 1.0 : 0.3
         color: themeObject.textColor
         horizontalAlignment: Text.AlignHCenter
