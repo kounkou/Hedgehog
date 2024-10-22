@@ -1,7 +1,7 @@
 var question = [
     {
         id: "34",
-        category: "Topological Sorting",
+        category: "Topo. Sort",
         placeHolderCpp: `void topologicalSort(int v, vector<bool>& visited, stack<int>& Stack) {\n    ...\n}\n\nvoid topoSortGraph(int V, vector<int> adj[]) {\n    ...\n}\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func topologicalSort(v int, visited []bool, stack *[]int) {\n    ...\n}\n\nfunc topoSortGraph(V int, adj [][]int) {\n    ...\n}\n\n\n\n\n\n\n`,
         difficulty: "Hard",
