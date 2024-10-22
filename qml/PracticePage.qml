@@ -396,7 +396,6 @@ Rectangle {
                     Layout.alignment: Qt.AlignHCenter
                     color: themeObject.textColor
                     visible: quizComplete
-                    font.family: "Noto Color Emoji"
                 }
 
                 Text {
