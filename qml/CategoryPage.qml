@@ -122,6 +122,7 @@ Rectangle {
 
                         Text {
                             id: categoryText
+                            font.family: "Noto Color Emoji"
                             text: model.enabled ? model.name : "🔒"
                             font.pixelSize: 14
                             font.bold: true
