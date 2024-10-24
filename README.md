@@ -38,6 +38,14 @@ Key features of Hedgehog include:
 - The ability to skip a question and proceed to the next one.
 - An option to retry the same question, encouraging continued learning and improvement.
 
+# Installation instructions
+
+### MacOS
+
+```bash
+brew install qt@5
+```
+
 # How to build and execute Hedgehog
 
 You will need Qt installation for your platform to build and launch Hedgehog, after what you can launch below commands which will generate the binary file
