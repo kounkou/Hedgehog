@@ -2,7 +2,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 // import QtWebView 1.1
-import org.sample 1.0
+import Hedgehog 1.0
 
 import "handler.js" as QuestionsHandler
 
@@ -414,7 +414,6 @@ Rectangle {
                     font.pixelSize: 100
                     Layout.alignment: Qt.AlignHCenter
                     visible: quizComplete
-                    // font.family: "Noto Color Emoji"
                 }
 
                 RowLayout {
@@ -542,7 +541,9 @@ Rectangle {
                         }
                     }
 
-                    Component.onCompleted: documentHandler.setDocument(answerInput.textDocument, themeObject.theme)
+                    Component.onCompleted: {
+                        documentHandler.setDocument(answerInput.textDocument, themeObject.theme)
+                    }
 
                     palette {
                         highlight: "#B4D5FE"
@@ -600,7 +601,7 @@ Rectangle {
                         Layout.alignment: Qt.AlignHCenter
                         enabled: !submitted
                         visible: !quizComplete
-                        width: 200
+                        width: 200 
                         height: 50
                         font.bold: true
 

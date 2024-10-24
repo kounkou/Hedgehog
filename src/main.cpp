@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
     QGuiApplication app(argc, argv);
 
     DocumentHandler document;
-    qmlRegisterType<Highlighter>("org.sample", 1, 0, "Highlighter");
+    qmlRegisterType<Highlighter>("Hedgehog", 1, 0, "Highlighter");
     app.setWindowIcon(QIcon("qrc:/app_icon.icns"));
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("documentHandler", &document);
