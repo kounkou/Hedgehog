@@ -21,6 +21,8 @@ QT += webengine
 
 # Input
 
+QMAKE_CXXFLAGS += -g
+
 SOURCES += src/main.cpp \
            src/highlighter.cpp \
            src/documenthandler.cpp
