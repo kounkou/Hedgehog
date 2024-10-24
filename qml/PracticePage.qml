@@ -553,6 +553,24 @@ Rectangle {
                     property bool processing: false
                     selectByMouse: true
 
+                    Keys.onPressed: {
+                        if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+                            var cursorPosition = answerInput.cursorPosition
+                            var currentText = answerInput.text
+
+                            var currentLine = currentText.substring(0, cursorPosition).split("\n").pop()
+                            var indentation = currentLine.match(/^\s*/)[0]
+                            var beforeCursor = currentText.substring(0, cursorPosition)
+                            var afterCursor = currentText.substring(cursorPosition)
+                            var newText = beforeCursor + "\n" + indentation + afterCursor
+
+                            answerInput.text = newText
+                            answerInput.cursorPosition = cursorPosition + 1 + indentation.length
+
+                            event.accepted = true
+                        }
+                    }
+
                     Rectangle {
                         id: clock
                         height: 25
