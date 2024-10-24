@@ -5,7 +5,7 @@ QtObject {
     
     property string theme: "light"
 
-    property color backgroundColor:         theme === "light" ? "#F6F6F6" : "#1F1A24"   // Off-white for light theme, softer dark for dark theme
+    property color backgroundColor:         theme === "light" ? "#F6F6F6" : "#000000"   // Off-white for light theme, softer dark for dark theme
     property color textColor:               theme === "light" ? "#202020" : "#E0E0E0"  // Dark grey for light theme, light grey for dark theme
 
     property color buttonBorderColor:       theme === "light" ? "#E0E0E0" : "#424242"  // Slightly darker grey for light theme, less harsh dark grey for dark theme
