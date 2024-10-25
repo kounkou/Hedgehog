@@ -309,6 +309,14 @@ Rectangle {
                 clock.enabled = true
                 isCurrentAnswerCorrect = false
             }
+
+            function insertText(textToInsert) {
+                let cursorPos = answerInput.cursorPosition;
+                let textBeforeCursor = answerInput.text.slice(0, cursorPos);
+                let textAfterCursor = answerInput.text.slice(cursorPos);
+                answerInput.text = textBeforeCursor + textToInsert + textAfterCursor;
+                answerInput.cursorPosition = cursorPos + textToInsert.length;
+            }
         }
 
         ListModel {
@@ -554,41 +562,25 @@ Rectangle {
                     selectByMouse: true
 
                     Keys.onPressed: {
-                        var cursorPosition = answerInput.cursorPosition
-                        var currentText = answerInput.text
-                        var currentLine = currentText.substring(0, cursorPosition).split("\n").pop()
-
                         if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
-                            var indentation = currentLine.match(/^\s*/)[0]
-                            var beforeCursor = currentText.substring(0, cursorPosition)
-                            var afterCursor = currentText.substring(cursorPosition)
-                            var newText = ""
+                            let cursorPos = answerInput.cursorPosition
+                            let text = answerInput.text
+                            let currentLineStart = text.lastIndexOf("\n", cursorPos - 1) + 1
+                            let currentLineEnd = cursorPos
+                            let currentLineText = text.substring(currentLineStart, currentLineEnd).trim()
+                            let indentation = text.substring(currentLineStart, currentLineEnd).match(/^\s*/)[0]
 
-                            if (currentLine.trim().endsWith("{")) {
-                                newText = beforeCursor + "\n" + indentation + "    " + afterCursor;
-                                answerInput.text = newText
-                                answerInput.cursorPosition = cursorPosition + 5
-                            } else if (currentLine.trim() === "}") {
-                                var reducedIndentation = indentation.substring(4)
-                                newText = beforeCursor + "\n" + reducedIndentation + afterCursor
-                                answerInput.text = newText
-                                answerInput.cursorPosition = cursorPosition + reducedIndentation.length - indentation.length + 1
+                            if (currentLineText && currentLineText.slice(-1) !== '{' && currentLineText.slice(-1) !== '}') {
+                                d.insertText("\n" + indentation)
+                            } else if (currentLineText.slice(-1) === '{') {
+                                d.insertText("\n" + indentation + "    ")
+                            } else if (currentLineText.slice(-1) === '}') {
+                                let reducedIndentation = indentation.substring(0, Math.max(0, indentation.length - 4))
+                                d.insertText("\n" + reducedIndentation)
                             } else {
-                                newText = beforeCursor + "\n" + indentation + afterCursor
-                                answerInput.text = newText
-                                answerInput.cursorPosition = cursorPosition + 1 + indentation.length
+                                d.insertText("\n" + indentation)
                             }
-
                             event.accepted = true
-                        } else if (event.text === "}") {
-                            var beforeCursor = currentText.substring(0, cursorPosition)
-                            var afterCursor = currentText.substring(cursorPosition)
-
-                            var newIndentation = currentLine.match(/^\s*/)[0].substring(4)
-                            var newText = beforeCursor + afterCursor
-
-                            answerInput.text = newText
-                            answerInput.cursorPosition = cursorPosition - 4
                         }
                     }
 
