@@ -554,20 +554,41 @@ Rectangle {
                     selectByMouse: true
 
                     Keys.onPressed: {
-                        if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
-                            var cursorPosition = answerInput.cursorPosition
-                            var currentText = answerInput.text
+                        var cursorPosition = answerInput.cursorPosition
+                        var currentText = answerInput.text
+                        var currentLine = currentText.substring(0, cursorPosition).split("\n").pop()
 
-                            var currentLine = currentText.substring(0, cursorPosition).split("\n").pop()
+                        if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
                             var indentation = currentLine.match(/^\s*/)[0]
                             var beforeCursor = currentText.substring(0, cursorPosition)
                             var afterCursor = currentText.substring(cursorPosition)
-                            var newText = beforeCursor + "\n" + indentation + afterCursor
+                            var newText = ""
 
-                            answerInput.text = newText
-                            answerInput.cursorPosition = cursorPosition + 1 + indentation.length
+                            if (currentLine.trim().endsWith("{")) {
+                                newText = beforeCursor + "\n" + indentation + "    " + afterCursor;
+                                answerInput.text = newText
+                                answerInput.cursorPosition = cursorPosition + 5
+                            } else if (currentLine.trim() === "}") {
+                                var reducedIndentation = indentation.substring(4)
+                                newText = beforeCursor + "\n" + reducedIndentation + afterCursor
+                                answerInput.text = newText
+                                answerInput.cursorPosition = cursorPosition + reducedIndentation.length - indentation.length + 1
+                            } else {
+                                newText = beforeCursor + "\n" + indentation + afterCursor
+                                answerInput.text = newText
+                                answerInput.cursorPosition = cursorPosition + 1 + indentation.length
+                            }
 
                             event.accepted = true
+                        } else if (event.text === "}") {
+                            var beforeCursor = currentText.substring(0, cursorPosition)
+                            var afterCursor = currentText.substring(cursorPosition)
+
+                            var newIndentation = currentLine.match(/^\s*/)[0].substring(4)
+                            var newText = beforeCursor + afterCursor
+
+                            answerInput.text = newText
+                            answerInput.cursorPosition = cursorPosition - 4
                         }
                     }
 
