@@ -10,9 +10,9 @@ var question = [
         answerCpp: `void dfs(int node, map<int, bool>& visited, stack<int>& stk, vector<int> graph[]) {
     visited[node] = true;
     
-    for (int i : graph[node]) {
-        if (visited[i]) continue;
-        dfs(i, visited, stk, graph);
+    for (int nei : graph[node]) {
+        if (visited[nei]) continue;
+        dfs(nei, visited, stk, graph);
     }
     
     stk.push(node);
@@ -35,9 +35,9 @@ void topoSortGraph(vector<int> nodes, vector<int> graph[]) {
         answerGo: `func dfs(v int, visited []bool, stk *[]int, graph [][]int) {
     visited[v] = true
     
-    for _, i := range graph[v] {
-        if !visited[i] {
-            dfs(i, visited, stk, graph)
+    for _, nei := range graph[v] {
+        if !visited[nei] {
+            dfs(nei, visited, stk, graph)
         }
     }
     
