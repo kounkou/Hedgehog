@@ -455,7 +455,7 @@ Rectangle {
 
                     ComboBox {
                         id: languageComboBox
-                        model: [ "C++", "Go" ]
+                        model: [ "C++", "Go", "Python" ]
                         currentIndex: 0
                         visible: !quizComplete
                         Layout.alignment: Qt.AlignRight

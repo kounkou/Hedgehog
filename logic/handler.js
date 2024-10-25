@@ -17,6 +17,8 @@ function getQuestionPlaceHolder(questionsData, currentLanguage, questionIndex, s
                 return question.placeHolderCpp;
             } else if (currentLanguage === "Go") {
                 return question.placeHolderGo;
+            } else if (currentLanguage === "Python") {
+                return question.placeHolderPython
             }
         } else {
             return "No questions available for the selected categories";
@@ -56,6 +58,8 @@ function getAnswer(questionsData, currentLanguage, questionIndex) {
             return questionsData[questionIndex].answerCpp
         } else if (currentLanguage === "Go") {
             return questionsData[questionIndex].answerGo
+        } else if (currentLanguage === "Python") {
+            return questionsData[questionIndex].answerPython
         }
     } else {
         return ""
