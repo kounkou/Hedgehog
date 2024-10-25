@@ -85,6 +85,7 @@ Rectangle {
             anchors.horizontalCenter: parent.horizontalCenter
             onCheckedChanged: {
                 themeObject.theme = checked ? "dark" : "light"
+                sessionObject.saveSession()
             }
 
             contentItem: Text {

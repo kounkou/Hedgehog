@@ -159,6 +159,8 @@ Rectangle {
                                 if (sessionObject.selectedCategories.length === 0) {
                                     isCategorySelected = false
                                 }
+
+                                sessionObject.saveSession()
                             }
                         }
                     }

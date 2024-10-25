@@ -38,3 +38,31 @@ void DocumentHandler::setText(QString text) {
         emit textChanged(text);
     }
 }
+
+bool DocumentHandler::saveToFile(const QString& filename, const QString& content) {
+    QFile file(filename);
+
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qWarning() << "Could not open file for writing:" << filename;
+        return false;
+    }
+
+    QTextStream out(&file);
+    out << content;
+    file.close();
+    return true;
+}
+
+QString DocumentHandler::loadFromFile(const QString& filename) {
+    QFile file(filename);
+
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Could not open file for reading:" << filename;
+        return QString();
+    }
+
+    QTextStream in(&file);
+    QString content = in.readAll();
+    file.close();
+    return content;
+}
