@@ -14,6 +14,9 @@ class DocumentHandler : public QObject {
 
     Q_INVOKABLE void openFile(const QString& path);
     Q_INVOKABLE void setDocument(QQuickTextDocument* document, const QString& theme);
+    Q_INVOKABLE bool saveToFile(const QString& filename, const QString& content);
+    Q_INVOKABLE QString loadFromFile(const QString& filename);
+
     QString text() const;
 
    public slots:

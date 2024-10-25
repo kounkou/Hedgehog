@@ -72,5 +72,7 @@
         <file alias="convex-hull.js">logic/geometry/convex-hull.js</file>
         <file alias="line-intersection.js">logic/geometry/line-intersection.js</file>
         <file alias="area-triangle-heron.js">logic/geometry/area-triangle-heron.js</file>
+
+        <file alias="sessionData.json">sessionData.json</file>
     </qresource>
 </RCC>

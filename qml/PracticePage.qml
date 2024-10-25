@@ -283,6 +283,29 @@ Rectangle {
                 loadNextQuestion()
             }
 
+            function handleIdentation(event) {
+                if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+                    let cursorPos = answerInput.cursorPosition
+                    let text = answerInput.text
+                    let currentLineStart = text.lastIndexOf("\n", cursorPos - 1) + 1
+                    let currentLineEnd = cursorPos
+                    let currentLineText = text.substring(currentLineStart, currentLineEnd).trim()
+                    let indentation = text.substring(currentLineStart, currentLineEnd).match(/^\s*/)[0]
+
+                    if (currentLineText && currentLineText.slice(-1) !== '{' && currentLineText.slice(-1) !== '}') {
+                        d.insertText("\n" + indentation)
+                    } else if (currentLineText.slice(-1) === '{') {
+                        d.insertText("\n" + indentation + "    ")
+                    } else if (currentLineText.slice(-1) === '}') {
+                        let reducedIndentation = indentation.substring(0, Math.max(0, indentation.length - 4))
+                        d.insertText("\n" + reducedIndentation)
+                    } else {
+                        d.insertText("\n" + indentation)
+                    }
+                    event.accepted = true
+                }
+            }
+
             function loadNextQuestion() {
                 questionLabel.text = (currentQuestionIndex + 1) + ". Implement a " + QuestionsHandler.getQuestion(questionsData, currentQuestionIndex)
                 userAnswer = ""
@@ -457,6 +480,7 @@ Rectangle {
                         id: languageComboBox
                         model: [ "C++", "Go" ]
                         currentIndex: 0
+                        enabled: !submitted
                         visible: !quizComplete
                         Layout.alignment: Qt.AlignRight
 
@@ -562,26 +586,7 @@ Rectangle {
                     selectByMouse: true
 
                     Keys.onPressed: {
-                        if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
-                            let cursorPos = answerInput.cursorPosition
-                            let text = answerInput.text
-                            let currentLineStart = text.lastIndexOf("\n", cursorPos - 1) + 1
-                            let currentLineEnd = cursorPos
-                            let currentLineText = text.substring(currentLineStart, currentLineEnd).trim()
-                            let indentation = text.substring(currentLineStart, currentLineEnd).match(/^\s*/)[0]
-
-                            if (currentLineText && currentLineText.slice(-1) !== '{' && currentLineText.slice(-1) !== '}') {
-                                d.insertText("\n" + indentation)
-                            } else if (currentLineText.slice(-1) === '{') {
-                                d.insertText("\n" + indentation + "    ")
-                            } else if (currentLineText.slice(-1) === '}') {
-                                let reducedIndentation = indentation.substring(0, Math.max(0, indentation.length - 4))
-                                d.insertText("\n" + reducedIndentation)
-                            } else {
-                                d.insertText("\n" + indentation)
-                            }
-                            event.accepted = true
-                        }
+                        d.handleIdentation(event)
                     }
 
                     Rectangle {
