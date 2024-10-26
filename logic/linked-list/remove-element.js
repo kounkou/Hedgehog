@@ -1,6 +1,6 @@
 var question = [
     {
-        id: "26",
+        id: "Remove element",
         category: "Linked List",
         placeHolderCpp: `ListNode* removeElements(ListNode* head, int val) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func removeElements(head *ListNode, val int) *ListNode {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,

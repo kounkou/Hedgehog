@@ -1,6 +1,6 @@
 var question = [
     {
-        id: "35",
+        id: "N queens",
         category: "Backtracking",
         placeHolderCpp: `void solveNQueens(int row, vector<string> &board, vector<vector<string>> &solutions, int n) {\n    ...\n};\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func solveNQueens(n int)[][]string { \n    ...\n }; \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,

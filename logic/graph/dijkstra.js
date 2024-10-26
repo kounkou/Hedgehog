@@ -1,6 +1,6 @@
 var question = [
     {
-        id: "6",
+        id: "Dijkstra",
         category: "Graph",
         placeHolderCpp: "vector<int> dijkstra(vector<PairType> graph[], int V, int src) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
         placeHolderGo: "func dijkstra(graph [][]PairType, V, src int) []int {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",

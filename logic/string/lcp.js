@@ -1,6 +1,6 @@
 var question = [
     {
-        id: "20",
+        id: "LCP",
         category: "String",
         placeHolderCpp: `string findLCP(vector<string>& strs) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func (t *Trie) Insert(word string) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,

@@ -1,6 +1,6 @@
 var question = [
     {
-        id: "5",
+        id: "binary search",
         category: "Binary Search",
         placeHolderCpp: "int binarySearch(vector<int>& nums, int t) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
         placeHolderGo: "func binarySearch(nums []int, t int) int {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",

@@ -1,6 +1,6 @@
 var question = [
     {
-        id: "15",
+        id: "Triangle area",
         category: "Geometry",
         placeHolderCpp: `double areaOfTriangle(Point a, Point b, Point c) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func areaOfTriangle(a, b, c Point) float64 {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,

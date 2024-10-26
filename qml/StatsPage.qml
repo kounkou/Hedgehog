@@ -1,23 +1,40 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+import "handler.js" as QuestionsHandler
 
 Rectangle {
-    id: welcomePage
+    id: statsPage
 
     property string theme: "light"
 
-    width: parent.width
-    height: parent.height
+    Layout.fillWidth: true
+    Layout.fillHeight: true
     color: themeObject.backgroundColor
+
+    Component.onCompleted: {
+        populateGraphData();
+    }
+
+    function populateGraphData() {
+        graphData.clear();
+
+        var successData = sessionObject.successfulImplementationsThisMonth;
+
+        for (var questionId in successData) {
+            var score = successData[questionId];
+            graphData.append({ day: questionId, score: score });
+        }
+
+        canvas.requestPaint();
+    }
 
     Text {
         id: title
         anchors.top: parent.top
         anchors.topMargin: 10
-
-        text: "Overal session similarity (OSS)"
-        font.pixelSize: 14
+        text: "Number of successful implementations per question"
+        font.pixelSize: 24
         font.bold: true
         color: themeObject.textColor
         anchors.horizontalCenter: parent.horizontalCenter
@@ -26,8 +43,7 @@ Rectangle {
     Text {
         anchors.top: title.bottom
         anchors.topMargin: 10
-
-        text: "Measures your brain similarity over time. Reference code acts as baseline"
+        text: "Evaluates your performance by considering both the success rate and the frequency of problems solved."
         font.pixelSize: 14
         font.bold: false
         color: themeObject.textColor
@@ -36,16 +52,6 @@ Rectangle {
 
     ListModel {
         id: graphData
-        ListElement { x: 50;  y: 200 }
-        ListElement { x: 100; y: 150 }
-        ListElement { x: 150; y: 100 }
-        ListElement { x: 200; y: 180 }
-        ListElement { x: 250; y: 120 }
-        ListElement { x: 300; y: 60 }
-        ListElement { x: 350; y: 180 }
-        ListElement { x: 400; y: 80 }
-        ListElement { x: 450; y: 160 }
-        ListElement { x: 500; y: 120 }
     }
 
     Canvas {
@@ -56,84 +62,84 @@ Rectangle {
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.margins: 50
-        
+
         onPaint: {
-            var ctx = canvas.getContext("2d")
-            ctx.clearRect(0, 0, canvas.width, canvas.height)  // Clear canvas
+            var ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            var padding = 40  // Padding for graph boundaries
-            var graphWidth = canvas.width - padding * 2
-            var graphHeight = canvas.height - padding * 2
+            var padding = 40;
+            var graphWidth = canvas.width - padding * 2;
+            var graphHeight = canvas.height - padding * 2;
 
-            // X and Y axis lines
-            ctx.beginPath()
-            ctx.lineWidth = 2
-            ctx.strokeStyle = "#777777"  // Axis color
-            // Y-axis
-            // ctx.moveTo(padding, padding)
-            // ctx.lineTo(padding, canvas.height - padding)
-            // X-axis
-            ctx.lineTo(canvas.width - padding, canvas.height - padding)
-            ctx.stroke()
+            var maxScore = 0;
+            for (var i = 0; i < graphData.count; i++) {
+                var point = graphData.get(i);
+                if (point.score > maxScore) {
+                    maxScore = point.score;
+                }
+            }
 
-            // Grid lines and labels
-            var gridLines = 5  // Number of grid lines
-            ctx.lineWidth = 0.5
-            ctx.strokeStyle = "#cccccc"  // Grid line color
+            var yAxisMax = Math.ceil(maxScore / 10) * 10;
+            if (yAxisMax === 0) yAxisMax = 10;
+
+            ctx.beginPath();
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = "#777777";
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            ctx.stroke();
+
+            var gridLines = 5;
+            ctx.lineWidth = 0.5;
+            ctx.strokeStyle = "#cccccc";
             for (var i = 1; i <= gridLines; i++) {
-                var y = padding + (graphHeight / gridLines) * i
-                // Horizontal grid lines
-                ctx.beginPath()
-                ctx.moveTo(padding, y)
-                ctx.lineTo(canvas.width - padding, y)
-                ctx.stroke()
+                var y = padding + (graphHeight / gridLines) * i;
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(canvas.width - padding, y);
+                ctx.stroke();
 
-                // Y-axis labels
-                ctx.fillStyle = "#777777"
-                ctx.font = "12px Arial"
-                ctx.fillText(((gridLines - i) * 20).toString(), 10, y + 4)
+                ctx.fillStyle = "#777777";
+                ctx.font = "12px Arial";
+                ctx.fillText(((gridLines - i) * (yAxisMax / gridLines)).toString(), 10, y + 4);
             }
 
-            // Plotting data points and lines
-            ctx.beginPath()
-            var firstPoint = graphData.get(0)
-            ctx.moveTo(padding + firstPoint.x, canvas.height - padding - firstPoint.y)
+            var barWidth = (graphWidth / graphData.count) - 4;
 
-            var gradient = ctx.createLinearGradient(0, 0, 0, canvas.height)
-            gradient.addColorStop(0, "rgba(0, 200, 255, 1)")
-            gradient.addColorStop(1, "rgba(0, 255, 150, 0.8)")
-            ctx.strokeStyle = gradient
-            ctx.lineWidth = 3
-
-            // Draw line between points
-            for (var i = 1; i < graphData.count; i++) {
-                var point = graphData.get(i)
-                var xPos = padding + point.x
-                var yPos = canvas.height - padding - point.y
-                ctx.lineTo(xPos, yPos)
-            }
-            ctx.stroke()
-
-            // Draw circles at data points
             for (var i = 0; i < graphData.count; i++) {
-                var point = graphData.get(i)
-                var xPos = padding + point.x
-                var yPos = canvas.height - padding - point.y
-                ctx.beginPath()
-                ctx.arc(xPos, yPos, 4, 0, 2 * Math.PI, false)
-                ctx.fillStyle = "#00c8ff"
-                ctx.fill()
-                ctx.strokeStyle = "#0044ff"
-                ctx.stroke()
+                var point = graphData.get(i);
+                var xPos = padding + i * (barWidth + 4);
+                var barHeight = (point.score / yAxisMax) * graphHeight;
+                var yPos = canvas.height - padding - barHeight;
+
+                ctx.beginPath();
+                ctx.rect(xPos, yPos, barWidth, barHeight);
+
+                var barColor = "#00c8ff";
+
+                barHeight = point.score
+
+                if (barHeight < 5) {
+                    barColor = themeObject.buttonHardColor;
+                } else if (barHeight >= 5 && barHeight <= 10) {
+                    barColor = themeObject.buttonMediumColor;
+                } else {
+                    barColor = themeObject.buttonEasyColor;
+                }
+
+                ctx.fillStyle = barColor;
+                ctx.fill();
+                ctx.strokeStyle = barColor;
+                ctx.stroke();
             }
 
-            // X-axis labels
             for (var i = 0; i < graphData.count; i++) {
-                var point = graphData.get(i)
-                var xPos = padding + point.x
-                ctx.fillStyle = "#777777"
-                ctx.font = "12px Arial"
-                ctx.fillText((i+1), xPos - 10, canvas.height - 20)
+                var point = graphData.get(i);
+                var xPos = padding + i * (barWidth + 4) + (barWidth / 2);
+                ctx.fillStyle = "#777777";
+                ctx.font = "12px Arial";
+                ctx.fillText(point.day, xPos - 10, canvas.height - 20);
             }
         }
     }
@@ -149,7 +155,7 @@ Rectangle {
             width: 200
             height: 50
             onClicked: {
-                stackView.pop(2)
+                stackView.pop(2);
             }
 
             contentItem: Text {
@@ -166,9 +172,7 @@ Rectangle {
                 radius: 10
                 border.width: 1
                 border.color: themeObject.buttonColor
-                color: {
-                    return homeButton.hovered ? themeObject.buttonHoveredColor : themeObject.buttonColor
-                }
+                color: homeButton.hovered ? themeObject.buttonHoveredColor : themeObject.buttonColor;
             }
         }
     }

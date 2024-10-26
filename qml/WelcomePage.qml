@@ -39,6 +39,14 @@ Rectangle {
         }
 
         CustomButton {
+            id: questionSelection
+            anchors.horizontalCenter: parent.horizontalCenter
+            
+            buttonText: "Select category"
+            page: categoryPage
+        }
+
+        CustomButton {
             id: startPractice
             anchors.horizontalCenter: parent.horizontalCenter
 
@@ -53,20 +61,13 @@ Rectangle {
         //     page: reviewPage
         // }
 
-        // CustomButton {
-        //     id: stats
-
-        //     buttonText: "Statistics"
-        //     page: statsPage
-        //     isBetaTagEnabled: false
-        // }
-
         CustomButton {
-            id: questionSelection
+            id: stats
             anchors.horizontalCenter: parent.horizontalCenter
-            
-            buttonText: "Select category"
-            page: categoryPage
+
+            buttonText: "Statistics"
+            page: statsPage
+            isBetaTagEnabled: false
         }
 
         CustomButton {

@@ -1,6 +1,6 @@
 var question = [
     {
-        id: "23",
+        id: "GCD",
         category: "Mathematics",
         placeHolderCpp: `int gcd(int a, int b) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func gcd(a int, b int) int {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,

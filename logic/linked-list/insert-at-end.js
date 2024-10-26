@@ -1,6 +1,6 @@
 var question = [
     {
-        id: "25",
+        id: "Insert at end",
         category: "Linked List",
         placeHolderCpp: `struct Node {\n    int data;\n    Node* next;\n};\n\nvoid insertAtEnd(Node** head, int newData) {\n    ...\n}\n\nvoid printList(Node* head) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `type Node struct {\n    data int\n    next *Node\n}\n\nfunc insertAtEnd(head **Node, newData int) {\n    ...\n}\n\nfunc printList(head *Node) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n`,

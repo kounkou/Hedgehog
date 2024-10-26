@@ -1,6 +1,6 @@
 var question = [
     {
-        id: "11",
+        id: "Jump search",
         category: "Searching",
         placeHolderCpp: `int jumpSearch(const vector<int>& nums, int target) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func jumpSearch(nums []int, target int) int {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
