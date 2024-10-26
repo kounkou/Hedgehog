@@ -1,6 +1,6 @@
 var question = [
     {
-        id: "32",
+        id: "power of 2",
         category: "Bit Manipulation",
         placeHolderCpp: `bool isPowerOfTwo(int n) {\n    ...\n};\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func isPowerOfTwo(n int) {\n    ...\n};\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,

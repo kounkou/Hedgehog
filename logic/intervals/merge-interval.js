@@ -1,6 +1,6 @@
 var question = [
     {
-        id: "16",
+        id: "Merge int.",
         category: "Intervals",
         placeHolderCpp: `vector<Interval> mergeIntervals(vector<Interval>& intervals) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func mergeIntervals(intervals []Interval) []Interval {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,

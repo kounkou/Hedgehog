@@ -202,6 +202,8 @@ Rectangle {
                 var prompt = "\nWhat is a brief difference between \n\n ```\n" + expectedAnswer + "\n```\n\n and \n\n```\n" + userAnswer + "\n```"
                 submitPrompt(prompt);
 
+                sessionObject.attempted += 1
+
                 if (currentQuestionIndex < QuestionsHandler.getTotalQuestions(questionsData)) {
                     const result = QuestionsHandler.getLevenshteinDistance(userAnswer.trim(), expectedAnswer)
 
@@ -209,15 +211,20 @@ Rectangle {
                         resultsModel.append({ similarity: "Highly Similar", id: currentQuestionIndex + 1 })
                         correctAnswers++
                         isCurrentAnswerCorrect = true
+                        sessionObject.algorithmAttempt(QuestionsHandler.getQuestionID(questionsData, currentQuestionIndex), true)
+
                     } else if (result.similarityStatus === "Moderately Similar") {
                         resultsModel.append({ similarity: "Moderately Similar", id: currentQuestionIndex + 1 })
                         correctAnswers++
                         isCurrentAnswerCorrect = true
+                        sessionObject.algorithmAttempt(QuestionsHandler.getQuestionID(questionsData, currentQuestionIndex), true)
+
                     } else {
                         answerInput.text = expectedAnswer
                         answerInput.readOnly = true
                         resultsModel.append({ similarity: "Not Similar", id: currentQuestionIndex + 1 })
                         isCurrentAnswerCorrect = false
+                        sessionObject.algorithmAttempt(QuestionsHandler.getQuestionID(questionsData, currentQuestionIndex), false)
                     }
 
                     submitted = true

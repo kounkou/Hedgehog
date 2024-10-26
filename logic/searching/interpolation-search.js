@@ -1,6 +1,6 @@
 var question = [
     {
-        id: "10",
+        id: "Interpolation search",
         category: "Searching",
         placeHolderCpp: `int interpolationSearch(const std::vector<int>& arr, int target) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func interpolationSearch(nums []int, target int) int {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,

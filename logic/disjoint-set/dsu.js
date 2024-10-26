@@ -1,6 +1,6 @@
 var question = [
     {
-        id: "9",
+        id: "dsu",
         category: "Disjoint Set",
         placeHolderCpp: `class DSU {\n    ...\n};\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `type DSU struct {\n    ...\n};\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,

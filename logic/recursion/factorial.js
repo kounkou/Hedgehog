@@ -1,6 +1,6 @@
 var question = [
     {
-        id: "28",
+        id: "Factorial",
         category: "Recursion",
         placeHolderCpp: `int factorial(int n) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func factorial(n int) int {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,

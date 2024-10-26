@@ -1,6 +1,6 @@
 var question = [
     {
-        id: "33",
+        id: "reverse bits",
         category: "Bit Manipulation",
         placeHolderCpp: `uint32_t reverseBits(uint32_t n) {\n    ...\n};\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func reverseBits(n uint32) uint32 {\n    ...\n};\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,

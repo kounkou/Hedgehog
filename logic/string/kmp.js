@@ -1,6 +1,6 @@
 var question = [
     {
-        id: "6",
+        id: "KMP",
         category: "String",
         placeHolderCpp: "vector<int> getLps(const string& p) {\n    ...\n}\n\nvoid kmp(const string& t, const string& p) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n",
         placeHolderGo: "func getLps(p string) []int {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",

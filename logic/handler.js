@@ -42,6 +42,14 @@ function getQuestion(questionsData, questionIndex) {
     }
 }
 
+function getQuestionID(questionsData, questionIndex) {
+    if (questionIndex < questionsData.length) {
+        return questionsData[questionIndex].id
+    } else {
+        return "No more questions"
+    }
+}
+
 function getQuestionDifficulty(questionsData, questionIndex) {
     if (questionIndex < questionsData.length) {
         return questionsData[questionIndex].difficulty

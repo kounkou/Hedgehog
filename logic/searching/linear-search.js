@@ -1,6 +1,6 @@
 var question = [
     {
-        id: "12",
+        id: "Linear search",
         category: "Searching",
         placeHolderCpp: `int linearSearch(const vector<int>& nums, int target) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func linearSearch(nums []int, target int) int {{\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,

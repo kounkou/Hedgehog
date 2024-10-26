@@ -1,6 +1,6 @@
 var question = [
     {
-        id: "22",
+        id: "Sieve",
         category: "Mathematics",
         placeHolderCpp: `void sieveOfEratosthenes(int n) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func sieveOfEratosthenes(n int) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,

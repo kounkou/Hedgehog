@@ -1,6 +1,6 @@
 var question = [
     {
-        id: "14",
+        id: "line inters.",
         category: "Geometry",
         placeHolderCpp: `bool doIntersect(Point p1, Point q1, Point p2, Point q2) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func doIntersect(p1, q1, p2, q2 Point) bool {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,

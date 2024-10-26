@@ -1,6 +1,6 @@
 var question = [
     {
-        id: "30",
+        id: "Heap sort",
         category: "Heap",
         placeHolderCpp: `void heapify(vector<int>& arr, int n, int i) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func heapify(arr []int, n, i int) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,

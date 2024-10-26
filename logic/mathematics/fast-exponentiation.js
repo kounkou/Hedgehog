@@ -1,6 +1,6 @@
 var question = [
     {
-        id: "24",
+        id: "Fast exp.",
         category: "Mathematics",
         placeHolderCpp: `long long power(long long base, long long exp, long long mod) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func power(base, exp, mod int64) int64 {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
