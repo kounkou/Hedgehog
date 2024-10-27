@@ -9,19 +9,23 @@ var question = [
         answerImage: "",
         answerCpp: `int countSetBits(int n) {
     int count = 0;
+
     while (n) {
         count += n & 1;
         n >>= 1;
     }
+
     return count;
 }
 `,
         answerGo: `func countSetBits(n int) int {
     count := 0
+
     for n > 0 {
         count += n & 1
         n >>= 1
     }
+
     return count
 }
 `

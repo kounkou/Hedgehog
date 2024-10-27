@@ -83,7 +83,7 @@ QtObject {
             totalSuccessfulCount += successfulImplementationsThisMonth[questionId].count || 0;
         }
 
-        var newPerformanceRating
+        var newPerformanceRating = ""
 
         if (totalSuccessfulCount < 5 || totalSuccessStreak < 0.5 * attempted) {
             newPerformanceRating = "Bad";
