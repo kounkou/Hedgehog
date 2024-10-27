@@ -4,6 +4,7 @@ var question = [
         category: "Intervals",
         placeHolderCpp: `vector<Interval> insertInterval(vector<Interval>& intervals, Interval newInterval) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func insertInterval(intervals []Interval, newInterval Interval) []Interval {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
+        placeHolderPython: `def insert_interval(intervals, new_interval):\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         spaceComplexity: "O(N)",
         timeComplexity: "O(N)",
         difficulty: "Medium",
@@ -70,6 +71,33 @@ func max(a, b int) int {
         return a
     }
     return b
-}`
+}`,
+        answerPython: `class Interval:
+def __init__(self, start, end):
+    self.start = start
+    self.end = end
+
+def insert_interval(intervals, new_interval):
+    result = []
+    i = 0
+    n = len(intervals)
+
+    while i < n and intervals[i].end < new_interval.start:
+        result.append(intervals[i])
+        i += 1
+
+    while i < n and intervals[i].start <= new_interval.end:
+        new_interval.start = min(new_interval.start, intervals[i].start)
+        new_interval.end = max(new_interval.end, intervals[i].end)
+        i += 1
+
+    result.append(new_interval)  # Add the merged interval
+
+    while i < n:
+        result.append(intervals[i])
+        i += 1
+
+    return result
+`
     }
 ]

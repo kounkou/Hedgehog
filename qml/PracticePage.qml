@@ -498,7 +498,7 @@ Rectangle {
 
                     ComboBox {
                         id: languageComboBox
-                        model: [ "C++", "Go" ]
+                        model: [ "C++", "Go", "Python" ]
                         currentIndex: 0
                         enabled: !submitted
                         visible: !quizComplete
