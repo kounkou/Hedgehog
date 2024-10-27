@@ -137,9 +137,15 @@ Rectangle {
             for (var i = 0; i < graphData.count; i++) {
                 var point = graphData.get(i);
                 var xPos = padding + i * (barWidth + 4) + (barWidth / 2);
-                ctx.fillStyle = "#777777";
+                var barHeight = (point.score / yAxisMax) * graphHeight;
+                var yPos = canvas.height - padding - barHeight - 5;
+                ctx.fillStyle = themeObject.textColor;
                 ctx.font = "12px Arial";
-                ctx.fillText(point.day, xPos - 10, canvas.height - 20);
+                ctx.save();
+                ctx.translate(xPos, yPos);
+                ctx.rotate(-Math.PI / 3); 
+                ctx.fillText(point.day, 0, 0);
+                ctx.restore();
             }
         }
     }
