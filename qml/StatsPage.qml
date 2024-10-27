@@ -137,9 +137,10 @@ Rectangle {
             for (var i = 0; i < graphData.count; i++) {
                 var point = graphData.get(i);
                 var xPos = padding + i * (barWidth + 4) + (barWidth / 2);
+                var textWidth = ctx.measureText(point.day).width;
                 ctx.fillStyle = "#777777";
                 ctx.font = "12px Arial";
-                ctx.fillText(point.day, xPos - 10, canvas.height - 20);
+                ctx.fillText(point.day, xPos - (textWidth / 2), canvas.height - 20);
             }
         }
     }
