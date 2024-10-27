@@ -22,7 +22,7 @@ Rectangle {
         var successData = sessionObject.successfulImplementationsThisMonth;
 
         for (var questionId in successData) {
-            var score = successData[questionId];
+            var score = successData[questionId].count;
             graphData.append({ day: questionId, score: score });
         }
 
@@ -144,36 +144,24 @@ Rectangle {
         }
     }
 
-    ColumnLayout {
+    RowLayout {
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottomMargin: 10
 
-        Button {
-            id: homeButton
-            text: "Go to home"
-            width: 200
-            height: 50
-            onClicked: {
-                stackView.pop(2);
-            }
+        CustomButton {
+            id: startPractice
 
-            contentItem: Text {
-                text: homeButton.text
-                font: homeButton.font
-                opacity: enabled ? 1.0 : 0.3
-                color: themeObject.textColor
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                elide: Text.ElideRight
-            }
+            enabled: isCategorySelected
+            buttonText: "Start Practicing"
+            page: practicePage
+        }
 
-            background: Rectangle {
-                radius: 10
-                border.width: 1
-                border.color: themeObject.buttonColor
-                color: homeButton.hovered ? themeObject.buttonHoveredColor : themeObject.buttonColor;
-            }
+        CustomButton {
+            id: home
+
+            buttonText: "Go to home"
+            page: welcomePage
         }
     }
 }
