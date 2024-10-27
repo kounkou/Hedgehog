@@ -120,9 +120,9 @@ Rectangle {
 
                 barHeight = point.score
 
-                if (barHeight < 5) {
+                if (barHeight <= 2) {
                     barColor = themeObject.buttonHardColor;
-                } else if (barHeight >= 5 && barHeight <= 10) {
+                } else if (barHeight > 2 && barHeight <= 4) {
                     barColor = themeObject.buttonMediumColor;
                 } else {
                     barColor = themeObject.buttonEasyColor;
