@@ -61,7 +61,6 @@ Rectangle {
     property string userAnswer: ""
     property bool quizComplete: false
     property int correctAnswers: 0
-    property var visitedNumbers: []
     property bool submitted: false
     property bool isCurrentAnswerCorrect: false
     property string currentLanguage: "C++"
@@ -139,6 +138,8 @@ Rectangle {
             sessionObject.selectedCategories = []
             questionsData = allQuestionsData;
         }
+
+        d.goToNextQuestion()
     }
 
     Rectangle {
@@ -247,19 +248,25 @@ Rectangle {
 
                 do {
                     randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
-                } while (visitedNumbers.includes(randomNumber))
+                } while (sessionObject.visitedNumbers.includes(randomNumber))
 
                 return randomNumber
             }
 
             function goToQuestion(questionIndex) {
                 var total = QuestionsHandler.getTotalQuestions(questionsData)
+                let questionID = QuestionsHandler.getQuestionID(questionsData, currentQuestionIndex)
 
                 if (isCurrentAnswerCorrect) {
-                    visitedNumbers.push(currentQuestionIndex)
+                    if (sessionObject.successfulImplementationsThisMonth[questionID].count >= 5) {
+                        if (!sessionObject.visitedNumbers.includes(questionID)) {
+                            sessionObject.visitedNumbers.push(questionID);
+                        }
+                        sessionObject.saveSession()
+                    }
                 }
 
-                if (visitedNumbers.length >= total) {
+                if (sessionObject.visitedNumbers.length >= total) {
                     resultText.text = ""
                     quizComplete = true
                     resultText.enabled = false
@@ -273,12 +280,18 @@ Rectangle {
 
             function goToNextQuestion() {
                 var total = QuestionsHandler.getTotalQuestions(questionsData)
+                let questionID = QuestionsHandler.getQuestionID(questionsData, currentQuestionIndex)
 
                 if (isCurrentAnswerCorrect) {
-                    visitedNumbers.push(currentQuestionIndex)
+                    if (sessionObject.successfulImplementationsThisMonth[questionID].count >= 5) {
+                        if (!sessionObject.visitedNumbers.includes(questionID)) {
+                            sessionObject.visitedNumbers.push(questionID);
+                        }
+                        sessionObject.saveSession()
+                    }
                 }
 
-                if (visitedNumbers.length >= total) {
+                if (sessionObject.visitedNumbers.length >= total) {
                     resultText.text = ""
                     quizComplete = true
                     resultText.enabled = false
@@ -330,7 +343,7 @@ Rectangle {
                 countdownTimer.start()
                 quizComplete = false
                 resultsModel.clear()
-                visitedNumbers = []
+                sessionObject.visitedNumbers = []
                 correctAnswers = 0
                 currentQuestionIndex = 0
                 questionLabel.text = (currentQuestionIndex + 1) + ". Implement a " + QuestionsHandler.getQuestion(questionsData, currentQuestionIndex)
@@ -617,7 +630,7 @@ Rectangle {
 
                         Text {
                             id: clockText
-                            text: (visitedNumbers.length + 1) + "/" + QuestionsHandler.getTotalQuestions(questionsData) + " Time left: " + (
+                            text: (sessionObject.visitedNumbers.length + 1) + "/" + QuestionsHandler.getTotalQuestions(questionsData) + " Time left: " + (
                                 QuestionsHandler.getQuestionDifficulty(questionsData, currentQuestionIndex) === "Hard" ? timerValue : timerValue
                             ) + "s"
                             Layout.alignment: Qt.AlignRight

@@ -10,6 +10,7 @@ QtObject {
     property string performanceRating: "N/A"
     property string lastPerformanceUpdateDate: ""
     property int    attempted: 0
+    property var    visitedNumbers: []
 
     function saveSession() {
         var sessionData = {
@@ -19,7 +20,8 @@ QtObject {
             successfulImplementationsThisMonth: successfulImplementationsThisMonth,
             performanceRating: performanceRating,
             lastPerformanceUpdateDate: lastPerformanceUpdateDate,
-            attempted: attempted
+            attempted: attempted,
+            visitedNumbers: visitedNumbers
         };
         var content = JSON.stringify(sessionData, null, 4);
         var filePath = "sessionData.json";
@@ -40,6 +42,7 @@ QtObject {
                 lastPerformanceUpdateDate = data.lastPerformanceUpdateDate || "";
                 themeObject.theme = theme;
                 attempted = data.attempted || 0;
+                visitedNumbers = data.visitedNumbers || [];
             } catch (e) {
                 console.error("Failed to parse session data: " + e);
             }
@@ -51,6 +54,24 @@ QtObject {
         return today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
     }
 
+   function resetAgedQuestions() {
+        for (var questionId in successfulImplementationsThisMonth) {
+            if (successfulImplementationsThisMonth.hasOwnProperty(questionId)) {
+                var questionData = successfulImplementationsThisMonth[questionId];
+
+                if (questionData.age >= 5) {
+                    questionData.count = 0;
+                    questionData.age = 0;
+
+                    var index = visitedNumbers.indexOf(questionId);
+                    if (index > -1) {
+                        visitedNumbers.splice(index, 1);
+                    }
+                }
+            }
+        }
+    }
+
     function updatePerformanceRatingForDay() {
         var today = getCurrentDate();
 
@@ -59,7 +80,7 @@ QtObject {
 
         for (var questionId in successStreaksPerQuestion) {
             totalSuccessStreak += successStreaksPerQuestion[questionId] || 0;
-            totalSuccessfulCount += successfulImplementationsThisMonth[questionId] || 0;
+            totalSuccessfulCount += successfulImplementationsThisMonth[questionId].count || 0;
         }
 
         var newPerformanceRating
@@ -72,6 +93,8 @@ QtObject {
             newPerformanceRating = "Excellent";
         }
 
+        resetAgedQuestions();
+
         if (lastPerformanceUpdateDate === today && performanceRating === newPerformanceRating) {
             console.log("Performance rating already updated for today.");
             return;
@@ -80,6 +103,11 @@ QtObject {
         performanceRating = newPerformanceRating
 
         lastPerformanceUpdateDate = today;
+
+        if (successfulImplementationsThisMonth[questionId].count >= 5) {
+            successfulImplementationsThisMonth[questionId].age += 1;
+        }
+
         saveSession();
     }
 
@@ -88,12 +116,12 @@ QtObject {
             successStreaksPerQuestion[questionId] = 0;
         }
         if (!successfulImplementationsThisMonth.hasOwnProperty(questionId)) {
-            successfulImplementationsThisMonth[questionId] = 0;
+            successfulImplementationsThisMonth[questionId] = { count: 0, age: 0 };
         }
 
         if (successful) {
             successStreaksPerQuestion[questionId] += 1;
-            successfulImplementationsThisMonth[questionId] += 1;
+            successfulImplementationsThisMonth[questionId].count += 1;
         } else {
             successStreaksPerQuestion[questionId] = 0;
         }
