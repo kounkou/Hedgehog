@@ -499,7 +499,19 @@ Rectangle {
                     ComboBox {
                         id: languageComboBox
                         model: [ "C++", "Go" ]
-                        currentIndex: 0
+                        currentIndex: {
+                            var value = 0;
+
+                            if (sessionObject.language === "C++") {
+                                value = 0;
+                            } else if (sessionObject.language === "Go") {
+                                value = 1;
+                            }
+
+                            currentLanguage = sessionObject.language
+
+                            return value
+                        }
                         enabled: !submitted
                         visible: !quizComplete
                         Layout.alignment: Qt.AlignRight
@@ -539,6 +551,8 @@ Rectangle {
 
                         onActivated: {
                             currentLanguage = languageComboBox.currentText
+                            sessionObject.language = currentLanguage
+                            sessionObject.saveSession()
                             d.updateLanguage(currentLanguage)
                         }
                     }

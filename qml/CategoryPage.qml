@@ -89,6 +89,16 @@ Rectangle {
                 }
             }
 
+            Text {
+                anchors.top: title.bottom
+                anchors.topMargin: 10
+                text: "Each category contains a set of questions to solve, focused on a specific topic."
+                font.pixelSize: 14
+                font.bold: false
+                color: themeObject.textColor
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+
             Flow {
                 id: categoriesFlow
                 width: parent.width
