@@ -17,7 +17,7 @@ QT += webengine
 # Please consult the documentation of the deprecated API in order to know
 # how to port your code away from it.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 # Input
 
@@ -31,3 +31,22 @@ HEADERS += includes/highlighter.h \
            includes/documenthandler.h 
 
 RESOURCES += resources.qrc
+
+target.path = /Applications/Hedgehog
+resources.path = /Applications/Hedgehog
+INSTALLS += target resources
+
+# MacOS-specific settings
+macx {
+    target.files = Hedgehog.app/Contents/MacOS/$${TARGET}
+    resources.files = target
+}
+
+# Non-macOS platforms fallback
+!macx {
+    target.files = Hedgehog
+    resources.files = target
+}
+
+QMAKE_POST_LINK +=  if [ ! -d /Applications/Hedgehog ]; then mkdir -p /Applications/Hedgehog; fi; \
+                    if [ ! -f /Applications/Hedgehog/sessionData.json ]; then cp $$PWD/sessionData.json /Applications/Hedgehog/; fi
