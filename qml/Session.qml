@@ -57,19 +57,26 @@ QtObject {
         return today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
     }
 
-   function resetAgedQuestions() {
-        for (var questionId in successfulImplementationsThisMonth) {
-            if (successfulImplementationsThisMonth.hasOwnProperty(questionId)) {
-                var questionData = successfulImplementationsThisMonth[questionId];
+   function resetAgedQuestions(today, lastPerformanceUpdateDate) {
+        if (today != lastPerformanceUpdateDate) {
+            for (var questionId in successfulImplementationsThisMonth) {
+                if (successfulImplementationsThisMonth.hasOwnProperty(questionId)) {
+                    var questionData = successfulImplementationsThisMonth[questionId];
 
-                if (questionData.age >= 5) {
-                    questionData.count = 0;
-                    questionData.age = 0;
+                    if (questionData.count >= 5) {
+                        questionData.age += 1;
 
-                    var index = visitedNumbers.indexOf(questionId);
-                    if (index > -1) {
-                        visitedNumbers.splice(index, 1);
+                        if (questionData.age >= 5) {
+                            questionData.count = 0;
+                            questionData.age = 0;
+
+                            var index = visitedNumbers.indexOf(questionId);
+                            if (index > -1) {
+                                visitedNumbers.splice(index, 1);
+                            }
+                        }
                     }
+                    successfulImplementationsThisMonth[questionId] = questionData;
                 }
             }
         }
@@ -96,7 +103,7 @@ QtObject {
             newPerformanceRating = "Excellent";
         }
 
-        resetAgedQuestions();
+        resetAgedQuestions(today, lastPerformanceUpdateDate);
 
         if (lastPerformanceUpdateDate === today && performanceRating === newPerformanceRating) {
             console.log("Performance rating already updated for today.");
@@ -106,10 +113,6 @@ QtObject {
         performanceRating = newPerformanceRating
 
         lastPerformanceUpdateDate = today;
-
-        if (successfulImplementationsThisMonth[questionId].count >= 5) {
-            successfulImplementationsThisMonth[questionId].age += 1;
-        }
 
         saveSession();
     }
