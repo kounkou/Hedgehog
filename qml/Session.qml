@@ -11,6 +11,7 @@ QtObject {
     property string lastPerformanceUpdateDate: ""
     property int    attempted: 0
     property var    visitedNumbers: []
+    property string language: ""
 
     function saveSession() {
         var sessionData = {
@@ -21,7 +22,8 @@ QtObject {
             performanceRating: performanceRating,
             lastPerformanceUpdateDate: lastPerformanceUpdateDate,
             attempted: attempted,
-            visitedNumbers: visitedNumbers
+            visitedNumbers: visitedNumbers,
+            language: language
         };
         var content = JSON.stringify(sessionData, null, 4);
         var filePath = "sessionData.json";
@@ -43,6 +45,7 @@ QtObject {
                 themeObject.theme = theme;
                 attempted = data.attempted || 0;
                 visitedNumbers = data.visitedNumbers || [];
+                language = data.language || "";
             } catch (e) {
                 console.error("Failed to parse session data: " + e);
             }
