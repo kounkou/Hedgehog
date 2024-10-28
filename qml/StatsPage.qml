@@ -158,7 +158,6 @@ Rectangle {
         CustomButton {
             id: startPractice
 
-            enabled: isCategorySelected
             buttonText: "Start Practicing"
             page: practicePage
         }

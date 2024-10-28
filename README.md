@@ -52,7 +52,9 @@ brew install qt@5
 You will need Qt installation for your platform to build and launch Hedgehog, after what you can launch below commands which will generate the binary file
 
 ```bash
-qmake && make
+make clean && qmake && make && make install
+cd /Applications/Hedgehog/
+./Hedgehog
 ```
 
 # How to contribute
