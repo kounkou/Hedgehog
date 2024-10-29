@@ -7,29 +7,37 @@ Rectangle {
 
     property string theme: "light"
 
+    FontLoader {
+        id: ibmPlex
+        source: "qrc:/fonts/IBMPlexSans-Regular.ttf"
+    }
+
     width: parent.width
     height: parent.height
     color: themeObject.backgroundColor
     anchors.horizontalCenter: parent.horizontalCenter
 
     Column {
-        spacing: 20
+        spacing: 16 
         anchors.centerIn: parent
 
         Text {
             text: "🦔"
-            font.pixelSize: 100
+            font.pixelSize: 150
             font.family: "Noto Color Emoji"
             anchors.horizontalCenter: parent.horizontalCenter
+            
         }
 
         Text {
             text: "Welcome to Hedgehog"
-            font.pixelSize: 24
-            font.bold: true
+            font.family: ibmPlex.name
+            font.pixelSize: 32
+            font.weight: Font.Bold
             color: themeObject.textColor
             anchors.horizontalCenter: parent.horizontalCenter
         }
+
 
         Text {
             text: "What would you like to do?"

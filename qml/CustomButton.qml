@@ -10,7 +10,7 @@ Button {
     property bool isBetaTagEnabled: false
 
     width: 200
-    height: 50
+    height: 48
 
     onClicked: {
         stackView.push(page)
@@ -28,7 +28,7 @@ Button {
 
     background: Rectangle {
         id: button
-        radius: 10
+        radius : 4
         border.width: 1
         border.color: themeObject.buttonBorderColor
         color: {
@@ -41,7 +41,7 @@ Button {
         anchors.margins: 8
         border.color: themeObject.buttonHardColor
         border.width: 1
-        radius: 10
+        radius : 4
         visible: root.isBetaTagEnabled
         height: 20
         width: 40

@@ -54,6 +54,7 @@ Rectangle {
         id: graphData
     }
 
+    
     Canvas {
         id: canvas
         
