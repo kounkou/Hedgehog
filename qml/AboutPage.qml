@@ -70,6 +70,30 @@ Rectangle {
             Rectangle {
                 width: parent.width
                 height: 50
+                color: "transparent"
+                border.width: 1
+                border.color: "transparent"
+                radius: 10
+                clip: true
+
+                Image {
+                    source: "buy-me-a-coffee.png"
+                    fillMode: Image.PreserveAspectFit 
+                    anchors.fill: parent
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: {
+                        Qt.openUrlExternally("https://buymeacoffee.com/kounkou")
+                    }
+                }
+            }
+
+            Rectangle {
+                width: parent.width
+                height: 50
                 color: themeObject.buttonColor
                 border.width: 1
                 border.color: themeObject.buttonBorderColor

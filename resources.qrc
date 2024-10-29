@@ -79,5 +79,6 @@
         <file alias="sessionData.json">sessionData.json</file>
 
         <file alias="Hedgehog-Telegram.jpeg">images/Hedgehog-Telegram.jpeg</file>
+        <file alias="buy-me-a-coffee.png">images/buy-me-a-coffee.png</file>
     </qresource>
 </RCC>
