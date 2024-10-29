@@ -11,7 +11,7 @@ QtObject {
     property string lastPerformanceUpdateDate: ""
     property int    attempted: 0
     property var    visitedNumbers: []
-    property string language: ""
+    property string language: "C++"
 
     function saveSession() {
         var sessionData = {

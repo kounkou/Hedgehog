@@ -73,6 +73,9 @@
         <file alias="line-intersection.js">logic/geometry/line-intersection.js</file>
         <file alias="area-triangle-heron.js">logic/geometry/area-triangle-heron.js</file>
 
+        <file alias="lazy-propagation.js">logic/segment-tree/lazy-propagation.js</file>
+        <file alias="range-sum-queries.js">logic/segment-tree/range-sum-queries.js</file>
+
         <file alias="sessionData.json">sessionData.json</file>
     </qresource>
 </RCC>

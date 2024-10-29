@@ -75,7 +75,7 @@ Rectangle {
 
             Rectangle {
                 width: parent.width // Set the width explicitly
-                height: 1600
+                height: 1450
                 color: themeObject.buttonColor
                 radius: 10
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -150,7 +150,7 @@ Rectangle {
 
             Rectangle {
                 width: parent.width
-                height: 1300
+                height: 1150
                 color: themeObject.buttonColor
                 radius: 10
                 anchors.horizontalCenter: parent.horizontalCenter
