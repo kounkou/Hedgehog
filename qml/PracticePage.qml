@@ -46,6 +46,8 @@ import "reverse-bits.js" as ReverseBits
 import "max-sub-array.js" as MaxSubArray
 import "topological-sorting.js" as TopologicalSorting
 import "backtracking.js" as BackTracking
+import "lazy-propagation.js" as LazyPropag
+import "range-sum-queries.js" as RangeSumQueries
 
 Rectangle {
     id: root
@@ -127,6 +129,9 @@ Rectangle {
             .concat(TopologicalSorting.question)
 
             .concat(BackTracking.question)
+
+            .concat(LazyPropag.question)
+            .concat(RangeSumQueries.question)
             
             .concat(LinearSearch.question);
 
@@ -583,7 +588,7 @@ Rectangle {
                     Layout.fillWidth: true
                     // height: 200
                     readOnly: submitted
-                    placeholderText: QuestionsHandler.getQuestionPlaceHolder(questionsData, currentLanguage, currentQuestionIndex, sessionObject.selectedCategories)
+                    placeholderText: QuestionsHandler.getQuestionPlaceHolder(questionsData, sessionObject.language, currentQuestionIndex, sessionObject.selectedCategories)
                     font.family: "Courier New"
                     font.pixelSize: 14
                     font.bold: true
