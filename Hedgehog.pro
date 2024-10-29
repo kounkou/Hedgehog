@@ -3,9 +3,9 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = Hedgehog
+TARGET = ./Hedgehog
 INCLUDEPATH += .
-
+DESTDIR = ./
 
 CONFIG += c++11
 
@@ -36,17 +36,9 @@ target.path = /Applications/Hedgehog
 resources.path = /Applications/Hedgehog
 INSTALLS += target resources
 
-# MacOS-specific settings
-macx {
-    target.files = Hedgehog.app/Contents/MacOS/$${TARGET}
-    resources.files = target
-}
-
-# Non-macOS platforms fallback
-!macx {
-    target.files = Hedgehog
-    resources.files = target
-}
+target.files = Hedgehog
+resources.files = target
 
 QMAKE_POST_LINK +=  if [ ! -d /Applications/Hedgehog ]; then mkdir -p /Applications/Hedgehog; fi; \
-                    if [ ! -f /Applications/Hedgehog/sessionData.json ]; then cp $$PWD/sessionData.json /Applications/Hedgehog/; fi
+                    if [ ! -f /Applications/Hedgehog/sessionData.json ]; then cp $$PWD/sessionData.json /Applications/Hedgehog/; fi; \
+                    if [ -f Hedgehog ]; then cp Hedgehog /Applications/Hedgehog/; fi
