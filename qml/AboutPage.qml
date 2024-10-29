@@ -29,7 +29,7 @@ Rectangle {
             Rectangle {
                 id: header
                 width: parent.width
-                height: 150
+                height: 230
                 color: themeObject.buttonColor
                 border.width: 1
                 border.color: themeObject.buttonBorderColor
@@ -52,6 +52,16 @@ Rectangle {
                         font.pixelSize: 24
                         color: themeObject.textColor
                         font.bold: true
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+
+                    Image {
+                        id: qrcode
+                        visible: true
+                        height: 115
+                        width: 115
+                        fillMode: Image.PreserveAspectFit
+                        source: "Hedgehog-Telegram.jpeg"
                         anchors.horizontalCenter: parent.horizontalCenter
                     }
                 }
@@ -214,7 +224,6 @@ Rectangle {
                 CustomButton {
                     id: startPractice
 
-                    enabled: isCategorySelected
                     buttonText: "Start Practicing"
                     page: practicePage
                 }
