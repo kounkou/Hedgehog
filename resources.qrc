@@ -12,6 +12,7 @@
         <file alias="CategoryPage.qml">qml/CategoryPage.qml</file>
         <file alias="Session.qml">qml/Session.qml</file>
         <file alias="LoginPage.qml">qml/LoginPage.qml</file>
+        <file alias="SettingsPage.qml">qml/SettingsPage.qml</file>
         <file alias="handler.js">logic/handler.js</file>
         
         <file alias="adsense-ad.html">qml/adsense-ad.html</file>
@@ -80,5 +81,9 @@
 
         <file alias="Hedgehog-Telegram.jpeg">images/Hedgehog-Telegram.jpeg</file>
         <file alias="buy-me-a-coffee.png">images/buy-me-a-coffee.png</file>
+        <file alias="appearance-dark.svg">images/appearance-dark.svg</file>
+        <file alias="font-dark.svg">images/font-dark.svg</file>
+        <file alias="appearance-light.svg">images/appearance-light.svg</file>
+        <file alias="font-light.svg">images/font-light.svg</file>
     </qresource>
 </RCC>

@@ -29,7 +29,7 @@ Rectangle {
             Rectangle {
                 id: header
                 width: parent.width
-                height: 230
+                height: 130
                 color: themeObject.buttonColor
                 border.width: 1
                 border.color: themeObject.buttonBorderColor
@@ -54,22 +54,16 @@ Rectangle {
                         font.bold: true
                         anchors.horizontalCenter: parent.horizontalCenter
                     }
-
-                    Image {
-                        id: qrcode
-                        visible: true
-                        height: 115
-                        width: 115
-                        fillMode: Image.PreserveAspectFit
-                        source: "Hedgehog-Telegram.jpeg"
-                        anchors.horizontalCenter: parent.horizontalCenter
-                    }
                 }
+            }
+
+            MenuSeparator {
+                anchors.horizontalCenter: parent.horizontalCenter
             }
 
             Rectangle {
                 width: parent.width
-                height: 50
+                height: 60
                 color: "transparent"
                 border.width: 1
                 border.color: "transparent"
@@ -80,15 +74,19 @@ Rectangle {
                     source: "buy-me-a-coffee.png"
                     fillMode: Image.PreserveAspectFit 
                     anchors.fill: parent
-                }
 
-                MouseArea {
-                    anchors.fill: parent
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: {
-                        Qt.openUrlExternally("https://buymeacoffee.com/kounkou")
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: {
+                            Qt.openUrlExternally("https://buymeacoffee.com/kounkou")
+                        }
                     }
                 }
+            }
+
+            MenuSeparator {
+                anchors.horizontalCenter: parent.horizontalCenter
             }
 
             Rectangle {
@@ -239,6 +237,58 @@ Rectangle {
                         radius: 10
                     }
                 }
+            }
+
+            MenuSeparator {
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+
+            Rectangle {
+                width: parent.width
+                height: 50
+                color: themeObject.buttonColor
+                border.width: 1
+                border.color: themeObject.buttonBorderColor
+                radius: 10
+
+                Text {
+                    text: "Join the Hedgehog community!"
+                    font.pixelSize: 24
+                    anchors.centerIn: parent
+                    color: themeObject.textColor
+                }
+            }
+
+            Rectangle {
+                width: parent.width
+                height: 115
+                color: "transparent"
+                border.width: 1
+                border.color: "transparent"
+                radius: 10
+                clip: true
+
+                Image {
+                    id: qrcode
+                    visible: true
+                    height: 115
+                    width: 115
+                    fillMode: Image.PreserveAspectFit
+                    source: "Hedgehog-Telegram.jpeg"
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: {
+                        Qt.openUrlExternally("https://t.me/+CAvjoAD69fBhOGJh")
+                    }
+                }
+            }
+
+            MenuSeparator {
+                anchors.horizontalCenter: parent.horizontalCenter
             }
 
             RowLayout {

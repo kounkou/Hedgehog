@@ -71,6 +71,14 @@ Rectangle {
         }
 
         CustomButton {
+            id: settings
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            buttonText: "Settings"
+            page: settingsPage
+        }
+
+        CustomButton {
             id: aboutHedgehog
             anchors.horizontalCenter: parent.horizontalCenter
 
@@ -84,6 +92,7 @@ Rectangle {
             text: themeObject.theme === "light" ? "Light Theme" : "Dark Theme"
             checked: themeObject.theme === "dark"
             anchors.horizontalCenter: parent.horizontalCenter
+            enabled: !sessionObject.automaticThemeSetting
             onCheckedChanged: {
                 themeObject.theme = checked ? "dark" : "light"
                 sessionObject.saveSession()

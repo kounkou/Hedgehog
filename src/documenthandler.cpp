@@ -2,7 +2,9 @@
 
 #include <QFile>
 #include <QFileDialog>
+#include <QOperatingSystemVersion>
 #include <QQmlEngine>
+#include <QSettings>
 #include <QTextStream>
 #include <QUrl>
 
@@ -10,6 +12,16 @@
 
 DocumentHandler::DocumentHandler(QObject* parent)
     : QObject(parent) {
+}
+
+bool DocumentHandler::isDarkMode() {
+    if (QOperatingSystemVersion::currentType() != QOperatingSystemVersion::MacOS) {
+        return false;
+    }
+
+    QSettings settings("Apple", "General");
+    QString theme = settings.value("AppleInterfaceStyle", "").toString();
+    return theme == "Dark";
 }
 
 void DocumentHandler::openFile(const QString& path) {

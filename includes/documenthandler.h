@@ -12,6 +12,7 @@ class DocumentHandler : public QObject {
 
     ~DocumentHandler() {}
 
+    Q_INVOKABLE bool isDarkMode();
     Q_INVOKABLE void openFile(const QString& path);
     Q_INVOKABLE void setDocument(QQuickTextDocument* document, const QString& theme);
     Q_INVOKABLE bool saveToFile(const QString& filename, const QString& content);
