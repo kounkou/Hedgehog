@@ -46,18 +46,29 @@ Key features of Hedgehog include:
 
 # Installation instructions
 
-### MacOS
+### MacOS dependencies installation
+
+Hedgehog relies on Qt to provide you with the amazing user interface
 
 ```bash
 brew install qt@5
 ```
 
-# How to build and execute Hedgehog
+You can check out Qt install on other platforms here : 
 
-You will need Qt installation for your platform to build and launch Hedgehog, after what you can launch below commands which will generate the binary file
+https://doc.qt.io/qt-6/get-and-install-qt.html
+
+# How to build, install and execute Hedgehog
+
+You can launch below commands which will generate the binary file and install the binary in /Applications/ folder
 
 ```bash
 bash install.sh
+```
+
+To launch Hedgehog from the Terminal : 
+
+```bash
 cd /Applications/Hedgehog/
 ./Hedgehog
 ```
