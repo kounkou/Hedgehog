@@ -23,6 +23,7 @@ ApplicationWindow {
 
     StackView {
         id: stackView
+        objectName: "stackView"
         anchors.fill: parent
         // initialItem: LoginPage{
         // }
@@ -34,6 +35,7 @@ ApplicationWindow {
     Component {
         id: login
         LoginPage{
+            objectName: "loginPage"
         }
     }
 
