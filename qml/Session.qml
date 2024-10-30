@@ -12,18 +12,42 @@ QtObject {
     property int    attempted: 0
     property var    visitedNumbers: []
     property string language: "C++"
+    property bool   automaticThemeSetting: false
+    property bool   fontSetting: false
+
+    function getTheme() {
+        if (automaticThemeSetting) {
+            var t = documentHandler.isDarkMode() ? "dark" : "light"
+            themeObject.theme = t
+            return t
+        }
+        return themeObject.theme;
+    }
+
+    function getThemeToLoad(data) {
+        if (automaticThemeSetting) {
+            var t = documentHandler.isDarkMode() ? "dark" : "light"
+            themeObject.theme = t
+            return t
+        }
+
+        themeObject.theme = data.theme
+        return data.theme
+    }
 
     function saveSession() {
         var sessionData = {
-            selectedCategories: selectedCategories,
-            theme: themeObject.theme,
+            selectedCategories: selectedCategories, 
             successStreaksPerQuestion: successStreaksPerQuestion,
             successfulImplementationsThisMonth: successfulImplementationsThisMonth,
             performanceRating: performanceRating,
             lastPerformanceUpdateDate: lastPerformanceUpdateDate,
             attempted: attempted,
             visitedNumbers: visitedNumbers,
-            language: language
+            language: language,
+            automaticThemeSetting: automaticThemeSetting,
+            theme: getTheme(),
+            fontSetting: fontSetting
         };
         var content = JSON.stringify(sessionData, null, 4);
         var filePath = "sessionData.json";
@@ -36,8 +60,7 @@ QtObject {
         if (content) {
             try {
                 var data = JSON.parse(content);
-                selectedCategories = data.selectedCategories || [];
-                theme = data.theme || theme;
+                selectedCategories = data.selectedCategories || [];                
                 successStreaksPerQuestion = data.successStreaksPerQuestion || {};
                 successfulImplementationsThisMonth = data.successfulImplementationsThisMonth || {};
                 performanceRating = data.performanceRating || "N/A";
@@ -46,6 +69,9 @@ QtObject {
                 attempted = data.attempted || 0;
                 visitedNumbers = data.visitedNumbers || [];
                 language = data.language || "";
+                automaticThemeSetting = data.automaticThemeSetting || false;
+                theme = getThemeToLoad(data) || theme;
+                fontSetting = data.fontSetting || false;
             } catch (e) {
                 console.error("Failed to parse session data: " + e);
             }

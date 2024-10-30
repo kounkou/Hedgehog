@@ -79,4 +79,10 @@ ApplicationWindow {
         CategoryPage{
         }
     }
+
+    Component {
+        id: settingsPage
+        SettingsPage{
+        }
+    }
 }
