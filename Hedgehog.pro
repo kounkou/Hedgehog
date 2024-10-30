@@ -3,21 +3,18 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = ./Hedgehog
+TARGET = Hedgehog
 INCLUDEPATH += .
-DESTDIR = ./
+DESTDIR = ./build
 
 CONFIG += c++11
 
 QT += core gui qml widgets
 QT += webengine
 
-# You can make your code fail to compile if you use deprecated APIs.
-# In order to do so, uncomment the following line.
-# Please consult the documentation of the deprecated API in order to know
-# how to port your code away from it.
-# You can also select to disable deprecated APIs only up to a certain version of Qt.
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+
+username = $$system(whoami)
 
 # Input
 
@@ -32,13 +29,35 @@ HEADERS += includes/highlighter.h \
 
 RESOURCES += resources.qrc
 
-target.path = /Applications/Hedgehog
-resources.path = /Applications/Hedgehog
-INSTALLS += target resources
+# Output Directories
+unix:!macx {
+    target.path = /home/$$username/Hedgehog
+    resources.path = /home/$$username/Hedgehog
+    INSTALLS += target resources
 
-target.files = Hedgehog
-resources.files = target
+    QMAKE_POST_LINK +=  if [ ! -d /home/$$username/Hedgehog ]; then mkdir -p /home/$$username/Hedgehog; fi; \
+                        if [ ! -f /home/$$username/Hedgehog/sessionData.json ]; then cp $$PWD/sessionData.json /home/$$username/Hedgehog/; fi; \
+                        if [ -f build/Hedgehog ]; then cp build/Hedgehog /home/$$username/Hedgehog/; fi
+}
 
-QMAKE_POST_LINK +=  if [ ! -d /Applications/Hedgehog ]; then mkdir -p /Applications/Hedgehog; fi; \
-                    if [ ! -f /Applications/Hedgehog/sessionData.json ]; then cp $$PWD/sessionData.json /Applications/Hedgehog/; fi; \
-                    if [ -f Hedgehog ]; then cp Hedgehog /Applications/Hedgehog/; fi
+macx {
+    target.path = /Applications/Hedgehog
+    resources.path = /Applications/Hedgehog
+    INSTALLS += target resources
+
+    QMAKE_POST_LINK +=  if [ ! -d /Applications/Hedgehog ]; then mkdir -p /Applications/Hedgehog; fi; \
+                        if [ ! -f /Applications/Hedgehog/sessionData.json ]; then cp $$PWD/sessionData.json /Applications/Hedgehog/; fi; \
+                        if [ -f build/Hedgehog ]; then cp build/Hedgehog /Applications/Hedgehog/; fi
+}
+
+win32 {
+    # Set installation paths for Windows
+    target.path = $$[QT_INSTALL_PREFIX]/Hedgehog
+    resources.path = $$[QT_INSTALL_PREFIX]/Hedgehog
+    INSTALLS += target resources
+
+    # Use copy command for Windows
+    QMAKE_POST_LINK += if not exist $$[QT_INSTALL_PREFIX]\\Hedgehog mkdir $$[QT_INSTALL_PREFIX]\\Hedgehog & \
+                       if not exist $$[QT_INSTALL_PREFIX]\\Hedgehog\\sessionData.json copy /Y sessionData.json $$[QT_INSTALL_PREFIX]\\Hedgehog & \
+                       if exist build/Hedgehog.exe copy /Y build/Hedgehog.exe $$[QT_INSTALL_PREFIX]\\Hedgehog
+}
