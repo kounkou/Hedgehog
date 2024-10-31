@@ -1,0 +1,84 @@
+name: Build Application
+
+on:
+  push:
+    branches:
+      - main  # Change to your default branch
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        arch: [x64, arm64]  # Add arm64 to support ARM architecture
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Qt5
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        sudo apt-get update
+        sudo apt install -y qtbase5-dev qt5-qmake qtwebengine5-dev
+
+    - name: Set up Qt5 on macOS
+      if: matrix.os == 'macos-latest'
+      run: |
+        brew install qt@5
+        brew link --force qt@5 --overwrite  # Link the installed Qt5
+
+    - name: Set architecture for build
+      run: |
+        if [ "${{ matrix.arch }}" == "arm64" ]; then
+          echo "Building for ARM architecture"
+          export CMAKE_CXX_FLAGS="-target arm64-apple-darwin"  # Adjust for macOS ARM
+        else
+          echo "Building for x64 architecture"
+        fi
+
+    - name: Build application
+      run: |
+        chmod +x ./build.sh  # Make sure your build script is executable
+        ./build.sh  # Run your build script
+
+    - name: Upload Linux binary
+      if: matrix.os == 'ubuntu-latest'
+      uses: actions/upload-artifact@v3
+      with:
+        name: linux-binary-${{ matrix.arch }}
+        path: ./build/Hedgehog  # Adjust path to your actual binary
+
+    - name: Upload macOS binary
+      if: matrix.os == 'macos-latest'
+      uses: actions/upload-artifact@v3
+      with:
+        name: macos-binary-${{ matrix.arch }}
+        path: ./build/Hedgehog  # Adjust path to your actual binary
+
+    - name: Create Release
+      id: create_release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: v1.0.0  # Update this to your desired release version
+        name: Hedgehog v1.0.0  # Name of the release
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload Linux binary to release
+      if: matrix.os == 'ubuntu-latest'
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: v1.0.0
+        files: ./build/Hedgehog  # Adjust path to your actual binary
+
+    - name: Upload macOS binary to release
+      if: matrix.os == 'macos-latest'
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: v1.0.0
+        files: ./build/Hedgehog  # Adjust path to your actual binary
