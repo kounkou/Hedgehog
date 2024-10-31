@@ -28,7 +28,7 @@ In an AI-driven world, algorithms and data structures remain critical for optimi
 
 ### Architecture 
 
-<img width="1001" alt="Screenshot 2024-10-18 at 9 35 34 AM" src="https://github.com/user-attachments/assets/60c035a0-26d8-499f-b1b4-6fc337985b22">
+<img width="1001" alt="Screenshot 2024-10-18 at 9 35 34 AM" src="images/architecture.png">
 
 
 ### Hedgehog features
