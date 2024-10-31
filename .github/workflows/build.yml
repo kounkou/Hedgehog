@@ -58,3 +58,27 @@ jobs:
         name: macos-binary-${{ matrix.arch }}
         path: ./build/Hedgehog  # Adjust path to your actual binary
 
+    - name: Create Release
+      id: create_release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: v1.0.0  # Update this to your desired release version
+        release_name: Release v1.0.0  # Name of the release
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload Linux binary to release
+      if: matrix.os == 'ubuntu-latest'
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: v1.0.0
+        files: ./build/Hedgehog  # Adjust path to your actual binary
+
+    - name: Upload macOS binary to release
+      if: matrix.os == 'macos-latest'
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: v1.0.0
+        files: ./build/Hedgehog  # Adjust path to your actual binary
