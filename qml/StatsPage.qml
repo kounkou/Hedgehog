@@ -13,10 +13,10 @@ Rectangle {
     color: themeObject.backgroundColor
 
     Component.onCompleted: {
-        populateGraphData();
+        populateGraphGaussianData();
     }
 
-    function populateGraphData() {
+    function populateGraphRandomData() {
         graphData.clear();
 
         var successData = sessionObject.successfulImplementationsThisMonth;
@@ -24,6 +24,39 @@ Rectangle {
         for (var questionId in successData) {
             var score = successData[questionId].count;
             graphData.append({ day: questionId, score: score });
+        }
+
+        canvas.requestPaint();
+    }
+
+    function populateGraphGaussianData() {
+        graphData.clear();
+
+        var successData = sessionObject.successfulImplementationsThisMonth;
+        var dataArray = [];
+
+        for (var questionId in successData) {
+            var score = successData[questionId].count;
+            dataArray.push({ day: questionId, score: score });
+        }
+
+        dataArray.sort(function(a, b) {
+            return b.score - a.score;
+        });
+
+        var midIndex = Math.floor(dataArray.length / 2);
+        var arrangedData = [];
+        
+        for (var i = 0; i < dataArray.length; i++) {
+            if (i % 2 === 0) {
+                arrangedData[midIndex + Math.floor(i / 2)] = dataArray[i];
+            } else {
+                arrangedData[midIndex - Math.ceil(i / 2)] = dataArray[i];
+            }
+        }
+
+        for (var i = 0; i < arrangedData.length; i++) {
+            graphData.append(arrangedData[i]);
         }
 
         canvas.requestPaint();
@@ -143,7 +176,7 @@ Rectangle {
                 ctx.font = "12px Arial";
                 ctx.save();
                 ctx.translate(xPos, yPos);
-                ctx.rotate(-Math.PI / 3); 
+                ctx.rotate(-Math.PI / 2); 
                 ctx.fillText(point.day, 0, 0);
                 ctx.restore();
             }
