@@ -94,4 +94,4 @@ jobs:
 
     - name: Upload binaries to release
       run: |
-        gh release upload v1.0.0 ./artifacts/* --cl
+        gh release upload v1.0.0 ./artifacts/* --clobber
