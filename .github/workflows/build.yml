@@ -36,14 +36,14 @@ jobs:
 
     - name: Upload Linux binary
       if: matrix.os == 'ubuntu-latest'
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: linux-binary
         path: ./Hedgehog  # Adjust path to your actual binary
 
     - name: Upload macOS binary
       if: matrix.os == 'macos-latest'
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: macos-binary
         path: ./Hedgehog  # Adjust path to your actual binary
