@@ -63,7 +63,7 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         tag_name: v1.0.0  # Update this to your desired release version
-        release_name: Release v1.0.0  # Name of the release
+        name: Hedgehog v1.0.0  # Name of the release
         draft: false
         prerelease: false
       env:
