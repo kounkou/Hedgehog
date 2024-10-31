@@ -85,7 +85,7 @@ Rectangle {
                     width: parent.width
                     height: 115
                     radius: 10
-                    color: themeObject.textAreaBackgroundColor
+                    color: themeObject.buttonColor
 
                     Component {
                         id: settingsDelegate
