@@ -11,7 +11,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]  # Specify OS for builds
+        os: [ubuntu-latest, macos-latest]
+        arch: [x64, arm64]  # Add arm64 to support ARM architecture
 
     steps:
     - name: Checkout code
@@ -21,13 +22,22 @@ jobs:
       if: matrix.os == 'ubuntu-latest'
       run: |
         sudo apt-get update
-        sudo apt install -y qtbase5-dev qt5-qmake
+        sudo apt install -y qtbase5-dev qt5-qmake qtwebengine5-dev
 
     - name: Set up Qt5 on macOS
       if: matrix.os == 'macos-latest'
       run: |
         brew install qt@5
         brew link --force qt@5 --overwrite  # Link the installed Qt5
+
+    - name: Set architecture for build
+      run: |
+        if [ "${{ matrix.arch }}" == "arm64" ]; then
+          echo "Building for ARM architecture"
+          export CMAKE_CXX_FLAGS="-target arm64-apple-darwin"  # Adjust for macOS ARM
+        else
+          echo "Building for x64 architecture"
+        fi
 
     - name: Build application
       run: |
@@ -38,12 +48,13 @@ jobs:
       if: matrix.os == 'ubuntu-latest'
       uses: actions/upload-artifact@v3
       with:
-        name: linux-binary
-        path: ./Hedgehog  # Adjust path to your actual binary
+        name: linux-binary-${{ matrix.arch }}
+        path: ./build/Hedgehog  # Adjust path to your actual binary
 
     - name: Upload macOS binary
       if: matrix.os == 'macos-latest'
       uses: actions/upload-artifact@v3
       with:
-        name: macos-binary
-        path: ./Hedgehog  # Adjust path to your actual binary
+        name: macos-binary-${{ matrix.arch }}
+        path: ./build/Hedgehog  # Adjust path to your actual binary
+
