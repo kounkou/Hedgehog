@@ -47,7 +47,7 @@ jobs:
     - name: Upload binary
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ matrix.os }}-binary-${{ matrix.arch }}
+        name: "${{ matrix.os }}-${{ matrix.arch }}-binary"
         path: ./build/Hedgehog  # Adjust path to your actual binary
 
   release:
@@ -58,10 +58,29 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Download build artifacts
+    - name: Download Linux x64 binary
       uses: actions/download-artifact@v3
       with:
-        name: ${{ matrix.os }}-binary-${{ matrix.arch }}
+        name: ubuntu-latest-x64-binary
+        path: ./artifacts
+
+    - name: Download Linux arm64 binary
+      uses: actions/download-artifact@v3
+      with:
+        name: ubuntu-latest-arm64-binary
+        path: ./artifacts
+
+    - name: Download macOS x64 binary
+      uses: actions/download-artifact@v3
+      with:
+        name: macos-latest-x64-binary
+        path: ./artifacts
+
+    - name: Download macOS arm64 binary
+      uses: actions/download-artifact@v3
+      with:
+        name: macos-latest-arm64-binary
+        path: ./artifacts
 
     - name: Create Draft Release
       id: create_release
@@ -74,7 +93,5 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Uses the automatically provided GitHub token
 
     - name: Upload binaries to release
-      uses: actions/upload-artifact@v3
-      with:
-        name: Hedgehog
-        path: ./build
+      run: |
+        gh release upload v1.0.0 ./artifacts/* --cl
