@@ -1,3 +1,8 @@
+<div align="center">
+    <img src="https://github.com/kounkou/Hedgehog/actions/workflows/build.yml/badge.svg"  alt="Hedgehog workflow">
+</div>
+
+----
 
 <div align="center">
     <a href="https://buymeacoffee.com/kounkou">
