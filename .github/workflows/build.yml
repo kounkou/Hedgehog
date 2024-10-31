@@ -1,4 +1,4 @@
-name: Build Application
+name: Build and Release Application
 
 on:
   push:
@@ -44,16 +44,37 @@ jobs:
         chmod +x ./build.sh  # Make sure your build script is executable
         ./build.sh  # Run your build script
 
-    - name: Upload Linux binary
-      if: matrix.os == 'ubuntu-latest'
+    - name: Upload binary
       uses: actions/upload-artifact@v3
       with:
-        name: linux-binary-${{ matrix.arch }}
+        name: ${{ matrix.os }}-binary-${{ matrix.arch }}
         path: ./build/Hedgehog  # Adjust path to your actual binary
 
-    - name: Upload macOS binary
-      if: matrix.os == 'macos-latest'
+  release:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Download build artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: ${{ matrix.os }}-binary-${{ matrix.arch }}
+
+    - name: Create Draft Release
+      id: create_release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: v1.0.0  # Adjust as needed
+        release_name: "Release v1.0.0"
+        draft: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Uses the automatically provided GitHub token
+
+    - name: Upload binaries to release
       uses: actions/upload-artifact@v3
       with:
-        name: macos-binary-${{ matrix.arch }}
-        path: ./build/Hedgehog  # Adjust path to your actual binary
+        name: Hedgehog
+        path: ./build
