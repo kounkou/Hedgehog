@@ -1,6 +1,6 @@
 #!/bin/sh
 
-function replaceDestinationBinary() {
+replaceDestinationBinary() {
     file='Makefile'
     string_to_replace='Hedgehog.app\/Contents\/MacOS\/'
     replacement_string=''
