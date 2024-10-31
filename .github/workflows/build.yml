@@ -1,0 +1,49 @@
+name: Build Application
+
+on:
+  push:
+    branches:
+      - main  # Change to your default branch
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]  # Specify OS for builds
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Qt5
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y qt5-default qtbase5-dev qtdeclarative5-dev
+
+    - name: Set up Qt5 on macOS
+      if: matrix.os == 'macos-latest'
+      run: |
+        brew install qt@5
+        brew link --force qt@5 --overwrite  # Link the installed Qt5
+
+    - name: Build application
+      run: |
+        chmod +x ./build.sh  # Make sure your build script is executable
+        ./build.sh  # Run your build script
+
+    - name: Upload Linux binary
+      if: matrix.os == 'ubuntu-latest'
+      uses: actions/upload-artifact@v2
+      with:
+        name: linux-binary
+        path: ./Hedgehog  # Adjust path to your actual binary
+
+    - name: Upload macOS binary
+      if: matrix.os == 'macos-latest'
+      uses: actions/upload-artifact@v2
+      with:
+        name: macos-binary
+        path: ./Hedgehog  # Adjust path to your actual binary
