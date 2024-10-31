@@ -21,7 +21,7 @@ jobs:
       if: matrix.os == 'ubuntu-latest'
       run: |
         sudo apt-get update
-        sudo apt-get install -y qt5-default qtbase5-dev qtdeclarative5-dev
+        sudo apt install -y qtbase5-dev qt5-qmake
 
     - name: Set up Qt5 on macOS
       if: matrix.os == 'macos-latest'
