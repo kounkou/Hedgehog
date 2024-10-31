@@ -1,4 +1,4 @@
 #!/bin/sh
 
-bash buils.sh
+bash build.sh
 make install
