@@ -395,6 +395,7 @@ Rectangle {
                 spacing: 20
 
                 Item {
+                    id: emojis
                     width: parent.width
                     height: 40
 
@@ -473,6 +474,8 @@ Rectangle {
                 }
 
                 RowLayout {
+                    spacing: 20
+
                     Rectangle {
                         id: questionDifficulty
                         height: 25
@@ -499,6 +502,36 @@ Rectangle {
 
                     Item {
                         Layout.fillWidth: true
+                    }
+
+                    Rectangle {
+                        id: clock
+                        height: 25
+                        width: clockText.width + 20
+                        opacity: countdownTimer.running ? 1 : 0.5
+                        color: {
+                            if (timerValue < 30) {
+                                    return themeObject.buttonHardColor
+                                } else if (timerValue < 60) {
+                                    return themeObject.buttonMediumColor
+                                } else {
+                                    return themeObject.buttonColor
+                                }
+                            }
+                        radius: 10
+
+                        Text {
+                            id: clockText
+                            text: (sessionObject.visitedNumbers.length + 1) + "/" + QuestionsHandler.getTotalQuestions(questionsData) + " Time left: " + (
+                                QuestionsHandler.getQuestionDifficulty(questionsData, currentQuestionIndex) === "Hard" ? timerValue : timerValue
+                            ) + "s"
+                            Layout.alignment: Qt.AlignRight
+                            font.pixelSize: 14
+                            anchors.centerIn: parent
+                            font.bold: true
+                            font.family: "Noto Color Emoji"
+                            color: themeObject.textColor
+                        }
                     }
 
                     ComboBox {
@@ -546,14 +579,6 @@ Rectangle {
                             color: themeObject.textColor
                         }
 
-                        // Component.onCompleted: {
-                        //     var maxText = model.reduce(function(a, b) { 
-                        //         return a.length > b.length ? a : b; 
-                        //     });
-                        //     var metrics = Qt.fontMetrics(font);
-                        //     width = metrics.width(maxText) + 30;
-                        // }
-
                         onActivated: {
                             currentLanguage = languageComboBox.currentText
                             sessionObject.language = currentLanguage
@@ -561,103 +586,57 @@ Rectangle {
                             d.updateLanguage(currentLanguage)
                         }
                     }
-
-                    // Switch {
-                    //     id: themeToggle
-                    //     font.bold: true
-                    //     text: themeObject.theme === "light" ? "Light Theme" : "Dark Theme"
-                    //     checked: themeObject.theme === "dark"
-                    //     visible: !quizComplete
-                    //     onCheckedChanged: {
-                    //         themeObject.theme = checked ? "dark" : "light"
-                    //     }
-
-                    //     contentItem: Text {
-                    //         text: themeToggle.text
-                    //         font: themeToggle.font
-                    //         opacity: enabled ? 1.0 : 0.3
-                    //         color: themeObject.textColor
-                    //         verticalAlignment: Text.AlignVCenter
-                    //         leftPadding: themeToggle.indicator.width + themeToggle.spacing
-                    //     }
-                    // }
                 }
 
-                TextArea {
-                    id: answerInput
-                    Layout.fillWidth: true
-                    // height: 200
-                    readOnly: submitted
-                    placeholderText: QuestionsHandler.getQuestionPlaceHolder(questionsData, sessionObject.language, currentQuestionIndex, sessionObject.selectedCategories)
-                    font.family: "Courier New"
-                    font.pixelSize: 14
-                    font.bold: true
-                    color: themeObject.textColor
-                    padding: 10
-                    antialiasing: true
-                    wrapMode: Text.Wrap
-                    visible: !quizComplete
+                Rectangle {
+                    id: backgroundRect
+                    width: parent.width
+                    height: 450
+                    color: themeObject.textAreaBackgroundColor
+                    border.width: 1
+                    border.color: themeObject.textAreaBorderColor
+                    radius: 10
 
-                    background: Rectangle {
-                        color: themeObject.textAreaBackgroundColor
-                        border.width: 1
-                        border.color: themeObject.textAreaBorderColor
-                        radius: 10
-                        width: root.width - 20
-                    }
-                    onTextChanged: {
-                        userAnswer = text
-                        if (!countdownTimer.running && !submitted) {
-                            countdownTimer.start()
-                        }
-                    }
+                    ScrollView {
+                        anchors.fill: parent
+                        clip: true
 
-                    Component.onCompleted: {
-                        documentHandler.setDocument(answerInput.textDocument, themeObject.theme)
-                    }
+                        TextArea {
+                            id: answerInput
+                            anchors.fill: parent
+                            readOnly: submitted
+                            placeholderText: QuestionsHandler.getQuestionPlaceHolder(questionsData, sessionObject.language, currentQuestionIndex, sessionObject.selectedCategories)
+                            font.family: "Courier New"
+                            font.pixelSize: 16
+                            font.bold: true
+                            color: themeObject.textColor
+                            padding: 10
+                            antialiasing: true
+                            wrapMode: Text.Wrap
+                            visible: !quizComplete
 
-                    palette {
-                        highlight: "#B4D5FE"
-                        highlightedText: "#202020"
-                    }
-
-                    property bool processing: false
-                    selectByMouse: true
-
-                    Keys.onPressed: {
-                        d.handleIdentation(event)
-                    }
-
-                    Rectangle {
-                        id: clock
-                        height: 25
-                        width: clockText.width + 20
-                        opacity: countdownTimer.running ? 1 : 0.5
-                        color: {
-                            if (timerValue < 30) {
-                                    return themeObject.buttonHardColor
-                                } else if (timerValue < 60) {
-                                    return themeObject.buttonMediumColor
-                                } else {
-                                    return themeObject.backgroundColor
+                            onTextChanged: {
+                                userAnswer = text
+                                if (!countdownTimer.running && !submitted) {
+                                    countdownTimer.start()
                                 }
                             }
-                        radius: 10
-                        anchors.bottom: parent.bottom
-                        anchors.right: parent.right
-                        anchors.margins: 10
 
-                        Text {
-                            id: clockText
-                            text: (sessionObject.visitedNumbers.length + 1) + "/" + QuestionsHandler.getTotalQuestions(questionsData) + " Time left: " + (
-                                QuestionsHandler.getQuestionDifficulty(questionsData, currentQuestionIndex) === "Hard" ? timerValue : timerValue
-                            ) + "s"
-                            Layout.alignment: Qt.AlignRight
-                            font.pixelSize: 14
-                            anchors.centerIn: parent
-                            font.bold: true
-                            font.family: "Noto Color Emoji"
-                            color: themeObject.textColor
+                            Component.onCompleted: {
+                                documentHandler.setDocument(answerInput.textDocument, themeObject.theme)
+                            }
+
+                            palette {
+                                highlight: "#B4D5FE"
+                                highlightedText: "#202020"
+                            }
+
+                            property bool processing: false
+                            selectByMouse: true
+
+                            Keys.onPressed: {
+                                d.handleIdentation(event)
+                            }
                         }
                     }
                 }
