@@ -3,7 +3,8 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
 Rectangle {
-    id: aboutPage
+    id: settingsObject
+
     width: parent.width
     height: parent.height - 10
     color: themeObject.backgroundColor
@@ -43,7 +44,7 @@ Rectangle {
             Rectangle {
                 id: header
                 width: parent.width
-                height: 130
+                height: 100
                 color: themeObject.buttonColor
                 border.width: 1
                 border.color: themeObject.buttonBorderColor
@@ -54,19 +55,12 @@ Rectangle {
                     anchors.margins: 20
 
                     Text {
-                        text: "🔩"
-                        font.pixelSize: 50
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        font.family: "Noto Color Emoji"
-                    }
-
-                    Text {
                         id: headerText
                         text: "Settings"
                         font.pixelSize: 24
                         color: themeObject.textColor
                         font.bold: true
-                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.centerIn: parent
                         font.family: "Noto Color Emoji"
                     }
                 }
@@ -150,8 +144,10 @@ Rectangle {
 
                     Component {
                         id: switchComponent
-                        
-                        Switch {
+
+                        SwitchDelegate {
+                            id: control
+
                             checked: itemName === "Automatic theme" ? sessionObject.automaticThemeSetting : sessionObject.fontSetting
 
                             onToggled: {
@@ -160,8 +156,37 @@ Rectangle {
                                 } else {
                                     sessionObject.fontSetting = checked;
                                 }
-
                                 sessionObject.saveSession();
+                            }
+
+                            indicator: Rectangle {
+                                implicitWidth: 50
+                                implicitHeight: 26
+                                x: control.width - width - control.rightPadding
+                                y: parent.height / 2 - height / 2
+                                radius: 13
+                                color: control.checked ? themeObject.buttonEasyColor : "#cccccc"
+                                border.color: control.checked ? themeObject.buttonEasyColor : "#cccccc"
+
+                                Rectangle {
+                                    x: control.checked ? parent.width - width : 0
+                                    width: 26
+                                    height: 26
+                                    radius: 13
+                                    color: control.down ? "#cccccc" : "#ffffff"
+                                    border.color: control.checked ? (control.down ? themeObject.buttonEasyColor : "#21be2b") : "#999999"
+
+                                    Behavior on x {
+                                        NumberAnimation { duration: 200 }
+                                    }
+                                }
+                            }
+
+                            background: Rectangle {
+                                implicitWidth: 100
+                                implicitHeight: 40
+                                visible: false
+                                color: control.down ? "#bdbebf" : "#eeeeee"
                             }
                         }
                     }

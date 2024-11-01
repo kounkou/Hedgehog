@@ -5,6 +5,7 @@
         <file alias="StatsPage.qml">qml/StatsPage.qml</file>
         <file alias="ReviewPage.qml">qml/ReviewPage.qml</file>
         <file alias="Theme.qml">qml/Theme.qml</file>
+        <file alias="CustomTimer.qml">qml/CustomTimer.qml</file>
         <file alias="SectionPage.qml">qml/SectionPage.qml</file>
         <file alias="WelcomePage.qml">qml/WelcomePage.qml</file>
         <file alias="PracticePage.qml">qml/PracticePage.qml</file>

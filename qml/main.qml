@@ -21,11 +21,13 @@ ApplicationWindow {
         id: themeObject
     }
 
+    CustomTimer {
+        id: customTimerObject
+    }
+
     StackView {
         id: stackView
         anchors.fill: parent
-        // initialItem: LoginPage{
-        // }
         initialItem: WelcomePage{
             theme: root.themeObject || "light"
         }
