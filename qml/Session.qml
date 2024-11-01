@@ -14,6 +14,8 @@ QtObject {
     property string language: "C++"
     property bool   automaticThemeSetting: false
     property bool   fontSetting: false
+    property int    todayVisitedNumbers: 0
+    property int    lastDayVisitedNumbers: 0
 
     function getTheme() {
         if (automaticThemeSetting) {
@@ -47,7 +49,9 @@ QtObject {
             language: language,
             automaticThemeSetting: automaticThemeSetting,
             theme: getTheme(),
-            fontSetting: fontSetting
+            fontSetting: fontSetting,
+            lastDayVisitedNumbers: lastDayVisitedNumbers,
+            todayVisitedNumbers: todayVisitedNumbers
         };
         var content = JSON.stringify(sessionData, null, 4);
         var filePath = "sessionData.json";
@@ -72,6 +76,8 @@ QtObject {
                 automaticThemeSetting = data.automaticThemeSetting || false;
                 theme = getThemeToLoad(data) || theme;
                 fontSetting = data.fontSetting || false;
+                lastDayVisitedNumbers = data.lastDayVisitedNumbers || 0;
+                todayVisitedNumbers = data.todayVisitedNumbers || 0;
             } catch (e) {
                 console.error("Failed to parse session data: " + e);
             }
@@ -85,6 +91,9 @@ QtObject {
 
    function resetAgedQuestions(today, lastPerformanceUpdateDate) {
         if (today != lastPerformanceUpdateDate) {
+            lastDayVisitedNumbers = todayVisitedNumbers
+            todayVisitedNumbers = 0
+
             for (var questionId in successfulImplementationsThisMonth) {
                 if (successfulImplementationsThisMonth.hasOwnProperty(questionId)) {
                     var questionData = successfulImplementationsThisMonth[questionId];
