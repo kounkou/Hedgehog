@@ -12,6 +12,10 @@ Rectangle {
     color: themeObject.backgroundColor
     anchors.horizontalCenter: parent.horizontalCenter
 
+    Component.onCompleted: {
+        customTimerObject.startTimer()
+    }
+
     Column {
         spacing: 20
         anchors.centerIn: parent
@@ -86,25 +90,59 @@ Rectangle {
             page: aboutPage
         }
 
-        Switch {
+        SwitchDelegate {
             id: themeToggle
+
             font.bold: true
             text: themeObject.theme === "light" ? "Light Theme" : "Dark Theme"
             checked: themeObject.theme === "dark"
             anchors.horizontalCenter: parent.horizontalCenter
             enabled: !sessionObject.automaticThemeSetting
+
+            contentItem: Text {
+                    rightPadding: themeToggle.indicator.width + themeToggle.spacing
+                    text: themeToggle.text 
+                    font: themeToggle.font
+                    opacity: enabled ? 1.0 : 0.5
+                    color: themeObject.textColor
+                    elide: Text.ElideRight
+                    verticalAlignment: Text.AlignVCenter
+            }
+
             onCheckedChanged: {
                 themeObject.theme = checked ? "dark" : "light"
                 sessionObject.saveSession()
             }
 
-            contentItem: Text {
-                text: themeToggle.text
-                font: themeToggle.font
-                opacity: enabled ? 1.0 : 0.3
-                color: themeObject.textColor
-                verticalAlignment: Text.AlignVCenter
-                leftPadding: themeToggle.indicator.width + themeToggle.spacing
+            indicator: Rectangle {
+                implicitWidth: 50
+                implicitHeight: 26
+                x: themeToggle.width - width - themeToggle.rightPadding
+                y: parent.height / 2 - height / 2
+                radius: 13
+                color: themeToggle.checked ? themeObject.buttonEasyColor : "#cccccc"
+                border.color: themeToggle.checked ? themeObject.buttonEasyColor : "#cccccc"
+                opacity: enabled ? 1.0 : 0.5
+
+                Rectangle {
+                    x: themeToggle.checked ? parent.width - width : 0
+                    width: 26
+                    height: 26
+                    radius: 13
+                    color: themeToggle.down ? "#cccccc" : "#ffffff"
+                    border.color: themeToggle.checked ? (themeToggle.down ? themeObject.buttonEasyColor : "#21be2b") : "#999999"
+
+                    Behavior on x {
+                        NumberAnimation { duration: 200 }
+                    }
+                }
+            }
+
+            background: Rectangle {
+                implicitWidth: 100
+                implicitHeight: 40
+                visible: false
+                color: control.down ? "#bdbebf" : "#eeeeee"
             }
         }
     }
