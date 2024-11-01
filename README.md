@@ -51,12 +51,18 @@ Key features of Hedgehog include:
 
 # Installation instructions
 
-### MacOS dependencies installation
-
 Hedgehog relies on Qt to provide you with the amazing user interface
 
+**MacOS**
 ```bash
 brew install qt@5
+brew link --force qt@5 --overwrite
+```
+
+**Linux**
+```bash
+sudo apt-get update
+sudo apt install -y qtbase5-dev qt5-qmake qtwebengine5-dev
 ```
 
 You can check out Qt install on other platforms here : 
@@ -73,8 +79,15 @@ bash install.sh
 
 To launch Hedgehog from the Terminal : 
 
+**MacOS**
 ```bash
 cd /Applications/Hedgehog/
+./Hedgehog
+```
+
+**Linux**
+```bash
+cd /home/<YOUR USERNAME>/Hedgehog/
 ./Hedgehog
 ```
 
