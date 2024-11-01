@@ -77,12 +77,12 @@ Rectangle {
 
             if (yesterday === 0) {
                 return today > 0 
-                    ? `⬆ ${today} from yesterday` 
+                    ? `⬆ ${today} successful implementations from yesterday` 
                     : "";
             }
 
             if (today === 0) {
-                return `⬇ ${yesterday} from yesterday`;
+                return `⬇ ${yesterday} successful implementations from yesterday`;
             }
 
             const difference = today - yesterday;
