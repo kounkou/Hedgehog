@@ -605,7 +605,7 @@ Rectangle {
 
                         TextArea {
                             id: answerInput
-                            anchors.fill: parent
+                            anchors.fill: backgroundRect
                             readOnly: submitted
                             placeholderText: QuestionsHandler.getQuestionPlaceHolder(questionsData, sessionObject.language, currentQuestionIndex, sessionObject.selectedCategories)
                             font.family: "Courier New"
