@@ -218,12 +218,14 @@ Rectangle {
                         correctAnswers++
                         isCurrentAnswerCorrect = true
                         sessionObject.algorithmAttempt(QuestionsHandler.getQuestionID(questionsData, currentQuestionIndex), true)
+                        sessionObject.todayVisitedNumbers += 1
 
                     } else if (result.similarityStatus === "Moderately Similar") {
                         resultsModel.append({ similarity: "Moderately Similar", id: currentQuestionIndex + 1 })
                         correctAnswers++
                         isCurrentAnswerCorrect = true
                         sessionObject.algorithmAttempt(QuestionsHandler.getQuestionID(questionsData, currentQuestionIndex), true)
+                        sessionObject.todayVisitedNumbers += 1
 
                     } else {
                         answerInput.text = expectedAnswer

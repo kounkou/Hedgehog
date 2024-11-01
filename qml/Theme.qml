@@ -26,4 +26,7 @@ QtObject {
     property color textAreaBorderColor:     theme === "light" ? "#CCCCCC" : "#444444"  // Less contrast in borders
     
     property color codeTextColor:           theme === "light" ? "#333333" : "#E0E0E0"  // Dark grey for light theme, soft grey for dark theme
+
+    property color averageLineColor:        theme === "light" ? "#2E7D32" : "#66BB6A"
+
 }

@@ -7,59 +7,100 @@ Rectangle {
     id: statsPage
 
     property string theme: "light"
+    property string fluctuation: ""
+    property string lastUpdateTime: ""
 
     Layout.fillWidth: true
     Layout.fillHeight: true
     color: themeObject.backgroundColor
 
     Component.onCompleted: {
-        populateGraphGaussianData();
+        d.populateGraphGaussianData();
+        sessionObject.loadSession();
+        statsPage.fluctuation = d.getFluctuation();
+        statsPage.lastUpdateTime = getCurrentTime();
     }
 
-    function populateGraphRandomData() {
-        graphData.clear();
+    QtObject {
+        id: d
 
-        var successData = sessionObject.successfulImplementationsThisMonth;
+        function populateGraphRandomData() {
+            graphData.clear();
 
-        for (var questionId in successData) {
-            var score = successData[questionId].count;
-            graphData.append({ day: questionId, score: score });
+            var successData = sessionObject.successfulImplementationsThisMonth;
+
+            for (var questionId in successData) {
+                var score = successData[questionId].count;
+                graphData.append({ day: questionId, score: score });
+            }
+
+            canvas.requestPaint();
+            statsPage.lastUpdateTime = getCurrentTime();
         }
 
-        canvas.requestPaint();
-    }
+        function populateGraphGaussianData() {
+            graphData.clear();
 
-    function populateGraphGaussianData() {
-        graphData.clear();
+            var successData = sessionObject.successfulImplementationsThisMonth;
+            var dataArray = [];
 
-        var successData = sessionObject.successfulImplementationsThisMonth;
-        var dataArray = [];
+            for (var questionId in successData) {
+                var score = successData[questionId].count;
+                dataArray.push({ day: questionId, score: score });
+            }
 
-        for (var questionId in successData) {
-            var score = successData[questionId].count;
-            dataArray.push({ day: questionId, score: score });
+            dataArray.sort(function(a, b) {
+                return b.score - a.score;
+            });
+
+            var midIndex = Math.floor(dataArray.length / 2);
+            var arrangedData = [];
+            
+            for (var i = 0; i < dataArray.length; i++) {
+                if (i % 2 === 0) {
+                    arrangedData[midIndex + Math.floor(i / 2)] = dataArray[i];
+                } else {
+                    arrangedData[midIndex - Math.ceil(i / 2)] = dataArray[i];
+                }
+            }
+
+            for (var i = 0; i < arrangedData.length; i++) {
+                graphData.append(arrangedData[i]);
+            }
+
+            canvas.requestPaint();
+            statsPage.lastUpdateTime = getCurrentTime();
         }
 
-        dataArray.sort(function(a, b) {
-            return b.score - a.score;
-        });
+        function getFluctuation() {
+            const { lastDayVisitedNumbers: yesterday, todayVisitedNumbers: today } = sessionObject;
 
-        var midIndex = Math.floor(dataArray.length / 2);
-        var arrangedData = [];
-        
-        for (var i = 0; i < dataArray.length; i++) {
-            if (i % 2 === 0) {
-                arrangedData[midIndex + Math.floor(i / 2)] = dataArray[i];
+            if (yesterday === 0) {
+                return today > 0 
+                    ? `⬆ ${today} from yesterday` 
+                    : "";
+            }
+
+            if (today === 0) {
+                return `⬇ ${yesterday} from yesterday`;
+            }
+
+            const difference = today - yesterday;
+            const percentageChange = Math.abs((difference / yesterday) * 100).toFixed(2);
+
+            if (difference > 0) {
+                return `⬆ ${percentageChange}% from yesterday`;
+            } else if (difference < 0) {
+                return `⬇ ${percentageChange}% from yesterday`;
             } else {
-                arrangedData[midIndex - Math.ceil(i / 2)] = dataArray[i];
+                return "";
             }
         }
+    }
 
-        for (var i = 0; i < arrangedData.length; i++) {
-            graphData.append(arrangedData[i]);
-        }
-
-        canvas.requestPaint();
+    function getCurrentTime() {
+        var date = new Date();
+        return date.toLocaleString(); // e.g., "10/31/2024, 3:45 PM"
     }
 
     Text {
@@ -74,11 +115,22 @@ Rectangle {
     }
 
     Text {
+        id: details
         anchors.top: title.bottom
         anchors.topMargin: 10
         text: "Evaluates your performance by considering both the success rate and the frequency of problems solved."
         font.pixelSize: 14
         font.bold: false
+        color: themeObject.textColor
+        anchors.horizontalCenter: parent.horizontalCenter
+    }
+
+    Text {
+        anchors.top: details.bottom
+        anchors.topMargin: 10
+        text: statsPage.fluctuation
+        font.pixelSize: 14
+        font.bold: true
         color: themeObject.textColor
         anchors.horizontalCenter: parent.horizontalCenter
     }
@@ -151,7 +203,7 @@ Rectangle {
 
                 var barColor = "#00c8ff";
 
-                barHeight = point.score
+                barHeight = point.score;
 
                 if (barHeight <= 2) {
                     barColor = themeObject.buttonHardColor;
@@ -180,7 +232,36 @@ Rectangle {
                 ctx.fillText(point.day, 0, 0);
                 ctx.restore();
             }
+
+            // Draw the dotted line at y = 5 LAST to bring it to the front
+            var yValue = 5;
+            var yPos = canvas.height - padding - ((yValue / yAxisMax) * graphHeight);
+
+            ctx.beginPath();
+            ctx.setLineDash([5, 5]); // 5px dash, 5px space
+            ctx.strokeStyle = themeObject.averageLineColor; // Color for the average line
+            ctx.lineWidth = 1;
+            ctx.moveTo(padding, yPos);
+            ctx.lineTo(canvas.width - padding, yPos);
+            ctx.stroke();
+            ctx.setLineDash([]); // Reset to solid lines
+
+            // Add text label at the end of the line
+            ctx.fillStyle = themeObject.averageLineColor; // Match line color for consistency
+            ctx.font = "12px Arial";
+            ctx.fillText("avg 5", canvas.width - 2 * padding, yPos - 4);
         }
+    }
+
+    // Updated Time Display
+    Text {
+        id: updatedTime
+        text: "Last updated: " + statsPage.lastUpdateTime
+        font.pixelSize: 12
+        color: themeObject.textColor
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottomMargin: 50
     }
 
     RowLayout {
