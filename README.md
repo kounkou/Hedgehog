@@ -91,11 +91,6 @@ cd /home/<YOUR USERNAME>/Hedgehog/
 ./Hedgehog
 ```
 
-# How to contribute
+# Contribution guidelines
 
-We welcome your contributions! You can get involved by:
-
-- Proposing and developing new features
-- Assisting with the addition of algorithms
-
-Your support is greatly appreciated!
+Your contributions are welcome! Please see the [contributing guidelines](https://github.com/kounkou/Hedgehog/blob/main/CONTRIBUTING.md)
