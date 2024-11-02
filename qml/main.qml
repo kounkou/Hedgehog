@@ -28,55 +28,63 @@ ApplicationWindow {
     StackView {
         id: stackView
         anchors.fill: parent
-        initialItem: welcomeLoader.sourceComponent
-    }
-
-    Loader {
-        id: welcomeLoader
-        sourceComponent: WelcomePage {
+        initialItem: WelcomePage{
             theme: root.themeObject || "light"
         }
     }
 
-    Loader {
-        id: loginLoader
-        sourceComponent: LoginPage {}
+    Component {
+        id: login
+        LoginPage{
+        }
     }
 
-    Loader {
-        id: sectionLoader
-        sourceComponent: SectionPage {}
+    Component {
+        id: welcomePage
+        WelcomePage{
+        }
     }
 
-    Loader {
-        id: practiceLoader
-        sourceComponent: PracticePage {
+    Component {
+        id: sectionPage
+        SectionPage{
+        }
+    }
+
+    Component {
+        id: practicePage
+        PracticePage{
             session: sessionObject.session
         }
     }
 
-    Loader {
-        id: reviewLoader
-        sourceComponent: ReviewPage {}
+    Component {
+        id: reviewPage
+        ReviewPage{
+        }
     }
 
-    Loader {
-        id: statsLoader
-        sourceComponent: StatsPage {}
+    Component {
+        id: statsPage
+        StatsPage{
+        }
     }
 
-    Loader {
-        id: aboutLoader
-        sourceComponent: AboutPage {}
+    Component {
+        id: aboutPage
+        AboutPage{
+        }
     }
 
-    Loader {
-        id: categoryLoader
-        sourceComponent: CategoryPage {}
+    Component { 
+        id: categoryPage
+        CategoryPage{
+        }
     }
 
-    Loader {
-        id: settingsLoader
-        sourceComponent: SettingsPage {}
+    Component {
+        id: settingsPage
+        SettingsPage{
+        }
     }
 }
