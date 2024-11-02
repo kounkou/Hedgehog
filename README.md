@@ -21,7 +21,7 @@
 - Linux   (Testing in progress)
 - Windows (Not tested)
 
-For the best experience, I currently recommend using Hedgehog on macOS for its optimal look and feel. That said, you can still run the application on Linux and Windows without any issues. I'm actively refining the styles for both platforms to ensure a polished experience across all operating systems.
+For the best experience, I currently recommend using Hedgehog on macOS for its optimal look and feel. That said, you can still run the application on Linux. I'm actively refining the styles for both platforms to ensure a polished experience across all operating systems.
 
 
 # Hedgehog
