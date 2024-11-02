@@ -16,6 +16,7 @@ QtObject {
     property bool   fontSetting: false
     property int    todayVisitedNumbers: 0
     property int    lastDayVisitedNumbers: 0
+    property bool   isFontBold: false
 
     function getTheme() {
         if (automaticThemeSetting) {
@@ -50,6 +51,7 @@ QtObject {
             automaticThemeSetting: automaticThemeSetting,
             theme: getTheme(),
             fontSetting: fontSetting,
+            isFontBold: isFontBold,
             lastDayVisitedNumbers: lastDayVisitedNumbers,
             todayVisitedNumbers: todayVisitedNumbers
         };
@@ -76,6 +78,7 @@ QtObject {
                 automaticThemeSetting = data.automaticThemeSetting || false;
                 theme = getThemeToLoad(data) || theme;
                 fontSetting = data.fontSetting || false;
+                isFontBold = data.isFontBold || false;
                 lastDayVisitedNumbers = data.lastDayVisitedNumbers || 0;
                 todayVisitedNumbers = data.todayVisitedNumbers || 0;
             } catch (e) {

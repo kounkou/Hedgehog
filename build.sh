@@ -14,4 +14,9 @@ make clean
 qmake
 replaceDestinationBinary
 make
-cp build/Hedgehog Hedgehog-$1
+
+if [ -z "$1" ]; then
+    cp build/Hedgehog Hedgehog
+else
+    cp build/Hedgehog Hedgehog-$1
+fi

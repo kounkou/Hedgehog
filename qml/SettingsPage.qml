@@ -25,12 +25,12 @@ Rectangle {
 
             ListElement {
                 name: "Automatic theme"
-                controlType: "Switch"
+                controlType: "AppearanceSwitch"
                 icon: "appearance"
             }
             ListElement {
                 name: "Bold Text"
-                controlType: "Switch"
+                controlType: "BoldTextSwitch"
                 icon: "font"
             }
         }
@@ -59,7 +59,7 @@ Rectangle {
                         text: "Settings"
                         font.pixelSize: 24
                         color: themeObject.textColor
-                        font.bold: true
+                        font.bold: sessionObject.isFontBold
                         anchors.centerIn: parent
                         font.family: "Noto Color Emoji"
                     }
@@ -112,13 +112,13 @@ Rectangle {
                                     anchors.left: settingItem.right
                                     anchors.leftMargin: 10
                                     font.pixelSize: 14
-                                    font.bold: true
+                                    font.bold: sessionObject.isFontBold
                                     color: themeObject.textColor
                                 }
 
                                 Loader {
                                     Layout.alignment: Qt.AlignRight
-                                    sourceComponent: controlType === "Switch" ? switchComponent : radioButtonComponent
+                                    sourceComponent: controlType === "AppearanceSwitch" ? appaeranceSwitchComponent : boldTextSwitchComponent
                                     property string itemName: name
                                 }
                             }
@@ -143,7 +143,7 @@ Rectangle {
                     }
 
                     Component {
-                        id: switchComponent
+                        id: appaeranceSwitchComponent
 
                         SwitchDelegate {
                             id: control
@@ -156,6 +156,51 @@ Rectangle {
                                 } else {
                                     sessionObject.fontSetting = checked;
                                 }
+                                sessionObject.saveSession();
+                            }
+
+                            indicator: Rectangle {
+                                implicitWidth: 50
+                                implicitHeight: 26
+                                x: control.width - width - control.rightPadding
+                                y: parent.height / 2 - height / 2
+                                radius: 13
+                                color: control.checked ? themeObject.buttonEasyColor : "#cccccc"
+                                border.color: control.checked ? themeObject.buttonEasyColor : "#cccccc"
+
+                                Rectangle {
+                                    x: control.checked ? parent.width - width : 0
+                                    width: 26
+                                    height: 26
+                                    radius: 13
+                                    color: control.down ? "#cccccc" : "#ffffff"
+                                    border.color: control.checked ? (control.down ? themeObject.buttonEasyColor : "#21be2b") : "#999999"
+
+                                    Behavior on x {
+                                        NumberAnimation { duration: 200 }
+                                    }
+                                }
+                            }
+
+                            background: Rectangle {
+                                implicitWidth: 100
+                                implicitHeight: 40
+                                visible: false
+                                color: control.down ? "#bdbebf" : "#eeeeee"
+                            }
+                        }
+                    }
+
+                    Component {
+                        id: boldTextSwitchComponent
+
+                        SwitchDelegate {
+                            id: control
+
+                            checked: sessionObject.isFontBold
+
+                            onToggled: {
+                                sessionObject.isFontBold = checked
                                 sessionObject.saveSession();
                             }
 

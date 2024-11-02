@@ -94,7 +94,7 @@ Rectangle {
                 anchors.topMargin: 10
                 text: "Each category contains a set of questions to solve, focused on a specific topic."
                 font.pixelSize: 14
-                font.bold: false
+                font.bold: sessionObject.isFontBold
                 color: themeObject.textColor
                 anchors.horizontalCenter: parent.horizontalCenter
             }
@@ -135,7 +135,7 @@ Rectangle {
                             font.family: "Noto Color Emoji"
                             text: model.enabled ? model.name : "🔒"
                             font.pixelSize: 14
-                            font.bold: true
+                            font.bold: sessionObject.isFontBold
                             color: model.selected ? "#F7F7F7" : themeObject.textColor
                             anchors.centerIn: parent
                         }
@@ -183,7 +183,7 @@ Rectangle {
                 height: 150
                 font.family: "Courier New"
                 font.pixelSize: 14
-                font.bold: false
+                font.bold: sessionObject.isFontBold
                 color: themeObject.textColor
                 textFormat: TextEdit.RichText
                 readOnly: true

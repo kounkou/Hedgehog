@@ -18,7 +18,7 @@ Button {
 
     contentItem: Text {
         text: root.buttonText
-        font.bold: true
+        font.bold: sessionObject.isFontBold
         opacity: enabled ? 1.0 : 0.3
         color: themeObject.textColor
         horizontalAlignment: Text.AlignHCenter
@@ -52,7 +52,7 @@ Button {
         Text {
             text: "BETA"
             color: themeObject.buttonHardColor
-            font.bold: true
+            font.bold: sessionObject.isFontBold
             verticalAlignment: Text.AlignVCenter
             font.pointSize: 12
             padding: 2
