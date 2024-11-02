@@ -51,7 +51,7 @@ Rectangle {
                         text: "About Hedgehog"
                         font.pixelSize: 24
                         color: themeObject.textColor
-                        font.bold: true
+                        font.bold: sessionObject.isFontBold
                         anchors.horizontalCenter: parent.horizontalCenter
                     }
                 }
@@ -118,7 +118,7 @@ Rectangle {
                     height: parent.height
                     font.family: "Courier New"
                     font.pixelSize: 14
-                    font.bold: false
+                    font.bold: sessionObject.isFontBold
                     color: themeObject.textColor
                     textFormat: TextEdit.RichText
                     readOnly: true
@@ -193,7 +193,7 @@ Rectangle {
                     height: parent.height
                     font.family: "Courier New"
                     font.pixelSize: 14
-                    font.bold: false
+                    font.bold: sessionObject.isFontBold
                     color: themeObject.textColor
                     textFormat: TextEdit.RichText
                     readOnly: true

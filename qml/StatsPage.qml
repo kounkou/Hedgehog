@@ -18,7 +18,7 @@ Rectangle {
         d.populateGraphGaussianData();
         sessionObject.loadSession();
         statsPage.fluctuation = d.getFluctuation();
-        statsPage.lastUpdateTime = getCurrentTime();
+        statsPage.lastUpdateTime = d.getCurrentTime();
     }
 
     QtObject {
@@ -35,7 +35,7 @@ Rectangle {
             }
 
             canvas.requestPaint();
-            statsPage.lastUpdateTime = getCurrentTime();
+            statsPage.lastUpdateTime = d.getCurrentTime();
         }
 
         function populateGraphGaussianData() {
@@ -69,7 +69,7 @@ Rectangle {
             }
 
             canvas.requestPaint();
-            statsPage.lastUpdateTime = getCurrentTime();
+            statsPage.lastUpdateTime = d.getCurrentTime();
         }
 
         function getFluctuation() {
@@ -96,11 +96,11 @@ Rectangle {
                 return "";
             }
         }
-    }
 
-    function getCurrentTime() {
-        var date = new Date();
-        return date.toLocaleString(); // e.g., "10/31/2024, 3:45 PM"
+        function getCurrentTime() {
+            var date = new Date();
+            return date.toLocaleString(); // e.g., "10/31/2024, 3:45 PM"
+        }
     }
 
     Text {
@@ -109,7 +109,7 @@ Rectangle {
         anchors.topMargin: 10
         text: "Number of successful implementations per question"
         font.pixelSize: 24
-        font.bold: true
+        font.bold: sessionObject.isFontBold
         color: themeObject.textColor
         anchors.horizontalCenter: parent.horizontalCenter
     }
@@ -120,7 +120,7 @@ Rectangle {
         anchors.topMargin: 10
         text: "Evaluates your performance by considering both the success rate and the frequency of problems solved."
         font.pixelSize: 14
-        font.bold: false
+        font.bold: sessionObject.isFontBold
         color: themeObject.textColor
         anchors.horizontalCenter: parent.horizontalCenter
     }
@@ -130,7 +130,7 @@ Rectangle {
         anchors.topMargin: 10
         text: statsPage.fluctuation
         font.pixelSize: 14
-        font.bold: true
+        font.bold: sessionObject.isFontBold
         color: themeObject.textColor
         anchors.horizontalCenter: parent.horizontalCenter
     }

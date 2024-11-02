@@ -424,7 +424,7 @@ Rectangle {
                                     : "👎"
                                     font.pixelSize: 40
                                     color: themeObject.textColor
-                                    font.bold: true
+                                    font.bold: sessionObject.isFontBold
                                     anchors.centerIn: parent
                                 }
                             }
@@ -436,7 +436,7 @@ Rectangle {
                     id: questionLabel
                     text: (currentQuestionIndex + 1) +  ". Implement a " + QuestionsHandler.getQuestion(questionsData, currentQuestionIndex)
                     font.pixelSize: 24
-                    font.bold: true
+                    font.bold: sessionObject.isFontBold
                     color: themeObject.textColor
                     visible: !quizComplete
                 }
@@ -496,7 +496,7 @@ Rectangle {
                         Text {
                             text: QuestionsHandler.getQuestionDifficulty(questionsData, currentQuestionIndex)
                             font.pixelSize: 14
-                            font.bold: true
+                            font.bold: sessionObject.isFontBold
                             anchors.centerIn: parent
                             color: themeObject.textColor
                         }
@@ -530,7 +530,7 @@ Rectangle {
                             Layout.alignment: Qt.AlignRight
                             font.pixelSize: 14
                             anchors.centerIn: parent
-                            font.bold: true
+                            font.bold: sessionObject.isFontBold
                             font.family: "Noto Color Emoji"
                             color: themeObject.textColor
                         }
@@ -610,7 +610,7 @@ Rectangle {
                             placeholderText: QuestionsHandler.getQuestionPlaceHolder(questionsData, sessionObject.language, currentQuestionIndex, sessionObject.selectedCategories)
                             font.family: "Courier New"
                             font.pixelSize: 16
-                            font.bold: true
+                            font.bold: sessionObject.isFontBold
                             color: themeObject.textColor
                             padding: 10
                             antialiasing: true
@@ -659,7 +659,7 @@ Rectangle {
                         visible: !quizComplete
                         width: 200 
                         height: 50
-                        font.bold: true
+                        font.bold: sessionObject.isFontBold
 
                         contentItem: Text {
                             text: pause.text
@@ -689,7 +689,7 @@ Rectangle {
                         visible: !quizComplete
                         width: 200
                         height: 50
-                        font.bold: true
+                        font.bold: sessionObject.isFontBold
 
                         contentItem: Text {
                             text: redo.text
@@ -717,7 +717,7 @@ Rectangle {
                         visible: quizComplete
                         width: 200
                         height: 50
-                        font.bold: true
+                        font.bold: sessionObject.isFontBold
                         Layout.alignment: Qt.AlignHCenter
 
                         onClicked: {
@@ -750,7 +750,7 @@ Rectangle {
                         visible: !quizComplete
                         width: 200
                         height: 50
-                        font.bold: true
+                        font.bold: sessionObject.isFontBold
                         Layout.alignment: Qt.AlignHCenter
 
                         onClicked: {
@@ -783,7 +783,7 @@ Rectangle {
                         text: "Return"
                         width: 200
                         height: 50
-                        font.bold: true
+                        font.bold: sessionObject.isFontBold
                         Layout.alignment: Qt.AlignHCenter
 
                         onClicked: {
@@ -833,7 +833,7 @@ Rectangle {
                             text: root.showSolution ? "View submission" : "View solution"
                             anchors.centerIn: parent
                             font.pixelSize: 14
-                            font.bold: true
+                            font.bold: sessionObject.isFontBold
                             color: themeObject.textColor
                         }
 
@@ -861,7 +861,7 @@ Rectangle {
                         opacity: enabled ? 1 : 0.5
                         width: 200
                         height: 50
-                        font.bold: true
+                        font.bold: sessionObject.isFontBold
 
                         contentItem: Text {
                             text: validate.text

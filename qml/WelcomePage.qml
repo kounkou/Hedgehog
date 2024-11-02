@@ -30,7 +30,7 @@ Rectangle {
         Text {
             text: "Welcome to Hedgehog"
             font.pixelSize: 24
-            font.bold: true
+            font.bold: sessionObject.isFontBold
             color: themeObject.textColor
             anchors.horizontalCenter: parent.horizontalCenter
         }
@@ -93,7 +93,7 @@ Rectangle {
         SwitchDelegate {
             id: themeToggle
 
-            font.bold: true
+            font.bold: sessionObject.isFontBold
             text: themeObject.theme === "light" ? "Light Theme" : "Dark Theme"
             checked: themeObject.theme === "dark"
             anchors.horizontalCenter: parent.horizontalCenter
@@ -142,7 +142,7 @@ Rectangle {
                 implicitWidth: 100
                 implicitHeight: 40
                 visible: false
-                color: control.down ? "#bdbebf" : "#eeeeee"
+                color: themeToggle.down ? "#bdbebf" : "#eeeeee"
             }
         }
     }
