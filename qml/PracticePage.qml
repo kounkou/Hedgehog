@@ -502,6 +502,29 @@ Rectangle {
                         }
                     }
 
+                    Rectangle {
+                        id: shareOnX
+                        height: 25
+                        width: 70
+                        radius: 10
+                        visible: isCurrentAnswerCorrect
+
+                        Image {
+                            source: "x-twitter.svg"
+                            fillMode: Image.PreserveAspectFit 
+                            anchors.fill: parent
+
+                            MouseArea {
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+                                onClicked: {
+                                    let question = QuestionsHandler.getQuestion(questionsData, currentQuestionIndex)
+                                    Qt.openUrlExternally("https://x.com/intent/post?text=Just+solved+" + question + "+on+%40Hedgehog%21+🦔+%0A%0A+https://github.com/kounkou/Hedgehog")
+                                }
+                            }
+                        }
+                    }
+
                     Item {
                         Layout.fillWidth: true
                     }

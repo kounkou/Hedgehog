@@ -86,5 +86,7 @@
         <file alias="font-dark.svg">images/font-dark.svg</file>
         <file alias="appearance-light.svg">images/appearance-light.svg</file>
         <file alias="font-light.svg">images/font-light.svg</file>
+        <file alias="x-twitter.svg">images/x-twitter.svg</file>
+        <file alias="facebook.svg">images/facebook.svg</file>
     </qresource>
 </RCC>
