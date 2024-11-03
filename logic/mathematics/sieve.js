@@ -19,8 +19,9 @@ var question = [
     }
 
     for (int i = 2; i <= n; i++) {
-        if (isPrime[i])
+        if (isPrime[i]) {
             cout << i << " ";
+        }
     }
 }`,
         answerGo: `package main
