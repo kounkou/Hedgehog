@@ -162,22 +162,26 @@ Rectangle {
                             indicator: Rectangle {
                                 implicitWidth: 50
                                 implicitHeight: 26
-                                x: control.width - width - control.rightPadding
+                                x: control.width - width - control.rightPadding + 3
                                 y: parent.height / 2 - height / 2
                                 radius: 13
                                 color: control.checked ? themeObject.buttonEasyColor : "#cccccc"
                                 border.color: control.checked ? themeObject.buttonEasyColor : "#cccccc"
 
                                 Rectangle {
-                                    x: control.checked ? parent.width - width : 0
-                                    width: 26
-                                    height: 26
-                                    radius: 13
+                                    x: control.checked ? parent.width - width - 3 : 3
+                                    width: 22
+                                    height: 22
+                                    radius: 11
+                                    anchors.verticalCenter: parent.verticalCenter
                                     color: control.down ? "#cccccc" : "#ffffff"
                                     border.color: control.checked ? (control.down ? themeObject.buttonEasyColor : "#21be2b") : "#999999"
 
                                     Behavior on x {
-                                        NumberAnimation { duration: 200 }
+                                        NumberAnimation { 
+                                            duration: 200 
+                                            easing.type: Easing.InOutQuad
+                                        }
                                     }
                                 }
                             }
@@ -207,22 +211,27 @@ Rectangle {
                             indicator: Rectangle {
                                 implicitWidth: 50
                                 implicitHeight: 26
-                                x: control.width - width - control.rightPadding
+                                x: control.width - width - control.rightPadding + 3
                                 y: parent.height / 2 - height / 2
                                 radius: 13
                                 color: control.checked ? themeObject.buttonEasyColor : "#cccccc"
                                 border.color: control.checked ? themeObject.buttonEasyColor : "#cccccc"
+                                opacity: enabled ? 1.0 : 0.5
 
                                 Rectangle {
-                                    x: control.checked ? parent.width - width : 0
-                                    width: 26
-                                    height: 26
-                                    radius: 13
+                                    x: control.checked ? parent.width - width - 3 : 3
+                                    width: 22
+                                    height: 22
+                                    radius: 11
+                                    anchors.verticalCenter: parent.verticalCenter
                                     color: control.down ? "#cccccc" : "#ffffff"
                                     border.color: control.checked ? (control.down ? themeObject.buttonEasyColor : "#21be2b") : "#999999"
 
                                     Behavior on x {
-                                        NumberAnimation { duration: 200 }
+                                        NumberAnimation { 
+                                            duration: 200 
+                                            easing.type: Easing.InOutQuad
+                                        }
                                     }
                                 }
                             }

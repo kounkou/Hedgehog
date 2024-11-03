@@ -175,9 +175,20 @@ Rectangle {
             }
 
             function submitPrompt(prompt) {
-                var url = "https://api-inference.huggingface.co/models/llama-3.1-Nemotron-70b-instruct";
+                var url = "https://api.openai.com/v1/chat/completions";
                 var jsonData = {
-                    "inputs": prompt
+                    "model": "gpt-3.5-turbo",
+                    "messages": [
+                        {
+                            "role": "system",
+                            "content": "You are an expert code reviewer. Provide constructive feedback and suggestions for improvement."
+                        },
+                        {
+                            "role": "user",
+                            "content": "Here is the code snippet for feedback:\n" + prompt
+                        }
+                    ],
+                    "temperature": 0.7
                 };
 
                 var xhr = new XMLHttpRequest();
@@ -189,7 +200,7 @@ Rectangle {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
                         if (xhr.status === 200) {
                             var response = JSON.parse(xhr.responseText);
-                            root.aiComment = response[0].generated_text;
+                            root.aiComment = response.choices[0].message.content;
                         } else {
                             console.log("Error: ", xhr.statusText);
                         }
@@ -205,8 +216,7 @@ Rectangle {
 
                 root.submittedAnswer = userAnswer
 
-                var prompt = "\nWhat is a brief difference between \n\n ```\n" + expectedAnswer + "\n```\n\n and \n\n```\n" + userAnswer + "\n```"
-                submitPrompt(prompt);
+                submitPrompt(userAnswer);
 
                 sessionObject.attempted += 1
 

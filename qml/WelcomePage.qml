@@ -117,7 +117,7 @@ Rectangle {
             indicator: Rectangle {
                 implicitWidth: 50
                 implicitHeight: 26
-                x: themeToggle.width - width - themeToggle.rightPadding
+                x: themeToggle.width - width - themeToggle.rightPadding + 3
                 y: parent.height / 2 - height / 2
                 radius: 13
                 color: themeToggle.checked ? themeObject.buttonEasyColor : "#cccccc"
@@ -125,15 +125,19 @@ Rectangle {
                 opacity: enabled ? 1.0 : 0.5
 
                 Rectangle {
-                    x: themeToggle.checked ? parent.width - width : 0
-                    width: 26
-                    height: 26
-                    radius: 13
+                    x: themeToggle.checked ? parent.width - width - 3 : 3
+                    width: 22
+                    height: 22
+                    radius: 11
+                    anchors.verticalCenter: parent.verticalCenter
                     color: themeToggle.down ? "#cccccc" : "#ffffff"
                     border.color: themeToggle.checked ? (themeToggle.down ? themeObject.buttonEasyColor : "#21be2b") : "#999999"
 
                     Behavior on x {
-                        NumberAnimation { duration: 200 }
+                        NumberAnimation { 
+                            duration: 200 
+                            easing.type: Easing.InOutQuad
+                        }
                     }
                 }
             }
