@@ -17,6 +17,7 @@ QtObject {
     property int    todayVisitedNumbers: 0
     property int    lastDayVisitedNumbers: 0
     property bool   isFontBold: false
+    property string apiKey: ""
 
     function getTheme() {
         if (automaticThemeSetting) {
@@ -53,7 +54,8 @@ QtObject {
             fontSetting: fontSetting,
             isFontBold: isFontBold,
             lastDayVisitedNumbers: lastDayVisitedNumbers,
-            todayVisitedNumbers: todayVisitedNumbers
+            todayVisitedNumbers: todayVisitedNumbers,
+            apiKey: apiKey
         };
         var content = JSON.stringify(sessionData, null, 4);
         var filePath = "sessionData.json";
@@ -81,6 +83,7 @@ QtObject {
                 isFontBold = data.isFontBold || false;
                 lastDayVisitedNumbers = data.lastDayVisitedNumbers || 0;
                 todayVisitedNumbers = data.todayVisitedNumbers || 0;
+                apiKey = data.apiKey || "";
             } catch (e) {
                 console.error("Failed to parse session data: " + e);
             }
