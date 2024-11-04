@@ -9,6 +9,22 @@ Rectangle {
     height: parent.height - 10
     color: themeObject.backgroundColor
 
+    QtObject {
+        id: d
+
+        function maskApiKey(apiKey) {
+            if (apiKey.length > 3) {
+                return apiKey.slice(0, 3) + '***';
+            }
+
+            return apiKey;
+        }
+
+        function isMasked(apiKey) {
+            return apiKey.contains("***")
+        }
+    }
+
     ScrollView {
         width: parent.width >> 1
         height: parent.height
@@ -68,7 +84,7 @@ Rectangle {
 
             Rectangle {
                 width: parent.width
-                height: 240
+                height: 115
                 color: "transparent"
                 border.width: 1
                 border.color: "transparent"
@@ -80,6 +96,7 @@ Rectangle {
                     height: 115
                     radius: 10
                     color: themeObject.buttonColor
+                    id: appearanceSettings
 
                     Component {
                         id: settingsDelegate
@@ -261,6 +278,70 @@ Rectangle {
                         id: radioButtonComponent
                         RadioButton {
                             checked: false
+                        }
+                    }
+                }
+            }
+
+            Rectangle {
+                width: parent.width
+                anchors.top: appearanceSettings.bottom
+                anchors.topMargin: 10
+                height: 140
+                color: themeObject.buttonColor
+                border.width: 1
+                border.color: themeObject.buttonBorderColor
+                radius: 10
+
+                RowLayout {
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.fill: parent
+
+                    Text {
+                        text: "API KEY"
+                        anchors.left: parent.left
+                        anchors.leftMargin: 20
+                        font.pixelSize: 14
+                        font.bold: sessionObject.isFontBold
+                        color: themeObject.textColor
+                    }
+
+                    Rectangle {
+                        id: backgroundRect
+                        width: parent.width - 100
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.right: parent.right
+                        anchors.rightMargin: 10
+                        height: 120
+                        color: themeObject.textAreaBackgroundColor
+                        border.width: 1
+                        border.color: themeObject.textAreaBorderColor
+                        radius: 10
+
+                        TextArea {
+                            anchors.fill: backgroundRect
+                            readOnly: submitted
+                            placeholderText: sessionObject.apiKey || "Enter your API KEY"
+                            // text: sessionObject.apiKey && d.maskApiKey(sessionObject.apiKey)
+                            font.family: "Courier New"
+                            font.pixelSize: 16
+                            font.bold: sessionObject.isFontBold
+                            color: themeObject.textColor
+                            padding: 10
+                            antialiasing: true
+                            wrapMode: Text.Wrap
+                            palette {
+                                highlight: "#B4D5FE"
+                                highlightedText: "#202020"
+                            }
+                            selectByMouse: true
+
+                            onFocusChanged: {
+                                if (!focus && text) {
+                                    sessionObject.apiKey = text || sessionObject.apiKey
+                                    sessionObject.saveSession();
+                                }
+                            }
                         }
                     }
                 }

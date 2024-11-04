@@ -71,7 +71,6 @@ Rectangle {
     property string expectedAnswer: ""
     property var questionsData: []
     property string aiComment: ""
-    property string api_key: ""
     
     property var session: null
 
@@ -181,26 +180,25 @@ Rectangle {
                     "messages": [
                         {
                             "role": "system",
-                            "content": "You are an expert code reviewer. Provide constructive feedback and suggestions for improvement."
-                        },
-                        {
-                            "role": "user",
-                            "content": "Here is the code snippet for feedback:\n" + prompt
+                            "content": "If the code snippet \n" + prompt + "\n matches with \n" + QuestionsHandler.getAnswer(questionsData, currentLanguage, currentQuestionIndex).trim() + 
+                            ", answer briefly with 'Highly Similar', 'Moderately Similar' or 'Not Similar' in html format without further explanation. If the code doesn't match, as a Senior Software engineer, provide explanation how to implement " + 
+                            QuestionsHandler.getQuestion(questionsData, currentQuestionIndex) + " in " + currentLanguage
                         }
                     ],
                     "temperature": 0.7
                 };
 
+                // console.debug("---> ", jsonData.messages[0].content)
+
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", url, true);
                 xhr.setRequestHeader("Content-Type", "application/json");
-                xhr.setRequestHeader("Authorization", "Bearer " + api_key);
+                xhr.setRequestHeader("Authorization", "Bearer " + sessionObject.apiKey);
 
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
                         if (xhr.status === 200) {
                             var response = JSON.parse(xhr.responseText);
-                            root.aiComment = response.choices[0].message.content;
                         } else {
                             console.log("Error: ", xhr.statusText);
                         }
@@ -221,7 +219,23 @@ Rectangle {
                 sessionObject.attempted += 1
 
                 if (currentQuestionIndex < QuestionsHandler.getTotalQuestions(questionsData)) {
-                    const result = QuestionsHandler.getLevenshteinDistance(userAnswer.trim(), expectedAnswer)
+                    let result = {}
+
+                    if (aiComment.length === 0) {
+                        // console.debug("---> LLM not available")
+
+                        result = QuestionsHandler.getLevenshteinDistance(userAnswer.trim(), expectedAnswer)
+                    } else {
+                        // console.debug("---> LLM available!")
+
+                        if (aiComment.includes("Highly Similar")) {
+                            result.similarityStatus = "Highly Similar"
+                        } else if (aiComment.includes("Moderately Similar")) {
+                            result.similarityStatus = "Moderately Similar"
+                        } else {
+                            result.similarityStatus = "Not Similar"
+                        }
+                    }
 
                     if (result.similarityStatus === "Highly Similar") {
                         resultsModel.append({ similarity: "Highly Similar", id: currentQuestionIndex + 1 })
@@ -253,7 +267,8 @@ Rectangle {
             }
 
             function showSolution() {
-                answerInput.text = root.expectedAnswer + "\n" + root.aiComment
+                answerInput.text = root.expectedAnswer
+                aiOutput.text = root.aiComment
             }
 
             function showSubmission() {
@@ -314,7 +329,8 @@ Rectangle {
                     resultText.enabled = false
                     return
                 }
-
+                
+                answerInput.visible = true
                 submitted = false
                 currentQuestionIndex = getRandomInt(0, total - 1)
                 loadNextQuestion()
@@ -673,6 +689,27 @@ Rectangle {
                                 d.handleIdentation(event)
                             }
                         }
+                        TextArea {
+                            id: aiOutput
+                            anchors.fill: backgroundRect
+                            readOnly: submitted
+                            font.family: "Courier New"
+                            font.pixelSize: 16
+                            font.bold: sessionObject.isFontBold
+                            color: themeObject.textColor
+                            padding: 10
+                            antialiasing: true
+                            wrapMode: Text.Wrap
+                            visible: !answerInput.visible
+                            textFormat: TextEdit.RichText
+
+                            palette {
+                                highlight: "#B4D5FE"
+                                highlightedText: "#202020"
+                            }
+
+                            selectByMouse: true
+                        }
                     }
                 }
 
@@ -848,11 +885,41 @@ Rectangle {
                     }
 
                     Rectangle {
+                        id: viewAiAnswerRect
+                        
+                        height: 25
+                        width: viewAiAnswerText.width + 20
+                        color: answerInput.visible ? themeObject.buttonColor : themeObject.buttonMediumColor
+                        opacity: submitted ? 1 : 0.5
+                        enabled: submitted
+                        radius: 10
+                        visible: !quizComplete && aiComment.length > 0
+
+                        Text {
+                            id: viewAiAnswerText
+                            text: "View AI Comments"
+                            anchors.centerIn: parent
+                            font.pixelSize: 14
+                            font.bold: sessionObject.isFontBold
+                            color: answerInput.visible ? themeObject.textColor : "#F7F7F7"
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+
+                            onClicked: {
+                                answerInput.visible = !answerInput.visible
+
+                            }
+                        }
+                    }
+
+                    Rectangle {
                         id: viewSubmission
                         
                         height: 25
                         width: viewSubmissionText.width + 20
-                        color: themeObject.buttonColor
+                        color: root.showSolution ? themeObject.buttonColor : themeObject.buttonActionColor
                         opacity: submitted ? 1 : 0.5
                         enabled: submitted
                         radius: 10
@@ -863,11 +930,11 @@ Rectangle {
 
                         Text {
                             id: viewSubmissionText
-                            text: root.showSolution ? "View submission" : "View solution"
+                            text: "View submission"
                             anchors.centerIn: parent
                             font.pixelSize: 14
                             font.bold: sessionObject.isFontBold
-                            color: themeObject.textColor
+                            color: root.showSolution ? themeObject.textColor : "#F7F7F7"
                         }
 
                         MouseArea {
