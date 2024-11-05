@@ -24,6 +24,13 @@ Rectangle {
     QtObject {
         id: d
 
+        function getBarColor(barHeight) {
+            let baseBlue = Qt.rgba(0, 0, 0.6, 1);
+            let lightnessIncrement = Math.min(barHeight * 0.1, 1.0);
+
+            return Qt.darker(baseBlue, 1 - 0.9 * lightnessIncrement);
+        }
+
         function populateGraphRandomData() {
             graphData.clear();
 
@@ -201,17 +208,7 @@ Rectangle {
                 ctx.beginPath();
                 ctx.rect(xPos, yPos, barWidth, barHeight);
 
-                var barColor = "#00c8ff";
-
-                barHeight = point.score;
-
-                if (barHeight <= 2) {
-                    barColor = themeObject.buttonHardColor;
-                } else if (barHeight > 2 && barHeight <= 4) {
-                    barColor = themeObject.buttonMediumColor;
-                } else {
-                    barColor = themeObject.buttonEasyColor;
-                }
+                var barColor = d.getBarColor(point.score)
 
                 ctx.fillStyle = barColor;
                 ctx.fill();
