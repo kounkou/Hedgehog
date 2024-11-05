@@ -621,7 +621,7 @@ Rectangle {
 
                         contentItem: Text {
                             text: languageComboBox.currentText
-                            font: languageComboBox.font
+                            font.bold: sessionObject.isFontBold
                             elide: Text.ElideRight
                             horizontalAlignment: Text.AlignLeft
                             verticalAlignment: Text.AlignVCenter

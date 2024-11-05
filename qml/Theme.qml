@@ -28,5 +28,8 @@ QtObject {
     property color codeTextColor:           theme === "light" ? "#333333" : "#E0E0E0"  // Dark grey for light theme, soft grey for dark theme
 
     property color averageLineColor:        theme === "light" ? "#2E7D32" : "#66BB6A"
+    
+    property color buttonDownColor:         theme === "light" ? "#CCCCCC" : "#CCCCCC"
+    property color buttonUpColor:           theme === "light" ? "#FFFFFF" : "#FFFFFF"
 
 }
