@@ -49,6 +49,11 @@ import "backtracking.js" as BackTracking
 import "lazy-propagation.js" as LazyPropag
 import "range-sum-queries.js" as RangeSumQueries
 
+import "unique-paths.js" as UniquePaths
+import "count-permutations.js" as CountPermutations
+import "generate-subsets.js" as GenerateSubsets
+import "count-combinations.js" as CountCombinations 
+
 Rectangle {
     id: root
 
@@ -131,7 +136,12 @@ Rectangle {
 
             .concat(LazyPropag.question)
             .concat(RangeSumQueries.question)
-            
+
+            .concat(UniquePaths.question)
+            .concat(CountPermutations.question)
+            .concat(GenerateSubsets.question)
+            .concat(CountCombinations.question)
+                        
             .concat(LinearSearch.question);
 
         if (sessionObject.selectedCategories && sessionObject.selectedCategories.length > 0) {
