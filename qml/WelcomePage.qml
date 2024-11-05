@@ -37,6 +37,7 @@ Rectangle {
 
         Text {
             text: "What would you like to do?"
+            font.bold: sessionObject.isFontBold
             font.pixelSize: 14
             color: themeObject.textColor
             anchors.horizontalCenter: parent.horizontalCenter
@@ -57,13 +58,6 @@ Rectangle {
             buttonText: "Start Practicing"
             page: practicePage
         }
-
-        // CustomButton {
-        //     id: reviewButton
-
-        //     buttonText: "Review algorithms"
-        //     page: reviewPage
-        // }
 
         CustomButton {
             id: stats
@@ -90,63 +84,14 @@ Rectangle {
             page: aboutPage
         }
 
-        SwitchDelegate {
+        ToggleSwitch {
             id: themeToggle
 
-            font.bold: sessionObject.isFontBold
-            text: themeObject.theme === "light" ? "Light Theme" : "Dark Theme"
-            checked: themeObject.theme === "dark"
-            anchors.horizontalCenter: parent.horizontalCenter
-            enabled: !sessionObject.automaticThemeSetting
-
-            contentItem: Text {
-                    rightPadding: themeToggle.indicator.width + themeToggle.spacing
-                    text: themeToggle.text 
-                    font: themeToggle.font
-                    opacity: enabled ? 1.0 : 0.5
-                    color: themeObject.textColor
-                    elide: Text.ElideRight
-                    verticalAlignment: Text.AlignVCenter
-            }
-
-            onCheckedChanged: {
+            switchText: themeObject.theme === "light" ? "Light Theme" : "Dark Theme"
+            switchChecked: themeObject.theme === "dark"
+            switchEnabled: !sessionObject.automaticThemeSetting
+            onCheckedChangedExternally: {
                 themeObject.theme = checked ? "dark" : "light"
-                sessionObject.saveSession()
-            }
-
-            indicator: Rectangle {
-                implicitWidth: 50
-                implicitHeight: 26
-                x: themeToggle.width - width - themeToggle.rightPadding + 3
-                y: parent.height / 2 - height / 2
-                radius: 13
-                color: themeToggle.checked ? themeObject.buttonEasyColor : "#cccccc"
-                border.color: themeToggle.checked ? themeObject.buttonEasyColor : "#cccccc"
-                opacity: enabled ? 1.0 : 0.5
-
-                Rectangle {
-                    x: themeToggle.checked ? parent.width - width - 3 : 3
-                    width: 22
-                    height: 22
-                    radius: 11
-                    anchors.verticalCenter: parent.verticalCenter
-                    color: themeToggle.down ? "#cccccc" : "#ffffff"
-                    border.color: themeToggle.checked ? (themeToggle.down ? themeObject.buttonEasyColor : "#21be2b") : "#999999"
-
-                    Behavior on x {
-                        NumberAnimation { 
-                            duration: 200 
-                            easing.type: Easing.InOutQuad
-                        }
-                    }
-                }
-            }
-
-            background: Rectangle {
-                implicitWidth: 100
-                implicitHeight: 40
-                visible: false
-                color: themeToggle.down ? "#bdbebf" : "#eeeeee"
             }
         }
     }

@@ -162,52 +162,16 @@ Rectangle {
                     Component {
                         id: appaeranceSwitchComponent
 
-                        SwitchDelegate {
+                        ToggleSwitch {
                             id: control
 
-                            checked: itemName === "Automatic theme" ? sessionObject.automaticThemeSetting : sessionObject.fontSetting
-
-                            onToggled: {
+                            switchChecked: itemName === "Automatic theme" ? sessionObject.automaticThemeSetting : sessionObject.fontSetting
+                            onCheckedChangedExternally: {
                                 if (itemName === "Automatic theme") {
                                     sessionObject.automaticThemeSetting = checked;
                                 } else {
                                     sessionObject.fontSetting = checked;
                                 }
-                                sessionObject.saveSession();
-                            }
-
-                            indicator: Rectangle {
-                                implicitWidth: 50
-                                implicitHeight: 26
-                                x: control.width - width - control.rightPadding + 3
-                                y: parent.height / 2 - height / 2
-                                radius: 13
-                                color: control.checked ? themeObject.buttonEasyColor : "#cccccc"
-                                border.color: control.checked ? themeObject.buttonEasyColor : "#cccccc"
-
-                                Rectangle {
-                                    x: control.checked ? parent.width - width - 3 : 3
-                                    width: 22
-                                    height: 22
-                                    radius: 11
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    color: control.down ? "#cccccc" : "#ffffff"
-                                    border.color: control.checked ? (control.down ? themeObject.buttonEasyColor : "#21be2b") : "#999999"
-
-                                    Behavior on x {
-                                        NumberAnimation { 
-                                            duration: 200 
-                                            easing.type: Easing.InOutQuad
-                                        }
-                                    }
-                                }
-                            }
-
-                            background: Rectangle {
-                                implicitWidth: 100
-                                implicitHeight: 40
-                                visible: false
-                                color: control.down ? "#bdbebf" : "#eeeeee"
                             }
                         }
                     }
@@ -215,49 +179,12 @@ Rectangle {
                     Component {
                         id: boldTextSwitchComponent
 
-                        SwitchDelegate {
+                        ToggleSwitch {
                             id: control
 
-                            checked: sessionObject.isFontBold
-
-                            onToggled: {
+                            switchChecked: sessionObject.isFontBold
+                            onCheckedChangedExternally: {
                                 sessionObject.isFontBold = checked
-                                sessionObject.saveSession();
-                            }
-
-                            indicator: Rectangle {
-                                implicitWidth: 50
-                                implicitHeight: 26
-                                x: control.width - width - control.rightPadding + 3
-                                y: parent.height / 2 - height / 2
-                                radius: 13
-                                color: control.checked ? themeObject.buttonEasyColor : "#cccccc"
-                                border.color: control.checked ? themeObject.buttonEasyColor : "#cccccc"
-                                opacity: enabled ? 1.0 : 0.5
-
-                                Rectangle {
-                                    x: control.checked ? parent.width - width - 3 : 3
-                                    width: 22
-                                    height: 22
-                                    radius: 11
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    color: control.down ? "#cccccc" : "#ffffff"
-                                    border.color: control.checked ? (control.down ? themeObject.buttonEasyColor : "#21be2b") : "#999999"
-
-                                    Behavior on x {
-                                        NumberAnimation { 
-                                            duration: 200 
-                                            easing.type: Easing.InOutQuad
-                                        }
-                                    }
-                                }
-                            }
-
-                            background: Rectangle {
-                                implicitWidth: 100
-                                implicitHeight: 40
-                                visible: false
-                                color: control.down ? "#bdbebf" : "#eeeeee"
                             }
                         }
                     }
