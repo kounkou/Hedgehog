@@ -18,7 +18,7 @@ Rectangle {
         categoryModel.append({ name: "Binary Search",        selected: false, enabled: true });
         categoryModel.append({ name: "Bit Manipulation",     selected: false, enabled: true });
         categoryModel.append({ name: "Combinatorics",        selected: false, enabled: true });
-        categoryModel.append({ name: "Divide and Conquer",   selected: false, enabled: false });
+        categoryModel.append({ name: "Divide and Conquer",   selected: false, enabled: true });
         categoryModel.append({ name: "Disjoint Set",         selected: false, enabled: true });
         categoryModel.append({ name: "DP",                   selected: false, enabled: true });
         categoryModel.append({ name: "Game Theory",          selected: false, enabled: false });

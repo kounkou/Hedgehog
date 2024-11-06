@@ -54,6 +54,9 @@ import "count-permutations.js" as CountPermutations
 import "generate-subsets.js" as GenerateSubsets
 import "count-combinations.js" as CountCombinations 
 
+import "merge-sort.js" as MergeSort
+import "quick-sort.js" as QuickSort
+
 Rectangle {
     id: root
 
@@ -76,6 +79,7 @@ Rectangle {
     property string expectedAnswer: ""
     property var questionsData: []
     property string aiComment: ""
+    property var localVisitedNumbers: []
     
     property var session: null
 
@@ -141,6 +145,9 @@ Rectangle {
             .concat(CountPermutations.question)
             .concat(GenerateSubsets.question)
             .concat(CountCombinations.question)
+
+            .concat(MergeSort.question)
+            .concat(QuickSort.question)
                         
             .concat(LinearSearch.question);
 
@@ -303,12 +310,13 @@ Rectangle {
                     if (sessionObject.successfulImplementationsThisMonth[questionID].count >= 5) {
                         if (!sessionObject.visitedNumbers.includes(questionID)) {
                             sessionObject.visitedNumbers.push(questionID);
+                            localVisitedNumbers.push(questionID);
                         }
                         sessionObject.saveSession()
                     }
                 }
 
-                if (sessionObject.visitedNumbers.length >= total) {
+                if (localVisitedNumbers.length >= total) {
                     resultText.text = ""
                     quizComplete = true
                     resultText.enabled = false
@@ -328,12 +336,13 @@ Rectangle {
                     if (sessionObject.successfulImplementationsThisMonth[questionID].count >= 5) {
                         if (!sessionObject.visitedNumbers.includes(questionID)) {
                             sessionObject.visitedNumbers.push(questionID);
+                            localVisitedNumbers.push(questionID);
                         }
                         sessionObject.saveSession()
                     }
                 }
 
-                if (sessionObject.visitedNumbers.length >= total) {
+                if (localVisitedNumbers.length >= total) {
                     resultText.text = ""
                     quizComplete = true
                     resultText.enabled = false

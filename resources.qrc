@@ -56,6 +56,9 @@
         <file alias="generate-subsets.js">logic/combinatorics/generate-subsets.js</file>
         <file alias="count-combinations.js">logic/combinatorics/count-combinations.js</file>
 
+        <file alias="merge-sort.js">logic/divide-and-conquer/merge-sort.js</file>
+        <file alias="quick-sort.js">logic/divide-and-conquer/quick-sort.js</file>
+
         <file alias="factorial.js">logic/recursion/factorial.js</file>
 
         <file alias="fractional-knapsack.js">logic/greedy/fractional-knapsack.js</file>

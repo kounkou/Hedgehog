@@ -53,7 +53,10 @@ Rectangle {
 
             for (var questionId in successData) {
                 var score = successData[questionId].count;
-                dataArray.push({ day: questionId, score: score });
+
+                if (score > 0) {
+                    dataArray.push({ day: questionId, score: score });
+                }
             }
 
             dataArray.sort(function(a, b) {
