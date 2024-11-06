@@ -21,6 +21,7 @@ var question = [
         result *= (n - i)
     }
     
-    return result\n}\n`
+    return result
+}`
     }
 ]
