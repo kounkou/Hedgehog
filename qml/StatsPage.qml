@@ -24,11 +24,19 @@ Rectangle {
     QtObject {
         id: d
 
-        function getBarColor(barHeight) {
-            let baseBlue = Qt.rgba(0, 0, 0.6, 1);
-            let lightnessIncrement = Math.min(barHeight * 0.1, 1.0);
+        function getBarColor(barHeight, yAxisMax) {
+            let baseRed = 0.2;
+            let baseGreen = 0.4;
+            let baseBlue = 0.8;
+            let maxHeightFactor = 0.6;
 
-            return Qt.darker(baseBlue, 1 - 0.9 * lightnessIncrement);
+            let intensity = Math.min(barHeight * maxHeightFactor / yAxisMax, 1.0);
+
+            let red = Math.min(baseRed + intensity, 1.0);
+            let green = Math.min(baseGreen + intensity, 1.0);
+            let blue = Math.max(baseBlue - intensity, 0.2);
+
+            return Qt.rgba(red, green, blue, 1.0);
         }
 
         function populateGraphRandomData() {
@@ -156,7 +164,7 @@ Rectangle {
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.bottom: parent.bottom
-        anchors.margins: 50
+        anchors.margins: 100
 
         onPaint: {
             var ctx = canvas.getContext("2d");
@@ -201,6 +209,20 @@ Rectangle {
             }
 
             var barWidth = (graphWidth / graphData.count) - 4;
+            var cornerRadius = 10; // Set the radius for the rounded corners
+
+            // Helper function to draw a rounded rectangle
+            function drawRoundedRect(ctx, x, y, width, height, radius) {
+                ctx.beginPath();
+                ctx.moveTo(x + radius, y);
+                ctx.lineTo(x + width - radius, y);
+                ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+                ctx.lineTo(x + width, y + height);
+                ctx.lineTo(x, y + height);
+                ctx.lineTo(x, y + radius);
+                ctx.quadraticCurveTo(x, y, x + radius, y);
+                ctx.closePath();
+            }
 
             for (var i = 0; i < graphData.count; i++) {
                 var point = graphData.get(i);
@@ -208,15 +230,16 @@ Rectangle {
                 var barHeight = (point.score / yAxisMax) * graphHeight;
                 var yPos = canvas.height - padding - barHeight;
 
-                ctx.beginPath();
-                ctx.rect(xPos, yPos, barWidth, barHeight);
-
-                var barColor = d.getBarColor(point.score)
-
+                ctx.save();
+                var barColor = d.getBarColor(point.score, yAxisMax);
                 ctx.fillStyle = barColor;
-                ctx.fill();
                 ctx.strokeStyle = barColor;
+
+                drawRoundedRect(ctx, xPos, yPos, barWidth, barHeight, cornerRadius);
+                ctx.fill();
                 ctx.stroke();
+
+                ctx.restore(); // Restore the context state after drawing the bar
             }
 
             for (var i = 0; i < graphData.count; i++) {
@@ -253,34 +276,39 @@ Rectangle {
         }
     }
 
-    // Updated Time Display
-    Text {
-        id: updatedTime
-        text: "Last updated: " + statsPage.lastUpdateTime
-        font.pixelSize: 12
-        color: themeObject.textColor
+    Column {
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottomMargin: 50
-    }
+        anchors.bottomMargin: 40
 
-    RowLayout {
-        anchors.bottom: parent.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottomMargin: 10
-
-        CustomButton {
-            id: startPractice
-
-            buttonText: "Start Practicing"
-            page: practicePage
+        Text {
+            id: updatedTime
+            text: "Last updated: " + statsPage.lastUpdateTime
+            font.pixelSize: 12
+            color: themeObject.textColor
+            anchors.bottom: parent.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottomMargin: 50
         }
 
-        CustomButton {
-            id: home
+        RowLayout {
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 10
 
-            buttonText: "Go to home"
-            page: welcomePage
+            CustomButton {
+                id: startPractice
+
+                buttonText: "Start Practicing"
+                page: practicePage
+            }
+
+            CustomButton {
+                id: home
+
+                buttonText: "Go to home"
+                page: welcomePage
+            }
         }
     }
 }
