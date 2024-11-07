@@ -263,7 +263,7 @@ Rectangle {
             ctx.beginPath();
             ctx.setLineDash([5, 5]); // 5px dash, 5px space
             ctx.strokeStyle = themeObject.averageLineColor; // Color for the average line
-            ctx.lineWidth = 1;
+            ctx.lineWidth = 2;
             ctx.moveTo(padding, yPos);
             ctx.lineTo(canvas.width - padding, yPos);
             ctx.stroke();
