@@ -3,7 +3,7 @@ var question = [
         id: "Topological sort",
         category: "Topo. Sort",
         placeHolderCpp: `void dfs(int node, map<int, bool>& visited, stack<int>& stk, vector<int> graph[]) {\n    ...\n}\n\nvoid topoSortGraph(int V, vector<int> adj[]) {\n    ...\n}\n\n\n\n\n\n\n\n`,
-        placeHolderGo: `func dfs(node int, visited []bool, stack *[]int, graph [][]int) {\n    ...\n}\n\nfunc topoSortGraph(V int, adj [][]int) {\n    ...\n}\n\n\n\n\n\n\n`,
+        placeHolderGo: `func dfs(node int, visited []bool, stack *[]int, graph [][]int) {\n    ...\n}\n\nvoid topoSortGraph(vector<int> nodes, vector<int> graph[]) {\n    ...\n}\n\n\n\n\n\n\n`,
         difficulty: "Hard",
         question: "Topological Sort.",
         answerImage: "",
@@ -18,7 +18,7 @@ var question = [
     stk.push(node);
 }
 
-void topoSortGraph(vector<int> nodes, vector<int> graph[]) {
+void topoSortGraph(int V, vector<int> nodes, vector<int> graph[]) {
     map<int, bool> visited(V, false);
     stack<int> stk;
     

@@ -7,6 +7,33 @@ on:
   pull_request:
 
 jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+  
+      - name: Set up Qt5 on Windows
+        run: |
+          choco install qt5-default -y
+          $env:PATH += ";C:\Qt\5.15.2\mingw81_64\bin"
+          ls 
+  
+      - name: Set architecture for build
+        run: echo "Building for Windows x64 architecture"
+  
+      - name: Build application
+        run: |
+          $env:PATH += ";C:\Qt\5.15.2\mingw81_64\bin"
+          .\build.bat windows-latest-x64-binary  # Ensure your build.bat script exists and is configured for Windows
+  
+      - name: Upload binary
+        uses: actions/upload-artifact@v3
+        with:
+          name: Hedgehog-windows-latest-x64-binary.exe
+          path: Hedgehog-windows-latest-x64-binary.exe
+
   build-linux:
     runs-on: ubuntu-latest
 
@@ -61,7 +88,7 @@ jobs:
 
   release:
     runs-on: ubuntu-latest
-    needs: [build-linux, build-macos]
+    needs: [build-linux, build-macos, build-windows]
 
     steps:
     - name: Checkout code
@@ -77,6 +104,12 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: Hedgehog-macos-latest-arm64-binary
+        path: ./
+          
+    - name: Download Windows x64 binary
+      uses: actions/download-artifact@v3
+      with:
+        name: Hedgehog-windows-latest-x64-binary.exe
         path: ./
 
     - name: Create Draft Release

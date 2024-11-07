@@ -1,13 +1,15 @@
 #include <QGuiApplication>
 #include <QIcon>
 #include <QQmlApplicationEngine>
-#include <QtWebEngine/QtWebEngine>
+// #include <QtWebEngine/QtWebEngine>
+
+#include <QQmlContext>
 
 #include "includes/documenthandler.h"
 #include "includes/highlighter.h"
 
 int main(int argc, char *argv[]) {
-    QtWebEngine::initialize();
+    // QtWebEngine::initialize();
 
     QGuiApplication app(argc, argv);
 

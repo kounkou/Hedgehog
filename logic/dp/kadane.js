@@ -11,7 +11,7 @@ var question = [
         answerImage: "../code-snipets/kadane.png",
         answerCpp: `
 int kadane(vector<int>& nums) {
-    if (nums.size() <= 0) return 0; 
+    if (nums.empty()) return 0; 
     
     int lm = nums[0];
     int gm = INT_MIN;

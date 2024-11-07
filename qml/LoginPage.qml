@@ -1,8 +1,8 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
-import QtWebView 1.1
-import QtWebEngine 1.7
+// import QtWebView 1.1
+// import QtWebEngine 1.7
 
 Rectangle {
     id: categoryPage
@@ -15,35 +15,35 @@ Rectangle {
     property string redirectUri: "urn:ietf:wg:oauth:2.0:oob"
     property string authorizationUrl: "https://accounts.google.com/o/oauth2/v2/auth"
 
-    WebEngineView {
-        id: webView
-        anchors.fill: parent
+    // WebEngineView {
+    //     id: webView
+    //     anchors.fill: parent
 
-        // Step 1: Open Google's OAuth 2.0 login page
-        onUrlChanged: {
-            // Step 2: Detect redirect after successful login and extract authorization code
-            if (webView.url.indexOf(redirectUri) !== -1) {
-                var url = webView.url;
-                var authorizationCode = url.split("code=")[1];
-                if (authorizationCode) {
-                    console.log("Authorization Code: " + authorizationCode);
+    //     // Step 1: Open Google's OAuth 2.0 login page
+    //     onUrlChanged: {
+    //         // Step 2: Detect redirect after successful login and extract authorization code
+    //         if (webView.url.indexOf(redirectUri) !== -1) {
+    //             var url = webView.url;
+    //             var authorizationCode = url.split("code=")[1];
+    //             if (authorizationCode) {
+    //                 console.log("Authorization Code: " + authorizationCode);
 
-                    // Step 3: Exchange authorization code for access token (via REST API call)
-                    getAccessToken(authorizationCode);
-                }
-            }
-        }
+    //                 // Step 3: Exchange authorization code for access token (via REST API call)
+    //                 getAccessToken(authorizationCode);
+    //             }
+    //         }
+    //     }
 
-        // Step 1: Load the Google login page with OAuth parameters
-        Component.onCompleted: {
-            var url = authorizationUrl +
-                "?client_id=" + clientId +
-                "&redirect_uri=" + redirectUri +
-                "&response_type=code" +
-                "&scope=https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email";
-            webView.url = url;
-        }
-    }
+    //     // Step 1: Load the Google login page with OAuth parameters
+    //     Component.onCompleted: {
+    //         var url = authorizationUrl +
+    //             "?client_id=" + clientId +
+    //             "&redirect_uri=" + redirectUri +
+    //             "&response_type=code" +
+    //             "&scope=https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email";
+    //         webView.url = url;
+    //     }
+    // }
 
     Button {
         text: "Exit"
