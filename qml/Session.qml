@@ -155,14 +155,29 @@ QtObject {
         saveSession();
     }
 
-    function algorithmAttempt(questionId, successful) {
+    function algorithmAttempt(questionId, successful, remainingTime) {
         if (!successfulImplementations.hasOwnProperty(questionId)) {
-            successfulImplementations[questionId] = { count: 0, age: 0, streak: 0 };
+            successfulImplementations[questionId] = {
+                count: 0, 
+                age: 0, 
+                streak: 0,
+                remainingTime: {
+                    average: 0,
+                    remainTimes: []
+                }
+            };
         }
 
         if (successful) {
             successfulImplementations[questionId].streak += 1;
             successfulImplementations[questionId].count += 1;
+
+            let currentAverage = successfulImplementations[questionId].remainingTime.average;
+            let count = successfulImplementations[questionId].count;
+            successfulImplementations[questionId].remainingTime.average = 
+                currentAverage + (remainingTime - currentAverage) / count;
+
+            successfulImplementations[questionId].remainingTime.remainTimes.push(remainingTime);
         } else {
             successfulImplementations[questionId].streak = 0;
         }
