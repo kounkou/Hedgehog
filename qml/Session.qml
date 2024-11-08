@@ -92,6 +92,25 @@ QtObject {
         return today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
     }
 
+    function getCurrentDay() {
+        var today = new Date();
+        var daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        var dayOfWeek = daysOfWeek[today.getDay()];
+
+        return dayOfWeek
+    }
+
+    function getCurrentTime() {
+        var today = new Date();
+        var hours = today.getHours();
+        var minutes = today.getMinutes();
+
+        hours = hours < 10 ? "0" + hours : hours;
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+
+        return hours + ":" + minutes;
+    }
+
    function resetAgedQuestions(today, lastPerformanceUpdateDate) {
         if (today != lastPerformanceUpdateDate) {
             lastDayVisitedNumbers = todayVisitedNumbers
@@ -155,14 +174,43 @@ QtObject {
         saveSession();
     }
 
-    function algorithmAttempt(questionId, successful) {
+    function algorithmAttempt(questionId, successful, spentTime) {
         if (!successfulImplementations.hasOwnProperty(questionId)) {
-            successfulImplementations[questionId] = { count: 0, age: 0, streak: 0 };
+            successfulImplementations[questionId] = {
+                count: 0, 
+                age: 0, 
+                streak: 0,
+                spentTime: {
+                    average: 0,
+                    spentTimes: []
+                }
+            };
         }
 
         if (successful) {
             successfulImplementations[questionId].streak += 1;
             successfulImplementations[questionId].count += 1;
+
+            let currentAverage = successfulImplementations[questionId].spentTime.average;
+            let count = successfulImplementations[questionId].count;
+            successfulImplementations[questionId].spentTime.average = 
+                Number((currentAverage + (spentTime - currentAverage) / count).toFixed(2));
+
+            let day = getCurrentDay();
+            var today = getCurrentDate();
+            let currentTime = getCurrentTime();
+
+            let dayEntry = successfulImplementations[questionId].spentTime.spentTimes.find(entry => entry.day === day);
+
+            if (dayEntry) {
+                dayEntry.times.push({ time: currentTime, spentTime: spentTime });
+            } else {
+                successfulImplementations[questionId].spentTime.spentTimes.push({
+                    day: day,
+                    today: today,
+                    times: [{ time: currentTime, spentTime: spentTime }]
+                });
+            }
         } else {
             successfulImplementations[questionId].streak = 0;
         }

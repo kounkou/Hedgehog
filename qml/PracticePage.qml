@@ -254,26 +254,30 @@ Rectangle {
                         }
                     }
 
-                    if (result.similarityStatus === "Highly Similar") {
-                        resultsModel.append({ similarity: "Highly Similar", id: currentQuestionIndex + 1 })
-                        correctAnswers++
-                        isCurrentAnswerCorrect = true
-                        sessionObject.algorithmAttempt(QuestionsHandler.getQuestionID(questionsData, currentQuestionIndex), true)
-                        sessionObject.todayVisitedNumbers += 1
-
-                    } else if (result.similarityStatus === "Moderately Similar") {
-                        resultsModel.append({ similarity: "Moderately Similar", id: currentQuestionIndex + 1 })
-                        correctAnswers++
-                        isCurrentAnswerCorrect = true
-                        sessionObject.algorithmAttempt(QuestionsHandler.getQuestionID(questionsData, currentQuestionIndex), true)
-                        sessionObject.todayVisitedNumbers += 1
-
+                    if (result.similarityStatus === "Highly Similar" || result.similarityStatus === "Moderately Similar") {
+                        resultsModel.append({
+                            similarity: result.similarityStatus, 
+                            id: currentQuestionIndex + 1 
+                        });
+                        correctAnswers++;
+                        isCurrentAnswerCorrect = true;
+                        sessionObject.algorithmAttempt(
+                            QuestionsHandler.getQuestionID(questionsData, currentQuestionIndex), 
+                            true,
+                            timeLimit - timerValue);
+                        sessionObject.todayVisitedNumbers += 1;
                     } else {
-                        answerInput.text = expectedAnswer
-                        answerInput.readOnly = true
-                        resultsModel.append({ similarity: "Not Similar", id: currentQuestionIndex + 1 })
-                        isCurrentAnswerCorrect = false
-                        sessionObject.algorithmAttempt(QuestionsHandler.getQuestionID(questionsData, currentQuestionIndex), false)
+                        answerInput.text = expectedAnswer;
+                        answerInput.readOnly = true;
+                        resultsModel.append({
+                            similarity: "Not Similar", 
+                            id: currentQuestionIndex + 1 
+                        });
+                        isCurrentAnswerCorrect = false;
+                        sessionObject.algorithmAttempt(
+                            QuestionsHandler.getQuestionID(questionsData, currentQuestionIndex), 
+                            false,
+                            timeLimit - timerValue);
                     }
 
                     submitted = true
