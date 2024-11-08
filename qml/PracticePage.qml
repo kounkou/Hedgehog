@@ -307,7 +307,7 @@ Rectangle {
                 let questionID = QuestionsHandler.getQuestionID(questionsData, currentQuestionIndex)
 
                 if (isCurrentAnswerCorrect) {
-                    if (sessionObject.successfulImplementationsThisMonth[questionID].count >= 5) {
+                    if (sessionObject.successfulImplementations[questionID].count >= 5) {
                         if (!sessionObject.visitedNumbers.includes(questionID)) {
                             sessionObject.visitedNumbers.push(questionID);
                             localVisitedNumbers.push(questionID);
@@ -333,7 +333,7 @@ Rectangle {
                 let questionID = QuestionsHandler.getQuestionID(questionsData, currentQuestionIndex)
 
                 if (isCurrentAnswerCorrect) {
-                    if (sessionObject.successfulImplementationsThisMonth[questionID].count >= 5) {
+                    if (sessionObject.successfulImplementations[questionID].count >= 5) {
                         if (!sessionObject.visitedNumbers.includes(questionID)) {
                             sessionObject.visitedNumbers.push(questionID);
                             localVisitedNumbers.push(questionID);

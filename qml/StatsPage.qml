@@ -42,7 +42,7 @@ Rectangle {
         function populateGraphRandomData() {
             graphData.clear();
 
-            var successData = sessionObject.successfulImplementationsThisMonth;
+            var successData = sessionObject.successfulImplementations;
 
             for (var questionId in successData) {
                 var score = successData[questionId].count;
@@ -56,7 +56,7 @@ Rectangle {
         function populateGraphGaussianData() {
             graphData.clear();
 
-            var successData = sessionObject.successfulImplementationsThisMonth;
+            var successData = sessionObject.successfulImplementations;
             var dataArray = [];
 
             for (var questionId in successData) {

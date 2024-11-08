@@ -5,8 +5,7 @@ QtObject {
 
     property var    selectedCategories: []
     property string theme: "white"
-    property var    successStreaksPerQuestion: ({})
-    property var    successfulImplementationsThisMonth: ({})
+    property var    successfulImplementations: ({})
     property string performanceRating: "N/A"
     property string lastPerformanceUpdateDate: ""
     property int    attempted: 0
@@ -42,8 +41,7 @@ QtObject {
     function saveSession() {
         var sessionData = {
             selectedCategories: selectedCategories, 
-            successStreaksPerQuestion: successStreaksPerQuestion,
-            successfulImplementationsThisMonth: successfulImplementationsThisMonth,
+            successfulImplementations: successfulImplementations,
             performanceRating: performanceRating,
             lastPerformanceUpdateDate: lastPerformanceUpdateDate,
             attempted: attempted,
@@ -69,8 +67,7 @@ QtObject {
             try {
                 var data = JSON.parse(content);
                 selectedCategories = data.selectedCategories || [];                
-                successStreaksPerQuestion = data.successStreaksPerQuestion || {};
-                successfulImplementationsThisMonth = data.successfulImplementationsThisMonth || {};
+                successfulImplementations = data.successfulImplementations || {};
                 performanceRating = data.performanceRating || "N/A";
                 lastPerformanceUpdateDate = data.lastPerformanceUpdateDate || "";
                 themeObject.theme = theme;
@@ -100,9 +97,9 @@ QtObject {
             lastDayVisitedNumbers = todayVisitedNumbers
             todayVisitedNumbers = 0
 
-            for (var questionId in successfulImplementationsThisMonth) {
-                if (successfulImplementationsThisMonth.hasOwnProperty(questionId)) {
-                    var questionData = successfulImplementationsThisMonth[questionId];
+            for (var questionId in successfulImplementations) {
+                if (successfulImplementations.hasOwnProperty(questionId)) {
+                    var questionData = successfulImplementations[questionId];
 
                     if (questionData.count >= 5) {
                         questionData.age += 1;
@@ -117,7 +114,7 @@ QtObject {
                             }
                         }
                     }
-                    successfulImplementationsThisMonth[questionId] = questionData;
+                    successfulImplementations[questionId] = questionData;
                 }
             }
         }
@@ -129,9 +126,9 @@ QtObject {
         var totalSuccessStreak = 0;
         var totalSuccessfulCount = 0;
 
-        for (var questionId in successStreaksPerQuestion) {
-            totalSuccessStreak += successStreaksPerQuestion[questionId] || 0;
-            totalSuccessfulCount += successfulImplementationsThisMonth[questionId].count || 0;
+        for (var questionId in successfulImplementations) {
+            totalSuccessStreak += successfulImplementations[questionId].streak || 0;
+            totalSuccessfulCount += successfulImplementations[questionId].count || 0;
         }
 
         var newPerformanceRating = ""
@@ -159,18 +156,15 @@ QtObject {
     }
 
     function algorithmAttempt(questionId, successful) {
-        if (!successStreaksPerQuestion.hasOwnProperty(questionId)) {
-            successStreaksPerQuestion[questionId] = 0;
-        }
-        if (!successfulImplementationsThisMonth.hasOwnProperty(questionId)) {
-            successfulImplementationsThisMonth[questionId] = { count: 0, age: 0 };
+        if (!successfulImplementations.hasOwnProperty(questionId)) {
+            successfulImplementations[questionId] = { count: 0, age: 0, streak: 0 };
         }
 
         if (successful) {
-            successStreaksPerQuestion[questionId] += 1;
-            successfulImplementationsThisMonth[questionId].count += 1;
+            successfulImplementations[questionId].streak += 1;
+            successfulImplementations[questionId].count += 1;
         } else {
-            successStreaksPerQuestion[questionId] = 0;
+            successfulImplementations[questionId].streak = 0;
         }
 
         updatePerformanceRatingForDay();
