@@ -264,7 +264,7 @@ Rectangle {
                         sessionObject.algorithmAttempt(
                             QuestionsHandler.getQuestionID(questionsData, currentQuestionIndex), 
                             true,
-                            timerValue);
+                            timeLimit - timerValue);
                         sessionObject.todayVisitedNumbers += 1;
                     } else {
                         answerInput.text = expectedAnswer;
@@ -277,7 +277,7 @@ Rectangle {
                         sessionObject.algorithmAttempt(
                             QuestionsHandler.getQuestionID(questionsData, currentQuestionIndex), 
                             false,
-                            timerValue);
+                            timeLimit - timerValue);
                     }
 
                     submitted = true

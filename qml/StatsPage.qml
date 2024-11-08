@@ -116,8 +116,14 @@ Rectangle {
         }
 
         function getCurrentTime() {
-            var date = new Date();
-            return date.toLocaleString(); // e.g., "10/31/2024, 3:45 PM"
+            var today = new Date();
+            var hours = today.getHours();
+            var minutes = today.getMinutes();
+
+            hours = hours < 10 ? "0" + hours : hours;
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+
+            return hours + ":" + minutes;
         }
     }
 
@@ -283,7 +289,7 @@ Rectangle {
 
         Text {
             id: updatedTime
-            text: "Last updated: " + statsPage.lastUpdateTime
+            text: "Updated today at " + statsPage.lastUpdateTime
             font.pixelSize: 12
             color: themeObject.textColor
             anchors.bottom: parent.bottom
