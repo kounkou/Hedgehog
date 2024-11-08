@@ -1,0 +1,85 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="main.qml">../qml/main.qml</file>
+        <file alias="CustomButton.qml">../qml/CustomButton.qml</file>
+        <file alias="StatsPage.qml">../qml/StatsPage.qml</file>
+        <file alias="ReviewPage.qml">../qml/ReviewPage.qml</file>
+        <file alias="Theme.qml">../qml/Theme.qml</file>
+        <file alias="SectionPage.qml">../qml/SectionPage.qml</file>
+        <file alias="WelcomePage.qml">../qml/WelcomePage.qml</file>
+        <file alias="PracticePage.qml">../qml/PracticePage.qml</file>
+        <file alias="AboutPage.qml">../qml/AboutPage.qml</file>
+        <file alias="CategoryPage.qml">../qml/CategoryPage.qml</file>
+        <file alias="Session.qml">../qml/Session.qml</file>
+        <file alias="LoginPage.qml">../qml/LoginPage.qml</file>
+        <file alias="SettingsPage.qml">../qml/SettingsPage.qml</file>
+        <file alias="handler.js">../logic/handler.js</file>
+
+        <file alias="bfs-recursive.js">../logic/graph/bfs-recursive.js</file>
+        <file alias="dfs-recursive.js">../logic/graph/dfs-recursive.js</file>
+        <file alias="bfs-iterative.js">../logic/graph/bfs-iterative.js</file>
+        <file alias="dfs-iterative.js">../logic/graph/dfs-iterative.js</file>
+        <file alias="dijkstra.js">../logic/graph/dijkstra.js</file>
+
+        <file alias="backtracking.js">../logic/backtracking/nqueens.js</file>
+
+        <file alias="dsu.js">../logic/disjoint-set/dsu.js</file>
+
+        <file alias="kadane.js">../logic/dp/kadane.js</file>
+
+        <file alias="topological-sorting.js">../logic/topological-sorting/topological-sorting.js</file>
+
+        <file alias="merge-interval.js">../logic/intervals/merge-interval.js</file>
+        <file alias="insert-interval.js">../logic/intervals/insert-interval.js</file>
+        <file alias="min-meeting-room.js">../logic/intervals/min-meeting-room.js</file>
+
+        <file alias="binary-search.js">../logic/binary-search/binary-search.js</file>
+
+        <file alias="linear-search.js">../logic/searching/linear-search.js</file>
+        <file alias="jump-search.js">../logic/searching/jump-search.js</file>
+        <file alias="interpolation-search.js">../logic/searching/interpolation-search.js</file>
+
+        <file alias="trie.js">../logic/trie/trie.js</file>
+
+        <file alias="kmp.js">../logic/string/kmp.js</file>
+        <file alias="lcp.js">../logic/string/lcp.js</file>
+        <file alias="rabin-karp.js">../logic/string/rabin-karp.js</file>
+
+        <file alias="factorial.js">../logic/recursion/factorial.js</file>
+
+        <file alias="fractional-knapsack.js">../logic/greedy/fractional-knapsack.js</file>
+
+        <file alias="check-power-of-two.js">../logic/bit-manipulation/check-power-of-two.js</file>
+        <file alias="count-set-bit.js">../logic/bit-manipulation/count-set-bit.js</file>
+        <file alias="reverse-bits.js">../logic/bit-manipulation/reverse-bits.js</file>
+
+        <file alias="max-sub-array.js">../logic/sliding-window/max-sub-array.js</file>
+
+        <file alias="heap-sort.js">../logic/heap/heap-sort.js</file>
+        <file alias="insert-heap.js">../logic/heap/insert-heap.js</file>
+
+        <file alias="insert-at-end.js">../logic/linked-list/insert-at-end.js</file>
+        <file alias="remove-element.js">../logic/linked-list/remove-element.js</file>
+        <file alias="ancestor.js">../logic/linked-list/ancestor.js</file>
+
+        <file alias="sieve.js">../logic/mathematics/sieve.js</file>
+        <file alias="gcd.js">../logic/mathematics/gcd.js</file>
+        <file alias="fast-exponentiation.js">../logic/mathematics/fast-exponentiation.js</file>
+
+        <file alias="convex-hull.js">../logic/geometry/convex-hull.js</file>
+        <file alias="line-intersection.js">../logic/geometry/line-intersection.js</file>
+        <file alias="area-triangle-heron.js">../logic/geometry/area-triangle-heron.js</file>
+
+        <file alias="lazy-propagation.js">../logic/segment-tree/lazy-propagation.js</file>
+        <file alias="range-sum-queries.js">../logic/segment-tree/range-sum-queries.js</file>
+
+        <file alias="sessionData.json">sessionData.json</file>
+
+        <file alias="Hedgehog-Telegram.jpeg">../images/Hedgehog-Telegram.jpeg</file>
+        <file alias="buy-me-a-coffee.png">../images/buy-me-a-coffee.png</file>
+        <file alias="appearance-dark.svg">../images/appearance-dark.svg</file>
+        <file alias="font-dark.svg">../images/font-dark.svg</file>
+        <file alias="appearance-light.svg">../images/appearance-light.svg</file>
+        <file alias="font-light.svg">../images/font-light.svg</file>
+    </qresource>
+</RCC>
