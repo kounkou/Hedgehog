@@ -26,16 +26,17 @@ Rectangle {
         id: d
 
         function getBarColor(barHeight, yAxisMax) {
-            let baseRed = 0.2;
-            let baseGreen = 0.4;
-            let baseBlue = 0.8;
-            let maxHeightFactor = 0.6;
+            let baseRed = 0.4;  // Slightly muted red
+            let baseGreen = 0.5;  // Slightly muted green
+            let baseBlue = 0.7;  // Softer blue
+            let maxHeightFactor = 0.4;  // Reduced to make intensity changes subtler
 
             let intensity = Math.min(barHeight * maxHeightFactor / yAxisMax, 1.0);
 
-            let red = Math.min(baseRed + intensity, 1.0);
-            let green = Math.min(baseGreen + intensity, 1.0);
-            let blue = Math.max(baseBlue - intensity, 0.2);
+            // Adjust the final colors to stay more subdued
+            let red = Math.min(baseRed + intensity * 0.2, 0.7);  // Cap red at a softer level
+            let green = Math.min(baseGreen + intensity * 0.2, 0.8);  // Cap green for softer hue
+            let blue = Math.max(baseBlue - intensity * 0.2, 0.5);  // Ensure blue stays soft
 
             return Qt.rgba(red, green, blue, 1.0);
         }
@@ -202,6 +203,7 @@ Rectangle {
         font.bold: sessionObject.isFontBold
         color: themeObject.textColor
         anchors.horizontalCenter: parent.horizontalCenter
+        visible: false
     }
 
     TogglePageSwitch {
