@@ -1,7 +1,7 @@
 var question = [
     {
         id: "quick sort",
-        category: "Divide and Conquer",
+        category: "Div. Conq.",
         placeHolderCpp: `void quickSort(vector<int>& arr, int low, int high) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func quickSort(arr []int, low, high int) \n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         difficulty: "Medium",

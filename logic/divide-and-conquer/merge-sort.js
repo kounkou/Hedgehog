@@ -1,7 +1,7 @@
 var question = [
     {
         id: "merge sort",
-        category: "Divide and Conquer",
+        category: "Div. Conq.",
         placeHolderCpp: `void mergeSort(vector<int>& arr, int l, int r) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func mergeSort(arr []int, l, r int) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         difficulty: "Medium",
