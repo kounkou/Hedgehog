@@ -15,6 +15,7 @@
         <file alias="LoginPage.qml">qml/LoginPage.qml</file>
         <file alias="SettingsPage.qml">qml/SettingsPage.qml</file>
         <file alias="ToggleSwitch.qml">qml/ToggleSwitch.qml</file>
+        <file alias="TogglePageSwitch.qml">qml/TogglePageSwitch.qml</file>
         <file alias="handler.js">logic/handler.js</file>
         
         <file alias="adsense-ad.html">qml/adsense-ad.html</file>
