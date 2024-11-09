@@ -2,7 +2,7 @@ var question = [
     {
         id: "Topological sort",
         category: "Topo. Sort",
-        placeHolderCpp: `void dfs(int node, map<int, bool>& visited, stack<int>& stk, vector<int> graph[]) {\n    ...\n}\n\nvoid topoSortGraph(int V, vector<int> adj[]) {\n    ...\n}\n\n\n\n\n\n\n\n`,
+        placeHolderCpp: `void dfs(int node, map<int, bool>& visited, stack<int>& stk, vector<int> graph[]) {\n    ...\n}\n\nvoid topoSortGraph(vector<int> nodes, vector<int> graph[], int V) {\n    ...\n}\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func dfs(node int, visited []bool, stack *[]int, graph [][]int) {\n    ...\n}\n\nvoid topoSortGraph(vector<int> nodes, vector<int> graph[]) {\n    ...\n}\n\n\n\n\n\n\n`,
         difficulty: "Hard",
         question: "Topological Sort.",
@@ -18,7 +18,7 @@ var question = [
     stk.push(node);
 }
 
-void topoSortGraph(int V, vector<int> nodes, vector<int> graph[]) {
+void topoSortGraph(vector<int> nodes, vector<int> graph[], int V) {
     map<int, bool> visited(V, false);
     stack<int> stk;
     
@@ -28,8 +28,9 @@ void topoSortGraph(int V, vector<int> nodes, vector<int> graph[]) {
     }
     
     while (!stk.empty()) {
-        cout << stk.top();
+        int node = stk.top();
         stk.pop();
+        cout << node;
     }
 }`,
         answerGo: `func dfs(v int, visited []bool, stk *[]int, graph [][]int) {
