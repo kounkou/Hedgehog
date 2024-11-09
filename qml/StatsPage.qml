@@ -16,6 +16,7 @@ Rectangle {
 
     Component.onCompleted: {
         d.populateGraphGaussianData();
+        d.populateGraphSpentTimeData();
         sessionObject.loadSession();
         statsPage.fluctuation = d.getFluctuation();
         statsPage.lastUpdateTime = d.getCurrentTime();
@@ -49,7 +50,7 @@ Rectangle {
                 graphData.append({ day: questionId, score: score });
             }
 
-            canvas.requestPaint();
+            successCanvas.requestPaint();
             statsPage.lastUpdateTime = d.getCurrentTime();
         }
 
@@ -86,8 +87,50 @@ Rectangle {
                 graphData.append(arrangedData[i]);
             }
 
-            canvas.requestPaint();
+            successCanvas.requestPaint();
             statsPage.lastUpdateTime = d.getCurrentTime();
+        }
+
+        function populateGraphSpentTimeData() {
+            graphData.clear();
+
+            // Initialize an object to accumulate times for each day
+            var daySpentTimes = {
+                "Monday": 0,
+                "Tuesday": 0,
+                "Wednesday": 0,
+                "Thursday": 0,
+                "Friday": 0,
+                "Saturday": 0,
+                "Sunday": 0,
+            };
+
+            // Loop through each question's data to populate daySpentTimes
+            for (var question in sessionObject.successfulImplementations) {
+                var data = sessionObject.successfulImplementations[question].spentTime;
+
+                // For each day's data in spentTimes
+                for (var dayData of data.spentTimes) {
+                    var day = dayData.day;
+                    // Ensure the day is within the desired days (Mon-Sat)
+                    if (daySpentTimes.hasOwnProperty(day)) {
+                        daySpentTimes[day] = data.average;  // Add the average time for that day
+                    }
+                }
+            }
+
+            // Calculate and populate graphData with the average spent time for each day
+            for (var day in daySpentTimes) {
+                var averageTime = daySpentTimes[day]
+
+                graphData.append({
+                    day: day,
+                    type: "average",
+                    time: averageTime
+                });
+            }
+
+            speedCanvas.requestPaint();
         }
 
         function getFluctuation() {
@@ -131,7 +174,8 @@ Rectangle {
         id: title
         anchors.top: parent.top
         anchors.topMargin: 10
-        text: "Number of successful implementations per question"
+        text: successCanvas.visible ? "Number of successful implementations per question." 
+            : "Time (in seconds) spent on average implementing a question."
         font.pixelSize: 24
         font.bold: sessionObject.isFontBold
         color: themeObject.textColor
@@ -142,7 +186,8 @@ Rectangle {
         id: details
         anchors.top: title.bottom
         anchors.topMargin: 10
-        text: "Evaluates your performance by considering both the success rate and the frequency of problems solved."
+        text: successCanvas.visible ? "Evaluates your performance by considering both the success rate and the frequency of problems solved." 
+            : "Monitors the time (in seconds) spent on average when solving any questions on that day."
         font.pixelSize: 14
         font.bold: sessionObject.isFontBold
         color: themeObject.textColor
@@ -159,26 +204,33 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
     }
 
+    TogglePageSwitch {
+        id: control
+        anchors.top: details.bottom
+        anchors.topMargin: 10
+
+        onToggled: {
+            speedCanvas.visible ? d.populateGraphSpentTimeData() : d.populateGraphGaussianData()
+        }
+    }
+
     ListModel {
         id: graphData
     }
 
     Canvas {
-        id: canvas
-        
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
+        id: successCanvas
+        anchors.fill: parent
         anchors.margins: 100
+        visible: control.checked
 
         onPaint: {
-            var ctx = canvas.getContext("2d");
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            var ctx = successCanvas.getContext("2d");
+            ctx.clearRect(0, 0, successCanvas.width, successCanvas.height);
 
             var padding = 40;
-            var graphWidth = canvas.width - padding * 2;
-            var graphHeight = canvas.height - padding * 2;
+            var graphWidth = successCanvas.width - padding * 2;
+            var graphHeight = successCanvas.height - padding * 2;
 
             var maxScore = 0;
             for (var i = 0; i < graphData.count; i++) {
@@ -191,12 +243,13 @@ Rectangle {
             var yAxisMax = Math.ceil(maxScore / 10) * 10;
             if (yAxisMax === 0) yAxisMax = 10;
 
+            // Draw the axes
             ctx.beginPath();
             ctx.lineWidth = 2;
             ctx.strokeStyle = "#777777";
             ctx.moveTo(padding, padding);
-            ctx.lineTo(padding, canvas.height - padding);
-            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            ctx.lineTo(padding, successCanvas.height - padding);
+            ctx.lineTo(successCanvas.width - padding, successCanvas.height - padding);
             ctx.stroke();
 
             var gridLines = 5;
@@ -206,7 +259,7 @@ Rectangle {
                 var y = padding + (graphHeight / gridLines) * i;
                 ctx.beginPath();
                 ctx.moveTo(padding, y);
-                ctx.lineTo(canvas.width - padding, y);
+                ctx.lineTo(successCanvas.width - padding, y);
                 ctx.stroke();
 
                 ctx.fillStyle = "#777777";
@@ -214,11 +267,17 @@ Rectangle {
                 ctx.fillText(((gridLines - i) * (yAxisMax / gridLines)).toString(), 10, y + 4);
             }
 
-            var barWidth = (graphWidth / graphData.count) - 4;
-            var cornerRadius = 10; // Set the radius for the rounded corners
+            // Adjust bar width and spacing
+            var barWidth = (graphWidth / graphData.count) * 0.3;  // Reduce bar width to 50% of each segment
+            var segmentWidth = graphWidth / graphData.count;
+            var cornerRadius = 10;  // Set the radius for the rounded corners
 
             // Helper function to draw a rounded rectangle
             function drawRoundedRect(ctx, x, y, width, height, radius) {
+                if (height === 0) {
+                    return;
+                }
+
                 ctx.beginPath();
                 ctx.moveTo(x + radius, y);
                 ctx.lineTo(x + width - radius, y);
@@ -232,12 +291,135 @@ Rectangle {
 
             for (var i = 0; i < graphData.count; i++) {
                 var point = graphData.get(i);
-                var xPos = padding + i * (barWidth + 4);
+                var xPos = padding + i * segmentWidth + (segmentWidth - barWidth) / 2;  // Center the bar in each segment
                 var barHeight = (point.score / yAxisMax) * graphHeight;
-                var yPos = canvas.height - padding - barHeight;
+                var yPos = successCanvas.height - padding - barHeight;
 
                 ctx.save();
                 var barColor = d.getBarColor(point.score, yAxisMax);
+                ctx.fillStyle = barColor;
+                ctx.strokeStyle = barColor;
+
+                drawRoundedRect(ctx, xPos, yPos, barWidth, barHeight, cornerRadius);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.restore();
+            }
+
+            for (var i = 0; i < graphData.count; i++) {
+                var point = graphData.get(i);
+                var xPos = padding + i * segmentWidth + segmentWidth / 2;
+                var barHeight = (point.score / yAxisMax) * graphHeight;
+                var yPos = successCanvas.height - padding - barHeight - 5;
+                ctx.fillStyle = themeObject.textColor;
+                ctx.font = "12px Arial";
+                ctx.save();
+                ctx.translate(xPos, yPos);
+                ctx.rotate(-Math.PI / 2); 
+                ctx.fillText(point.day, 0, 0);
+                ctx.restore();
+            }
+
+            // Draw the dotted line at y = 5 LAST to bring it to the front
+            var yValue = 5;
+            var yPos = successCanvas.height - padding - ((yValue / yAxisMax) * graphHeight);
+
+            ctx.beginPath();
+            ctx.setLineDash([5, 5]);  // 5px dash, 5px space
+            ctx.strokeStyle = themeObject.averageLineColor;  // Color for the average line
+            ctx.lineWidth = 2;
+            ctx.moveTo(padding, yPos);
+            ctx.lineTo(successCanvas.width - padding, yPos);
+            ctx.stroke();
+            ctx.setLineDash([]);  // Reset to solid lines
+
+            // Add text label at the end of the line
+            ctx.fillStyle = themeObject.averageLineColor;  // Match line color for consistency
+            ctx.font = "12px Arial";
+            ctx.fillText("avg 5", successCanvas.width - 2 * padding, yPos - 4);
+        }
+    }
+
+    Canvas {
+        id: speedCanvas
+        anchors.fill: parent
+        anchors.margins: 100
+        visible: !control.checked
+
+        onPaint: {
+            var ctx = speedCanvas.getContext("2d");
+            ctx.clearRect(0, 0, speedCanvas.width, speedCanvas.height);
+
+            var padding = 40;
+            var graphWidth = speedCanvas.width - padding * 2;
+            var graphHeight = speedCanvas.height - padding * 2;
+
+            var maxTime = 0;
+            for (var i = 0; i < graphData.count; i++) {
+                var point = graphData.get(i);
+                if (point.time > maxTime) {
+                    maxTime = point.time;
+                }
+            }
+
+            var yAxisMax = Math.ceil(maxTime / 10) * 10;
+            if (yAxisMax === 0) yAxisMax = 10;
+
+            // Draw the axes
+            ctx.beginPath();
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = "#777777";
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, speedCanvas.height - padding);
+            ctx.lineTo(speedCanvas.width - padding, speedCanvas.height - padding);
+            ctx.stroke();
+
+            // Draw y-axis grid lines
+            var gridLines = 5;
+            ctx.lineWidth = 0.5;
+            ctx.strokeStyle = "#cccccc";
+            for (var i = 1; i <= gridLines; i++) {
+                var y = padding + (graphHeight / gridLines) * i;
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(speedCanvas.width - padding, y);
+                ctx.stroke();
+
+                ctx.fillStyle = "#777777";
+                ctx.font = "12px Arial";
+                ctx.fillText(((gridLines - i) * (yAxisMax / gridLines)).toString(), 10, y + 4);
+            }
+
+            var barWidth = (graphWidth / graphData.count) * 0.3;
+            var segmentWidth = graphWidth / graphData.count;
+            var cornerRadius = 10; // Set the radius for the rounded corners
+
+            // Helper function to draw a rounded rectangle
+            function drawRoundedRect(ctx, x, y, width, height, radius) {
+                if (height === 0) {
+                    return;
+                }
+
+                ctx.beginPath();
+                ctx.moveTo(x + radius, y);
+                ctx.lineTo(x + width - radius, y);
+                ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+                ctx.lineTo(x + width, y + height);
+                ctx.lineTo(x, y + height);
+                ctx.lineTo(x, y + radius);
+                ctx.quadraticCurveTo(x, y, x + radius, y);
+                ctx.closePath();
+            }
+
+            for (var i = 0; i < graphData.count; i++) {
+                var point = graphData.get(i);
+                var xPos = padding + i * segmentWidth + (segmentWidth - barWidth) / 2;  // Center the bar in each segment
+                var barHeight = (point.time / yAxisMax) * graphHeight;
+                var yPos = speedCanvas.height - padding - barHeight;
+
+                ctx.save();
+                var barColor = d.getBarColor(point.time, yAxisMax);
                 ctx.fillStyle = barColor;
                 ctx.strokeStyle = barColor;
 
@@ -250,35 +432,16 @@ Rectangle {
 
             for (var i = 0; i < graphData.count; i++) {
                 var point = graphData.get(i);
-                var xPos = padding + i * (barWidth + 4) + (barWidth / 2);
-                var barHeight = (point.score / yAxisMax) * graphHeight;
-                var yPos = canvas.height - padding - barHeight - 5;
+                var xPos = padding + i * segmentWidth + segmentWidth / 2 - 25;
+                var barHeight = (point.time / yAxisMax) * graphHeight;
+                var yPos = speedCanvas.height - 25
                 ctx.fillStyle = themeObject.textColor;
                 ctx.font = "12px Arial";
                 ctx.save();
                 ctx.translate(xPos, yPos);
-                ctx.rotate(-Math.PI / 2); 
                 ctx.fillText(point.day, 0, 0);
                 ctx.restore();
             }
-
-            // Draw the dotted line at y = 5 LAST to bring it to the front
-            var yValue = 5;
-            var yPos = canvas.height - padding - ((yValue / yAxisMax) * graphHeight);
-
-            ctx.beginPath();
-            ctx.setLineDash([5, 5]); // 5px dash, 5px space
-            ctx.strokeStyle = themeObject.averageLineColor; // Color for the average line
-            ctx.lineWidth = 2;
-            ctx.moveTo(padding, yPos);
-            ctx.lineTo(canvas.width - padding, yPos);
-            ctx.stroke();
-            ctx.setLineDash([]); // Reset to solid lines
-
-            // Add text label at the end of the line
-            ctx.fillStyle = themeObject.averageLineColor; // Match line color for consistency
-            ctx.font = "12px Arial";
-            ctx.fillText("avg 5", canvas.width - 2 * padding, yPos - 4);
         }
     }
 

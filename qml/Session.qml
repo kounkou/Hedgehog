@@ -200,7 +200,7 @@ QtObject {
             var today = getCurrentDate();
             let currentTime = getCurrentTime();
 
-            let dayEntry = successfulImplementations[questionId].spentTime.spentTimes.find(entry => entry.day === day);
+            let dayEntry = successfulImplementations[questionId].spentTime.spentTimes.find(entry => entry.day === day && entry.today === today);
 
             if (dayEntry) {
                 dayEntry.times.push({ time: currentTime, spentTime: spentTime });
