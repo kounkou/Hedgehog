@@ -41,7 +41,7 @@ SwitchDelegate {
         Rectangle {
             x: root.checked ? parent.width - width - 3 : 3
             width: 100
-            height: 22
+            height: 20
             radius: 5
             anchors.verticalCenter: parent.verticalCenter
             color: root.down ? themeObject.buttonColor : themeObject.buttonColor
