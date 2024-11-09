@@ -365,8 +365,8 @@ Rectangle {
                 }
             }
 
-            var yAxisMax = Math.ceil(maxTime / 10) * 10;
-            if (yAxisMax === 0) yAxisMax = 10;
+            var yAxisMax = Math.ceil(maxTime / 10) * 10 * 2;
+            if (yAxisMax === 0) yAxisMax = 20;
 
             // Draw the axes
             ctx.beginPath();
