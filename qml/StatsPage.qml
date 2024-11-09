@@ -169,6 +169,12 @@ Rectangle {
 
             return hours + ":" + minutes;
         }
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            return `${minutes}m ${remainingSeconds}s`;
+        }
     }
 
     Text {
@@ -365,8 +371,8 @@ Rectangle {
                 }
             }
 
-            var yAxisMax = Math.ceil(maxTime / 10) * 10 * 2;
-            if (yAxisMax === 0) yAxisMax = 20;
+            var yAxisMax = Math.ceil(maxTime / 10) * 10 * 3;
+            if (yAxisMax === 0) yAxisMax = 30;
 
             // Draw the axes
             ctx.beginPath();
@@ -429,12 +435,29 @@ Rectangle {
                 ctx.fill();
                 ctx.stroke();
 
-                ctx.restore(); // Restore the context state after drawing the bar
+                ctx.restore();
             }
 
             for (var i = 0; i < graphData.count; i++) {
                 var point = graphData.get(i);
-                var xPos = padding + i * segmentWidth + segmentWidth / 2 - 25;
+
+                if (point.time === 0) continue;
+
+                var xPos = padding + i * segmentWidth + (segmentWidth - barWidth) / 2;
+                var barHeight = (point.time / yAxisMax) * graphHeight;
+                var yPos = successCanvas.height - padding - barHeight - 5;
+                ctx.fillStyle = themeObject.textColor;
+                ctx.font = "12px Arial";
+                ctx.save();
+                ctx.translate(xPos, yPos);
+                var textWidth = d.formatTime(point.time).length
+                ctx.fillText(d.formatTime(point.time), 0, 0)
+                ctx.restore();
+            }
+
+            for (var i = 0; i < graphData.count; i++) {
+                var point = graphData.get(i);
+                var xPos = padding + i * segmentWidth + (segmentWidth - barWidth) / 2;
                 var barHeight = (point.time / yAxisMax) * graphHeight;
                 var yPos = speedCanvas.height - 25
                 ctx.fillStyle = themeObject.textColor;
