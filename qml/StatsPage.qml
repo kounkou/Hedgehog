@@ -101,7 +101,8 @@ Rectangle {
                 "Wednesday": 0,
                 "Thursday": 0,
                 "Friday": 0,
-                "Saturday": 0
+                "Saturday": 0,
+                "Sunday": 0,
             };
 
             // Loop through each question's data to populate daySpentTimes
