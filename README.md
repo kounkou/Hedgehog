@@ -11,9 +11,20 @@
 </div>
 
 <img width="1212" alt="Screenshot 2024-10-27 at 11 20 15 AM" src="images/welcome.png">
+
+# Topics
+
 <img width="1212" alt="Screenshot 2024-10-22 at 4 08 13 PM" src="images/categories.png">
+
+# Editor
+
 <img width="1042" alt="Screenshot 2024-10-17 at 8 59 40 AM" src="images/code-editor.png">
-<img width="1212" alt="Screenshot 2024-10-28 at 12 57 31 PM" src="images/stats.png">
+
+# Statistics
+
+<img width="1212" alt="Screenshot 2024-10-28 at 12 57 31 PM" src="images/stats-1.png">
+<img width="1212" alt="Screenshot 2024-10-28 at 12 57 31 PM" src="images/stats-2.png">
+<img width="1212" alt="Screenshot 2024-10-28 at 12 57 31 PM" src="images/stats-3.png">
 
 # Platforms
 
