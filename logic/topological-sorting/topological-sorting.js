@@ -19,7 +19,7 @@ var question = [
 }
 
 void topoSortGraph(vector<int> nodes, vector<int> graph[], int V) {
-    map<int, bool> visited(V, false);
+    map<int, bool> visited;
     stack<int> stk;
     
     for (int node : nodes) {

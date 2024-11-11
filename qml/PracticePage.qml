@@ -947,9 +947,6 @@ Rectangle {
                         enabled: submitted
                         radius: 10
                         visible: !quizComplete
-                        // anchors.top: parent.top
-                        // anchors.right: parent.right
-                        // anchors.margins: 10
 
                         Text {
                             id: viewSubmissionText
