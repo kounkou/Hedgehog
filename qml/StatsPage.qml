@@ -9,6 +9,8 @@ Rectangle {
     property string theme: "light"
     property string fluctuation: ""
     property string lastUpdateTime: ""
+    property var questionColorMap: {}
+    property bool detailsButtonCheckedState: false
 
     Layout.fillWidth: true
     Layout.fillHeight: true
@@ -17,6 +19,7 @@ Rectangle {
     Component.onCompleted: {
         d.populateGraphGaussianData();
         d.populateGraphSpentTimeData();
+
         sessionObject.loadSession();
         statsPage.fluctuation = d.getFluctuation();
         statsPage.lastUpdateTime = d.getCurrentTime();
@@ -95,7 +98,6 @@ Rectangle {
         function populateGraphSpentTimeData() {
             graphData.clear();
 
-            // Initialize an object to accumulate times for each day
             var daySpentTimes = {
                 "Monday": 0,
                 "Tuesday": 0,
@@ -106,21 +108,18 @@ Rectangle {
                 "Sunday": 0,
             };
 
-            // Loop through each question's data to populate daySpentTimes
             for (var question in sessionObject.successfulImplementations) {
                 var data = sessionObject.successfulImplementations[question].spentTime;
 
-                // For each day's data in spentTimes
                 for (var dayData of data.spentTimes) {
                     var day = dayData.day;
-                    // Ensure the day is within the desired days (Mon-Sat)
+
                     if (daySpentTimes.hasOwnProperty(day)) {
-                        daySpentTimes[day] = data.average;  // Add the average time for that day
+                        daySpentTimes[day] = data.average;
                     }
                 }
             }
 
-            // Calculate and populate graphData with the average spent time for each day
             for (var day in daySpentTimes) {
                 var averageTime = daySpentTimes[day]
 
@@ -132,6 +131,64 @@ Rectangle {
             }
 
             speedCanvas.requestPaint();
+            statsPage.lastUpdateTime = d.getCurrentTime();
+        }
+
+        function populateGraphDetailedSpentTimeData() {
+            graphData.clear();
+
+            var daySpentTimes = {
+                "Monday": [],
+                "Tuesday": [],
+                "Wednesday": [],
+                "Thursday": [],
+                "Friday": [],
+                "Saturday": [],
+                "Sunday": []
+            };
+
+            for (var question in sessionObject.successfulImplementations) {
+                var data = sessionObject.successfulImplementations[question].spentTime;
+
+                for (var dayData of data.spentTimes) {
+                    var day = dayData.day;
+                    var time = dayData.spentTime;
+
+                    if (daySpentTimes.hasOwnProperty(day)) {
+                        for (var timeEntry of dayData.times) {
+                            daySpentTimes[day].push({
+                                questionId: question,
+                                spentTime: timeEntry.spentTime
+                            });
+                        }
+                    }
+                }
+            }
+
+            var daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
+            for (var day of daysOfWeek) {
+                if (daySpentTimes[day].length === 0) {
+                    graphData.append({
+                        day: day,
+                        questionId: "N/A",
+                        type: "individual",
+                        time: 0
+                    });
+                } else {
+                    for (var timeData of daySpentTimes[day]) {
+                        graphData.append({
+                            day: day,
+                            questionId: timeData.questionId,
+                            type: "individual",
+                            time: timeData.spentTime
+                        });
+                    }
+                }
+            }
+
+            speedDetailsCanvas.requestPaint();
+            statsPage.lastUpdateTime = d.getCurrentTime();
         }
 
         function getFluctuation() {
@@ -171,9 +228,32 @@ Rectangle {
         }
 
         function formatTime(seconds) {
-            const minutes = Math.floor(seconds / 60);
-            const remainingSeconds = seconds % 60;
-            return `${minutes}m ${remainingSeconds}s`;
+            const minutes = String(Math.floor(seconds / 60)).padStart(2, '0');
+            const remainingSeconds = String(seconds % 60).padStart(2, '0');
+            return `${minutes}m${remainingSeconds}`;
+        }
+
+        function hashString(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                hash = (hash << 5) - hash + str.charCodeAt(i);
+                hash |= 0; // Convert to 32-bit integer
+            }
+            return hash;
+        }
+
+        function getColorForQuestion(questionId) {
+            if (!questionId) {
+                console.error("questionId is undefined");
+                return "hsl(0, 0%, 85%)";
+            }
+
+            const hash = hashString(questionId);
+            const hue = (hash % 360 + 360) % 360;
+            const saturation = 70;
+            const lightness = 60;
+
+            return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         }
     }
 
@@ -181,8 +261,15 @@ Rectangle {
         id: title
         anchors.top: parent.top
         anchors.topMargin: 10
-        text: successCanvas.visible ? "Number of successful implementations per question." 
-            : "Time (in seconds) spent on average implementing a question."
+        text: {
+            if (successCanvas.visible) {
+                return "Number of successful implementations per question." 
+            } else if (speedCanvas.visible) {
+                return "Time (in seconds) spent on average implementing a question."
+            } else {
+                return "Individual time contribution to overall practice time"
+            }
+        }
         font.pixelSize: 24
         font.bold: sessionObject.isFontBold
         color: themeObject.textColor
@@ -193,8 +280,15 @@ Rectangle {
         id: details
         anchors.top: title.bottom
         anchors.topMargin: 10
-        text: successCanvas.visible ? "Evaluates your performance by considering both the success rate and the frequency of problems solved." 
-            : "Monitors the time (in seconds) spent on average when solving any questions on that day."
+        text: {
+            if (successCanvas.visible) { 
+                return "Evaluates your performance by considering both the success rate and the frequency of problems solved." 
+            } else if (speedCanvas.visible) {
+                return "Monitors the time (in seconds) spent on average when solving any questions on that day."
+            } else {
+                return "Monitors the individual time contribution to overall practice time measured in minutes and seconds"
+            }
+        }
         font.pixelSize: 14
         font.bold: sessionObject.isFontBold
         color: themeObject.textColor
@@ -202,6 +296,7 @@ Rectangle {
     }
 
     Text {
+        id: description
         anchors.top: details.bottom
         anchors.topMargin: 10
         text: statsPage.fluctuation
@@ -216,6 +311,7 @@ Rectangle {
         id: control
         anchors.top: details.bottom
         anchors.topMargin: 10
+        enabled: !detailsButtonCheckedState
 
         onToggled: {
             speedCanvas.visible ? d.populateGraphSpentTimeData() : d.populateGraphGaussianData()
@@ -230,7 +326,7 @@ Rectangle {
         id: successCanvas
         anchors.fill: parent
         anchors.margins: 100
-        visible: control.checked
+        visible: control.checked && !detailsButtonCheckedState
 
         onPaint: {
             var ctx = successCanvas.getContext("2d");
@@ -253,7 +349,7 @@ Rectangle {
 
             // Draw the axes
             ctx.beginPath();
-            ctx.lineWidth = 2;
+            ctx.lineWidth = 1;
             ctx.strokeStyle = "#777777";
             ctx.moveTo(padding, padding);
             ctx.lineTo(padding, successCanvas.height - padding);
@@ -272,13 +368,13 @@ Rectangle {
 
                 ctx.fillStyle = "#777777";
                 ctx.font = "12px Arial";
-                ctx.fillText(((gridLines - i) * (yAxisMax / gridLines)).toString(), 10, y + 4);
+                ctx.fillText(((gridLines - i) * (yAxisMax / gridLines)).toString(), graphWidth + 40, y + 4);
             }
 
             // Adjust bar width and spacing
             var barWidth = (graphWidth / graphData.count) * 0.3;  // Reduce bar width to 50% of each segment
             var segmentWidth = graphWidth / graphData.count;
-            var cornerRadius = 10;  // Set the radius for the rounded corners
+            var cornerRadius = 5;  // Set the radius for the rounded corners
 
             // Helper function to draw a rounded rectangle
             function drawRoundedRect(ctx, x, y, width, height, radius) {
@@ -353,7 +449,7 @@ Rectangle {
         id: speedCanvas
         anchors.fill: parent
         anchors.margins: 100
-        visible: !control.checked
+        visible: !control.checked && !detailsButtonCheckedState
 
         onPaint: {
             var ctx = speedCanvas.getContext("2d");
@@ -376,7 +472,7 @@ Rectangle {
 
             // Draw the axes
             ctx.beginPath();
-            ctx.lineWidth = 2;
+            ctx.lineWidth = 1;
             ctx.strokeStyle = "#777777";
             ctx.moveTo(padding, padding);
             ctx.lineTo(padding, speedCanvas.height - padding);
@@ -396,12 +492,12 @@ Rectangle {
 
                 ctx.fillStyle = "#777777";
                 ctx.font = "12px Arial";
-                ctx.fillText(((gridLines - i) * (yAxisMax / gridLines)).toString(), 10, y + 4);
+                ctx.fillText(d.formatTime((gridLines - i) * (yAxisMax / gridLines)), graphWidth + 40, y + 4);
             }
 
             var barWidth = (graphWidth / graphData.count) * 0.3;
             var segmentWidth = graphWidth / graphData.count;
-            var cornerRadius = 10; // Set the radius for the rounded corners
+            var cornerRadius = 5; // Set the radius for the rounded corners
 
             // Helper function to draw a rounded rectangle
             function drawRoundedRect(ctx, x, y, width, height, radius) {
@@ -445,7 +541,7 @@ Rectangle {
 
                 var xPos = padding + i * segmentWidth + (segmentWidth - barWidth) / 2;
                 var barHeight = (point.time / yAxisMax) * graphHeight;
-                var yPos = successCanvas.height - padding - barHeight - 5;
+                var yPos = speedCanvas.height - padding - barHeight - 5;
                 ctx.fillStyle = themeObject.textColor;
                 ctx.font = "12px Arial";
                 ctx.save();
@@ -470,10 +566,180 @@ Rectangle {
         }
     }
 
+    Canvas {
+        id: speedDetailsCanvas
+        anchors.fill: parent
+        anchors.margins: 100
+        visible: detailsButtonCheckedState
+
+        onPaint: {
+            var ctx = speedDetailsCanvas.getContext("2d");
+            ctx.clearRect(0, 0, speedDetailsCanvas.width, speedDetailsCanvas.height);
+
+            var padding = 40;
+            var graphWidth = speedDetailsCanvas.width - padding * 2;
+            var graphHeight = speedDetailsCanvas.height - padding * 2;
+
+            var maxTime = 0;
+            for (var i = 0; i < graphData.count; i++) {
+                var point = graphData.get(i);
+                maxTime += point.time;  // Add up all times for stacked visualization
+            }
+
+            var yAxisMax = Math.ceil(maxTime / 10) * 10;
+            if (yAxisMax === 0) yAxisMax = 10;
+
+            // Draw the axes
+            ctx.beginPath();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#777777";
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, speedDetailsCanvas.height - padding);
+            ctx.lineTo(speedDetailsCanvas.width - padding, speedDetailsCanvas.height - padding);
+            ctx.stroke();
+
+            // Draw y-axis grid lines
+            var gridLines = 5;
+            ctx.lineWidth = 0.5;
+            ctx.strokeStyle = "#cccccc";
+            for (var i = 1; i <= gridLines; i++) {
+                var y = padding + (graphHeight / gridLines) * i;
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(speedDetailsCanvas.width - padding, y);
+                ctx.stroke();
+
+                ctx.fillStyle = "#777777";
+                ctx.font = "12px Arial";
+                ctx.fillText(d.formatTime((gridLines - i) * (yAxisMax / gridLines)).toString(), graphWidth + 40, y + 4);
+            }
+
+            var segmentWidth = graphWidth / 7;  // Assume 7 days for simplicity
+            var barWidth = segmentWidth * 0.3;
+            var cornerRadius = 5;
+
+            // Helper function to draw a rounded rectangle
+            function drawTopRoundedRect(ctx, x, y, width, height, radius, isTopBar) {
+                if (height === 0) return;
+
+                ctx.beginPath();
+                if (isTopBar) {
+                    // Apply rounded corners only for the top of the bar
+                    ctx.moveTo(x, y + height);
+                    ctx.lineTo(x, y + radius);
+                    ctx.quadraticCurveTo(x, y, x + radius, y);
+                    ctx.lineTo(x + width - radius, y);
+                    ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+                    ctx.lineTo(x + width, y + height);
+                } else {
+                    // Draw a rectangle with square corners
+                    ctx.rect(x, y, width, height);
+                }
+                ctx.closePath();
+            }
+
+            var dayBarCounts = {};
+            for (var i = 0; i < graphData.count; i++) {
+                var day = graphData.get(i).day;
+                dayBarCounts[day] = (dayBarCounts[day] || 0) + 1;
+            }
+
+            // Draw each day's stacked bar
+            var dayIndex = {};
+
+            for (var i = 0; i < graphData.count; i++) {
+                var point = graphData.get(i);
+                var day = point.day;
+
+                // Initialize stacking information if not already set for the day
+                if (!dayIndex[day]) {
+                    dayIndex[day] = {
+                        xPos: padding + (Object.keys(dayIndex).length * segmentWidth) + (segmentWidth - barWidth) / 2,
+                        currentHeight: 0,
+                        barCount: 0
+                    };
+                }
+
+                var xPos = dayIndex[day].xPos;
+                var barHeight = (point.time / yAxisMax) * graphHeight;
+                var yPos = speedDetailsCanvas.height - padding - barHeight - dayIndex[day].currentHeight;
+
+                ctx.save();
+                
+                if (!point.questionId || point.questionId === "N/A") continue;
+
+                // Set color dynamically based on index
+                var barColor = d.getColorForQuestion(point.questionId);
+                ctx.fillStyle = barColor;
+                ctx.strokeStyle = barColor;
+
+                // Check if this is the top-most bar in the stack
+                var isTopBar = (dayIndex[day].barCount > dayBarCounts[day] - 2);
+
+                // Draw rounded only for the top bar
+                drawTopRoundedRect(ctx, xPos, yPos, barWidth, barHeight, cornerRadius, isTopBar);
+                
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+
+                // Update cumulative height and bar count for the day
+                dayIndex[day].currentHeight += barHeight;
+                dayIndex[day].barCount += 1;
+            }
+
+            // Draw day labels at the bottom of each column
+            var dayNames = Object.keys(dayIndex);
+            for (var i = 0; i < dayNames.length; i++) {
+                var day = dayNames[i];
+                var xPos = dayIndex[day].xPos;
+                var yPos = speedDetailsCanvas.height - 25;
+                ctx.fillStyle = themeObject.textColor;
+                ctx.font = "12px Arial";
+                ctx.save();
+                ctx.translate(xPos, yPos);
+                ctx.fillText(day, 0, 0);
+                ctx.restore();
+            }
+
+            // Draw colored rectangles for each question below the graph
+            var questionIndex = {};
+            var questionOffset = 10;  // Offset from the bottom for the rectangles
+            var rectangleHeight = 20;  // Height of each rectangle
+
+            for (var i = 0; i < graphData.count; i++) {
+                var point = graphData.get(i);
+                if (!point.questionId || point.questionId === "N/A") continue;
+                var color = d.getColorForQuestion(point.questionId);
+
+                if (!questionIndex[point.questionId]) {
+                    questionIndex[point.questionId] = {
+                        xPos: padding + (Object.keys(questionIndex).length * segmentWidth) + (segmentWidth - barWidth / 2) / 2,
+                    };
+
+                    // Draw a colored rectangle for this question
+                    ctx.save();
+                    ctx.fillStyle = color;
+                    ctx.fillRect(questionIndex[point.questionId].xPos, speedDetailsCanvas.height - padding + 25, barWidth / 2, rectangleHeight);
+                    ctx.restore();
+
+                    // Draw the question ID to the right of the rectangle
+                    var textXPos = questionIndex[point.questionId].xPos + barWidth / 2 + 5;  // Position text 5px to the right
+                    var textYPos = speedDetailsCanvas.height - padding + 25 + rectangleHeight / 2 + 4; // Vertically center the text
+                    ctx.save();
+                    ctx.fillStyle = themeObject.textColor;
+                    ctx.font = "12px Arial";
+                    ctx.fillText(point.questionId, textXPos, textYPos);
+                    ctx.restore();
+                }
+            }
+        }
+    }
+
     Column {
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottomMargin: 40
+        anchors.bottomMargin: 20
 
         Text {
             id: updatedTime
@@ -502,6 +768,44 @@ Rectangle {
 
                 buttonText: "Go to home"
                 page: welcomePage
+            }
+
+            Button {
+                id: detailsButton
+                enabled: !control.checked
+                text: qsTr("View details")
+                onClicked: {
+                    detailsButtonCheckedState = !detailsButtonCheckedState
+
+                    if (detailsButtonCheckedState) {
+                        d.populateGraphDetailedSpentTimeData()
+                    } else {
+                        d.populateGraphSpentTimeData()
+                    }
+                }
+                Layout.alignment: Qt.AlignHCenter
+                width: 200 
+                height: 50
+                font.bold: sessionObject.isFontBold
+
+                contentItem: Text {
+                    text: detailsButton.text
+                    font: detailsButton.font
+                    opacity: enabled ? 1.0 : 0.3
+                    color: detailsButtonCheckedState ? "#F7F7F7" : themeObject.textColor
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    elide: Text.ElideRight
+                }
+
+                background: Rectangle {
+                    radius: 10
+                    border.width: 1
+                    border.color: themeObject.buttonBorderColor
+                    color: {
+                        return !detailsButtonCheckedState ? themeObject.buttonColor : themeObject.buttonActionColor
+                    }
+                }
             }
         }
     }
