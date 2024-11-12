@@ -51,6 +51,7 @@
         <file alias="kmp.js">logic/string/kmp.js</file>
         <file alias="lcp.js">logic/string/lcp.js</file>
         <file alias="rabin-karp.js">logic/string/rabin-karp.js</file>
+        <file alias="split-sentence.js">logic/string/split-sentence.js</file>
 
         <file alias="unique-paths.js">logic/combinatorics/unique-paths.js</file>
         <file alias="count-permutations.js">logic/combinatorics/count-permutations.js</file>
