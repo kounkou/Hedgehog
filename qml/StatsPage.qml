@@ -107,6 +107,30 @@ Rectangle {
             statsPage.lastUpdateTime = d.getCurrentTime();
         }
 
+        function getCurrentDate() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        function parseDate(dateString) {
+            const [year, month, day] = dateString.split('-').map(Number);
+            return new Date(year, month - 1, day);
+        }
+
+        function getCurrentWeekRange(today) {
+            const dayOfWeek = today.getDay();
+            const startOfWeek = new Date(today);
+            const endOfWeek = new Date(today);
+
+            startOfWeek.setDate(today.getDate() - ((dayOfWeek + 6) % 7));
+            endOfWeek.setDate(startOfWeek.getDate() + 6);
+
+            return { startOfWeek, endOfWeek };
+        }
+
         function populateGraphSpentTimeData() {
             graphData.clear();
 
@@ -120,14 +144,20 @@ Rectangle {
                 "Sunday": 0,
             };
 
+            const today = d.parseDate(d.getCurrentDate());
+            const { startOfWeek, endOfWeek } = d.getCurrentWeekRange(today);
+
             for (var question in sessionObject.successfulImplementations) {
                 var data = sessionObject.successfulImplementations[question].spentTime;
 
                 for (var dayData of data.spentTimes) {
                     var day = dayData.day;
+                    const dayProblemWasSolved = d.parseDate(dayData.today);
 
-                    if (daySpentTimes.hasOwnProperty(day)) {
-                        daySpentTimes[day] = data.average;
+                    if (dayProblemWasSolved >= startOfWeek && dayProblemWasSolved <= endOfWeek) {
+                        if (daySpentTimes.hasOwnProperty(day)) {
+                            daySpentTimes[day] = data.average;
+                        }
                     }
                 }
             }
@@ -149,7 +179,7 @@ Rectangle {
         function populateGraphDetailedSpentTimeData() {
             graphData.clear();
 
-            var daySpentTimes = {
+            const daySpentTimes = {
                 "Monday": [],
                 "Tuesday": [],
                 "Wednesday": [],
@@ -159,27 +189,33 @@ Rectangle {
                 "Sunday": []
             };
 
-            for (var question in sessionObject.successfulImplementations) {
-                var data = sessionObject.successfulImplementations[question].spentTime;
+            const today = d.parseDate(d.getCurrentDate());
+            const { startOfWeek, endOfWeek } = d.getCurrentWeekRange(today);
 
-                for (var dayData of data.spentTimes) {
-                    var day = dayData.day;
-                    var time = dayData.spentTime;
+            for (const question in sessionObject.successfulImplementations) {
+                const data = sessionObject.successfulImplementations[question].spentTime;
 
-                    if (daySpentTimes.hasOwnProperty(day)) {
-                        for (var timeEntry of dayData.times) {
-                            daySpentTimes[day].push({
-                                questionId: question,
-                                spentTime: timeEntry.spentTime
-                            });
+                for (const dayData of data.spentTimes) {
+                    const day = dayData.day;
+                    const dayProblemWasSolved = d.parseDate(dayData.today);
+
+                    if (dayProblemWasSolved >= startOfWeek && dayProblemWasSolved <= endOfWeek) {
+                        if (daySpentTimes.hasOwnProperty(day)) {
+                            for (const timeEntry of dayData.times) {
+                                daySpentTimes[day].push({
+                                    questionId: question,
+                                    spentTime: timeEntry.spentTime,
+                                    hour: timeEntry.time
+                                });
+                            }
                         }
                     }
                 }
             }
 
-            var daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+            const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
-            for (var day of daysOfWeek) {
+            for (const day of daysOfWeek) {
                 if (daySpentTimes[day].length === 0) {
                     graphData.append({
                         day: day,
@@ -188,7 +224,7 @@ Rectangle {
                         time: 0
                     });
                 } else {
-                    for (var timeData of daySpentTimes[day]) {
+                    for (const timeData of daySpentTimes[day]) {
                         graphData.append({
                             day: day,
                             questionId: timeData.questionId,
@@ -299,8 +335,8 @@ Rectangle {
 
             const hash = hashString(questionId);
             const hue = (hash % 360 + 360) % 360;
-            const saturation = 70;
-            const lightness = 60;
+            const saturation = 50;
+            const lightness = 50;
 
             return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         }
@@ -393,8 +429,8 @@ Rectangle {
                 }
             }
 
-            var yAxisMax = Math.ceil(maxScore / 10) * 10;
-            if (yAxisMax === 0) yAxisMax = 10;
+            var yAxisMax = Math.ceil(maxScore / 10) * 10 * 2;
+            if (yAxisMax === 0) yAxisMax = 20;
 
             // Draw the axes
             ctx.beginPath();
@@ -635,8 +671,8 @@ Rectangle {
                 maxTime += point.time;  // Add up all times for stacked visualization
             }
 
-            var yAxisMax = Math.ceil(maxTime / 10) * 10;
-            if (yAxisMax === 0) yAxisMax = 10;
+            var yAxisMax = Math.ceil(maxTime / 10) * 10 * 2;
+            if (yAxisMax === 0) yAxisMax = 20;
 
             // Draw the axes
             ctx.beginPath();
