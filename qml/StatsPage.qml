@@ -11,6 +11,7 @@ Rectangle {
     property string lastUpdateTime: ""
     property var questionColorMap: {}
     property bool detailsButtonCheckedState: false
+    property bool dataReady: false
 
     Layout.fillWidth: true
     Layout.fillHeight: true
@@ -23,6 +24,17 @@ Rectangle {
         sessionObject.loadSession();
         statsPage.fluctuation = d.getFluctuation();
         statsPage.lastUpdateTime = d.getCurrentTime();
+        questionListView.populateQuestionModel();
+    }
+
+    Connections {
+        target: graphData
+        function onCountChanged() {
+            if (graphData.count > 0) {
+                dataReady = true;
+                questionListView.populateQuestionModel();
+            }
+        }
     }
 
     QtObject {
@@ -242,7 +254,44 @@ Rectangle {
             return hash;
         }
 
-        function getColorForQuestion(questionId) {
+        function hueToRgb(p, q, t) {
+            if (t < 0) t += 1;
+            if (t > 1) t -= 1;
+            if (t < 1 / 6) return p + (q - p) * 6 * t;
+            if (t < 1 / 2) return q;
+            if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+            return p;
+        }
+
+        function hslToHex(hsl) {
+            const result = /hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)/.exec(hsl);
+            if (!result) {
+                throw new Error("Invalid HSL format");
+            }
+
+            const h = parseInt(result[1], 10);        // Hue
+            const s = parseInt(result[2], 10) / 100;  // Saturation
+            const l = parseInt(result[3], 10) / 100;  // Lightness
+
+            let r, g, b;
+
+            if (s === 0) {
+                // Achromatic (gray)
+                r = g = b = l;
+            } else {
+                const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+                const p = 2 * l - q;
+                r = hueToRgb(p, q, h / 360 + 1 / 3);
+                g = hueToRgb(p, q, h / 360);
+                b = hueToRgb(p, q, h / 360 - 1 / 3);
+            }
+
+            // Convert to hexadecimal and return
+            const toHex = (x) => Math.round(x * 255).toString(16).padStart(2, "0");
+            return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+        }
+
+        function getColorForQuestion(questionId: string): string{
             if (!questionId) {
                 console.error("questionId is undefined");
                 return "hsl(0, 0%, 85%)";
@@ -441,7 +490,7 @@ Rectangle {
             // Add text label at the end of the line
             ctx.fillStyle = themeObject.averageLineColor;  // Match line color for consistency
             ctx.font = "12px Arial";
-            ctx.fillText("avg 5", successCanvas.width - 2 * padding, yPos - 4);
+            ctx.fillText("goal 5", successCanvas.width - 2 * padding, yPos - 4);
         }
     }
 
@@ -701,38 +750,6 @@ Rectangle {
                 ctx.fillText(day, 0, 0);
                 ctx.restore();
             }
-
-            // Draw colored rectangles for each question below the graph
-            var questionIndex = {};
-            var questionOffset = 10;  // Offset from the bottom for the rectangles
-            var rectangleHeight = 20;  // Height of each rectangle
-
-            for (var i = 0; i < graphData.count; i++) {
-                var point = graphData.get(i);
-                if (!point.questionId || point.questionId === "N/A") continue;
-                var color = d.getColorForQuestion(point.questionId);
-
-                if (!questionIndex[point.questionId]) {
-                    questionIndex[point.questionId] = {
-                        xPos: padding + (Object.keys(questionIndex).length * segmentWidth) + (segmentWidth - barWidth / 2) / 2,
-                    };
-
-                    // Draw a colored rectangle for this question
-                    ctx.save();
-                    ctx.fillStyle = color;
-                    ctx.fillRect(questionIndex[point.questionId].xPos, speedDetailsCanvas.height - padding + 25, barWidth / 2, rectangleHeight);
-                    ctx.restore();
-
-                    // Draw the question ID to the right of the rectangle
-                    var textXPos = questionIndex[point.questionId].xPos + barWidth / 2 + 5;  // Position text 5px to the right
-                    var textYPos = speedDetailsCanvas.height - padding + 25 + rectangleHeight / 2 + 4; // Vertically center the text
-                    ctx.save();
-                    ctx.fillStyle = themeObject.textColor;
-                    ctx.font = "12px Arial";
-                    ctx.fillText(point.questionId, textXPos, textYPos);
-                    ctx.restore();
-                }
-            }
         }
     }
 
@@ -740,6 +757,75 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottomMargin: 20
+
+        ListView {
+            id: questionListView
+            width: speedDetailsCanvas.width
+            height: 20
+            orientation: Qt.Horizontal
+            spacing: 10
+
+            anchors.bottom: updatedTime.top
+            anchors.bottomMargin: 10
+            anchors.horizontalCenter: parent.horizontalCenter
+            clip: true
+            anchors.horizontalCenterOffset: 20
+
+            model: ListModel {
+                id: questionModel
+            }
+
+            Component.onCompleted: {
+                if (dataReady && graphData.count > 0) {
+                    populateQuestionModel();
+                }
+            }
+
+            function populateQuestionModel() {
+                questionModel.clear();
+                var questionIndex = {};
+                for (var i = 0; i < graphData.count; i++) {
+                    var point = graphData.get(i);
+                    if (!point.questionId || point.questionId === "N/A") continue;
+
+                    if (!questionIndex[point.questionId]) {
+                        questionIndex[point.questionId] = true;
+                        var itemColor = d.getColorForQuestion(point.questionId);
+
+                        questionModel.append({ questionId: point.questionId, itemColor: d.hslToHex(itemColor) });
+                    }
+                }
+            }
+
+            delegate: Rectangle {
+                width: questionId.width + 30
+                height: 20
+                color: "transparent"
+                radius: 5
+                anchors.horizontalCenter: root.horizontalCenter
+
+                RowLayout {
+                    anchors.centerIn: parent
+                    spacing: 20
+
+                    Rectangle {
+                        width: 10
+                        height: 10
+                        color: model.itemColor
+                        radius: 3
+                    }
+
+                    Text {
+                        id: questionId
+                        text: model.questionId
+                        font.pointSize: 12
+                        color: themeObject.textColor
+                        elide: Text.ElideRight
+                        anchors.centerIn: parent
+                    }
+                }
+            }
+        }
 
         Text {
             id: updatedTime
