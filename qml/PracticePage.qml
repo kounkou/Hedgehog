@@ -17,6 +17,7 @@ import "kadane.js" as Kadane
 import "kmp.js" as Kmp
 import "lcp.js" as LCP
 import "rabin-karp.js" as RabinKarp
+import "split-sentence.js" as SplitSentence
 
 import "binary-search.js" as BinarySearch
 import "linear-search.js" as LinearSearch
@@ -106,6 +107,7 @@ Rectangle {
             .concat(Kmp.question)
             .concat(LCP.question)
             .concat(RabinKarp.question)
+            .concat(SplitSentence.question)
 
             .concat(BinarySearch.question)
             .concat(JumpSearch.question)
