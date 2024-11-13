@@ -281,7 +281,7 @@ Rectangle {
 
         function formatTime(seconds) {
             const minutes = String(Math.floor(seconds / 60)).padStart(2, '0');
-            const remainingSeconds = String(seconds % 60).padStart(2, '0');
+            const remainingSeconds = String((seconds % 60).toFixed(2)).padStart(2, '0');
             return `${minutes}m${remainingSeconds}`;
         }
 
