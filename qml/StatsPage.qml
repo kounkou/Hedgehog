@@ -135,13 +135,13 @@ Rectangle {
             graphData.clear();
 
             var daySpentTimes = {
-                "Monday": 0,
-                "Tuesday": 0,
-                "Wednesday": 0,
-                "Thursday": 0,
-                "Friday": 0,
-                "Saturday": 0,
-                "Sunday": 0,
+                "Monday":    { total: 0, count: 0 },
+                "Tuesday":   { total: 0, count: 0 },
+                "Wednesday": { total: 0, count: 0 },
+                "Thursday":  { total: 0, count: 0 },
+                "Friday":    { total: 0, count: 0 },
+                "Saturday":  { total: 0, count: 0 },
+                "Sunday":    { total: 0, count: 0 },
             };
 
             const today = d.parseDate(d.getCurrentDate());
@@ -151,19 +151,23 @@ Rectangle {
                 var data = sessionObject.successfulImplementations[question].spentTime;
 
                 for (var dayData of data.spentTimes) {
-                    var day = dayData.day;
+                    const day = dayData.day;
                     const dayProblemWasSolved = d.parseDate(dayData.today);
 
                     if (dayProblemWasSolved >= startOfWeek && dayProblemWasSolved <= endOfWeek) {
                         if (daySpentTimes.hasOwnProperty(day)) {
-                            daySpentTimes[day] = data.average;
+                            for (const timeEntry of dayData.times) {
+                                daySpentTimes[day].total += timeEntry.spentTime;
+                                daySpentTimes[day].count += 1;
+                            }
                         }
                     }
                 }
             }
 
             for (var day in daySpentTimes) {
-                var averageTime = daySpentTimes[day]
+                const dayData = daySpentTimes[day];
+                const averageTime = dayData.count > 0 ? dayData.total / dayData.count : 0;
 
                 graphData.append({
                     day: day,
