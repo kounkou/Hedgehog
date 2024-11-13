@@ -17,6 +17,23 @@ Rectangle {
     Layout.fillHeight: true
     color: themeObject.backgroundColor
 
+    Timer {
+        interval: 1 * 60 * 1000
+        repeat: true
+        running: true
+        triggeredOnStart: true
+
+        onTriggered: {
+            if (speedCanvas.visible) {
+                d.populateGraphSpentTimeData();
+            } else if (successCanvas.visible) {
+                d.populateGraphGaussianData();
+            } else {
+                d.populateGraphDetailedSpentTimeData();
+            }
+        }
+    }
+
     Component.onCompleted: {
         d.populateGraphGaussianData();
         d.populateGraphSpentTimeData();
@@ -32,7 +49,7 @@ Rectangle {
         function onCountChanged() {
             if (graphData.count > 0) {
                 dataReady = true;
-                questionListView.populateQuestionModel();
+                d.populateQuestionModel();
             }
         }
     }
@@ -281,7 +298,7 @@ Rectangle {
 
         function formatTime(seconds) {
             const minutes = String(Math.floor(seconds / 60)).padStart(2, '0');
-            const remainingSeconds = String((seconds % 60).toFixed(2)).padStart(2, '0');
+            const remainingSeconds = String((seconds % 60)).padStart(2, '0');
             return `${minutes}m${remainingSeconds}`;
         }
 
@@ -344,6 +361,22 @@ Rectangle {
 
             return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         }
+
+        function populateQuestionModel() {
+            questionModel.clear();
+            var questionIndex = {};
+            for (var i = 0; i < graphData.count; i++) {
+                var point = graphData.get(i);
+                if (!point.questionId || point.questionId === "N/A") continue;
+
+                if (!questionIndex[point.questionId]) {
+                    questionIndex[point.questionId] = true;
+                    var itemColor = d.getColorForQuestion(point.questionId);
+
+                    questionModel.append({ questionId: point.questionId, itemColor: d.hslToHex(itemColor) });
+                }
+            }
+        }
     }
 
     Text {
@@ -405,6 +438,10 @@ Rectangle {
         onToggled: {
             speedCanvas.visible ? d.populateGraphSpentTimeData() : d.populateGraphGaussianData()
         }
+    }
+
+    ListModel {
+        id: questionModel
     }
 
     ListModel {
@@ -636,7 +673,7 @@ Rectangle {
                 ctx.save();
                 ctx.translate(xPos, yPos);
                 var textWidth = d.formatTime(point.time).length
-                ctx.fillText(d.formatTime(point.time), 0, 0)
+                ctx.fillText(point.time.toFixed(2, 0).padStart(2, '0'), 0, 0)
                 ctx.restore();
             }
 
@@ -811,29 +848,11 @@ Rectangle {
             clip: true
             anchors.horizontalCenterOffset: 20
 
-            model: ListModel {
-                id: questionModel
-            }
+            model: questionModel
 
             Component.onCompleted: {
                 if (dataReady && graphData.count > 0) {
-                    populateQuestionModel();
-                }
-            }
-
-            function populateQuestionModel() {
-                questionModel.clear();
-                var questionIndex = {};
-                for (var i = 0; i < graphData.count; i++) {
-                    var point = graphData.get(i);
-                    if (!point.questionId || point.questionId === "N/A") continue;
-
-                    if (!questionIndex[point.questionId]) {
-                        questionIndex[point.questionId] = true;
-                        var itemColor = d.getColorForQuestion(point.questionId);
-
-                        questionModel.append({ questionId: point.questionId, itemColor: d.hslToHex(itemColor) });
-                    }
+                    d.populateQuestionModel();
                 }
             }
 
