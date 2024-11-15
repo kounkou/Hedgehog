@@ -712,8 +712,8 @@ Rectangle {
                 maxTime += point.time;  // Add up all times for stacked visualization
             }
 
-            var yAxisMax = Math.ceil(maxTime / 10) * 10 * 2;
-            if (yAxisMax === 0) yAxisMax = 20;
+            var yAxisMax = Math.ceil(maxTime / 10) * 10;
+            if (yAxisMax === 0) yAxisMax = 10;
 
             // Draw the axes
             ctx.beginPath();
