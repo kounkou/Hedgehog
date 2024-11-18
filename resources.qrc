@@ -89,6 +89,9 @@
         <file alias="lazy-propagation.js">logic/segment-tree/lazy-propagation.js</file>
         <file alias="range-sum-queries.js">logic/segment-tree/range-sum-queries.js</file>
 
+        <file alias="load-balancer-types.js">logic/system-design/load-balancing/load-balancer-types.js</file>
+        <file alias="cache-types.js">logic/system-design/caching/cache-types.js</file>
+
         <file alias="sessionData.json">sessionData.json</file>
 
         <file alias="Hedgehog-Telegram.jpeg">images/Hedgehog-Telegram.jpeg</file>

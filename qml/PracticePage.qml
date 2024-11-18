@@ -58,6 +58,9 @@ import "count-combinations.js" as CountCombinations
 import "merge-sort.js" as MergeSort
 import "quick-sort.js" as QuickSort
 
+import "load-balancer-types.js" as LoadBalancing
+import "cache-types.js" as Cache
+
 Rectangle {
     id: root
 
@@ -80,89 +83,82 @@ Rectangle {
     property string expectedAnswer: ""
     property var questionsData: []
     property string aiComment: ""
-    property var localVisitedNumbers: []
+    property var localVisitedNumbers: ({})
     
     property var session: null
 
     color: themeObject.backgroundColor
 
     Component.onCompleted: {
-        var allQuestionsData = BfsRecursive.question
-            .concat(DfsRecursive.question)
-            .concat(BfsIterative.question)
-            .concat(Dsu.question)
-            .concat(DfsIterative.question)
-            .concat(Dijkstra.question)
-            
-            .concat(Kadane.question)
+        // Organize questions into categories
+        var allQuestionsData = {
+            Programming: [
+                ...BfsRecursive.question,
+                ...DfsRecursive.question,
+                ...BfsIterative.question,
+                ...Dsu.question,
+                ...Dijkstra.question,
+                ...Kadane.question,
+                ...LineIntersection.question,
+                ...AreaTriangleHeron.question,
+                ...ConvexHull.question,
+                ...MergeIntervals.question,
+                ...InsertInterval.question,
+                ...MinMeetingRoom.question,
+                ...Kmp.question,
+                ...LCP.question,
+                ...RabinKarp.question,
+                ...SplitSentence.question,
+                ...BinarySearch.question,
+                ...JumpSearch.question,
+                ...InterpolationSearch.question,
+                ...Trie.question,
+                ...FractionalKnapsack.question,
+                ...InsertAtEnd.question,
+                ...RemoveElement.question,
+                ...Ancestor.question,
+                ...Factorial.question,
+                ...Sieve.question,
+                ...GCD.question,
+                ...FastExponentiation.question,
+                ...HeapSort.question,
+                ...InsertHeap.question,
+                ...MaxSubArray.question,
+                ...CheckPowerOfTwo.question,
+                ...CountSetBit.question,
+                ...ReverseBits.question,
+                ...TopologicalSorting.question,
+                ...BackTracking.question,
+                ...LazyPropag.question,
+                ...RangeSumQueries.question,
+                ...UniquePaths.question,
+                ...CountPermutations.question,
+                ...GenerateSubsets.question,
+                ...CountCombinations.question,
+                ...MergeSort.question,
+                ...QuickSort.question,
+                ...LinearSearch.question
+            ],
+            SystemDesign: [
+                ...LoadBalancing.question,
+                ...Cache.question
+            ]
+        };
 
-            .concat(LineIntersection.question)
-            .concat(AreaTriangleHeron.question)
-            .concat(ConvexHull.question)
+        // Filter questions based on selected categories
+        var selectedCategories = sessionObject.selectedCategories[sessionObject.topic] || {};
 
-            .concat(MergeIntervals.question)
-            .concat(InsertInterval.question)
-            .concat(MinMeetingRoom.question)
-
-            .concat(Kmp.question)
-            .concat(LCP.question)
-            .concat(RabinKarp.question)
-            .concat(SplitSentence.question)
-
-            .concat(BinarySearch.question)
-            .concat(JumpSearch.question)
-            .concat(InterpolationSearch.question)
-            
-            .concat(Trie.question)
-
-            .concat(FractionalKnapsack.question)
-
-            .concat(InsertAtEnd.question)
-            .concat(RemoveElement.question)
-            .concat(Ancestor.question)
-
-            .concat(Factorial.question)
-
-            .concat(Sieve.question)
-            .concat(GCD.question)
-            .concat(FastExponentiation.question)
-
-            .concat(HeapSort.question)
-            .concat(InsertHeap.question)
-
-            .concat(MaxSubArray.question)
-
-            .concat(CheckPowerOfTwo.question)
-            .concat(CountSetBit.question)
-            .concat(ReverseBits.question)
-
-            .concat(TopologicalSorting.question)
-
-            .concat(BackTracking.question)
-
-            .concat(LazyPropag.question)
-            .concat(RangeSumQueries.question)
-
-            .concat(UniquePaths.question)
-            .concat(CountPermutations.question)
-            .concat(GenerateSubsets.question)
-            .concat(CountCombinations.question)
-
-            .concat(MergeSort.question)
-            .concat(QuickSort.question)
-                        
-            .concat(LinearSearch.question);
-
-        if (sessionObject.selectedCategories && sessionObject.selectedCategories.length > 0) {
-            questionsData = allQuestionsData.filter(function(question) {
-                return sessionObject.selectedCategories.includes(question.category);
+        if (selectedCategories.length > 0) {
+            questionsData = allQuestionsData.Programming.concat(allQuestionsData.SystemDesign).filter(function(question) {
+                return selectedCategories.includes(question.category);
             });
         } else {
-            sessionObject.selectedCategories = []
-            questionsData = allQuestionsData;
+            questionsData = allQuestionsData.Programming.concat(allQuestionsData.SystemDesign);
         }
 
-        d.goToNextQuestion()
+        // Set questions and navigate to the next question
+        sessionObject.selectedCategories[sessionObject.topic] = selectedCategories;
+        d.goToNextQuestion();
     }
 
     Rectangle {
@@ -233,7 +229,9 @@ Rectangle {
 
                 root.submittedAnswer = userAnswer
 
-                submitPrompt(userAnswer);
+                if (sessionObject.apiKey.length > 0) {
+                    submitPrompt(userAnswer);
+                }
 
                 sessionObject.attempted += 1
 
@@ -303,62 +301,101 @@ Rectangle {
 
                 do {
                     randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
-                } while (sessionObject.visitedNumbers.includes(randomNumber))
+                } while (sessionObject.visitedNumbers && sessionObject.visitedNumbers[sessionObject.topic] && sessionObject.visitedNumbers[sessionObject.topic].includes(randomNumber))
 
                 return randomNumber
             }
 
             function goToQuestion(questionIndex) {
-                var total = QuestionsHandler.getTotalQuestions(questionsData)
-                let questionID = QuestionsHandler.getQuestionID(questionsData, currentQuestionIndex)
+                var total = QuestionsHandler.getTotalQuestions(questionsData);
+                let questionID = QuestionsHandler.getQuestionID(questionsData, currentQuestionIndex);
 
+                // Handle if the current answer is correct
                 if (isCurrentAnswerCorrect) {
-                    if (sessionObject.successfulImplementations[questionID].count >= 5) {
-                        if (!sessionObject.visitedNumbers.includes(questionID)) {
-                            sessionObject.visitedNumbers.push(questionID);
-                            localVisitedNumbers.push(questionID);
+                    let successfulImplementations = sessionObject.successfulImplementations[questionID];
+                    if (successfulImplementations && successfulImplementations.count >= 5) {
+                        if (sessionObject.visitedNumbers && sessionObject.visitedNumbers[sessionObject.topic]) {
+                            if (!sessionObject.visitedNumbers[sessionObject.topic].includes(questionID)) {
+                                sessionObject.visitedNumbers[sessionObject.topic].push(questionID);
+                            }
+                        } else {
+                            if (!localVisitedNumbers[sessionObject.topic]) {
+                                localVisitedNumbers[sessionObject.topic] = [];
+                            }
+                            localVisitedNumbers[sessionObject.topic].push(questionID);
                         }
-                        sessionObject.saveSession()
+                        sessionObject.saveSession();
                     }
                 }
 
-                if (localVisitedNumbers.length >= total) {
-                    resultText.text = ""
-                    quizComplete = true
-                    resultText.enabled = false
-                    return
+                // Check if all questions have been visited
+                if (
+                    localVisitedNumbers[sessionObject.topic] &&
+                    localVisitedNumbers[sessionObject.topic].length >= total
+                ) {
+                    resultText.text = "";
+                    quizComplete = true;
+                    resultText.enabled = false;
+                    return;
                 }
 
-                submitted = false
-                currentQuestionIndex = questionIndex
-                loadNextQuestion()
+                // Prepare for the next question
+                submitted = false;
+                currentQuestionIndex = questionIndex;
+                loadNextQuestion();
             }
 
             function goToNextQuestion() {
-                var total = QuestionsHandler.getTotalQuestions(questionsData)
-                let questionID = QuestionsHandler.getQuestionID(questionsData, currentQuestionIndex)
+                var total = QuestionsHandler.getTotalQuestions(questionsData);
+                let questionID = QuestionsHandler.getQuestionID(questionsData, currentQuestionIndex);
 
                 if (isCurrentAnswerCorrect) {
-                    if (sessionObject.successfulImplementations[questionID].count >= 5) {
-                        if (!sessionObject.visitedNumbers.includes(questionID)) {
-                            sessionObject.visitedNumbers.push(questionID);
-                            localVisitedNumbers.push(questionID);
+                    // Check if the entry exists and meets the condition
+                    if (sessionObject.successfulImplementations[questionID] && sessionObject.successfulImplementations[questionID].count >= 5) {
+
+                        // Ensure `visitedNumbers` and the topic array are initialized
+                        if (!sessionObject.visitedNumbers) {
+                            sessionObject.visitedNumbers = {};
                         }
-                        sessionObject.saveSession()
+
+                        if (!sessionObject.visitedNumbers[sessionObject.topic]) {
+                            sessionObject.visitedNumbers[sessionObject.topic] = [];
+                        }
+
+                        // Check and add `questionID` if not already present
+                        if (!sessionObject.visitedNumbers[sessionObject.topic].includes(questionID)) {
+                            sessionObject.visitedNumbers[sessionObject.topic].push(questionID);
+                        }
+
+                        // Ensure localVisitedNumbers follows the same structure
+                        if (!localVisitedNumbers[sessionObject.topic]) {
+                            localVisitedNumbers[sessionObject.topic] = [];
+                        }
+
+                        if (!localVisitedNumbers[sessionObject.topic].includes(questionID)) {
+                            localVisitedNumbers[sessionObject.topic].push(questionID);
+                        }
+
+                        // Save the session after updates
+                        sessionObject.saveSession();
                     }
                 }
 
-                if (localVisitedNumbers.length >= total) {
-                    resultText.text = ""
-                    quizComplete = true
-                    resultText.enabled = false
-                    return
+                // Check if all questions have been visited
+                if (
+                    localVisitedNumbers && localVisitedNumbers[sessionObject.topic] && localVisitedNumbers[sessionObject.topic].length >= total
+                ) {
+                    resultText.text = "";
+                    quizComplete = true;
+                    resultText.enabled = false;
+                    return;
                 }
-                
-                answerInput.visible = true
-                submitted = false
-                currentQuestionIndex = getRandomInt(0, total - 1)
-                loadNextQuestion()
+
+                // Prepare for the next question
+                answerInput.visible = true;
+                submitted = false;
+                currentQuestionIndex = getRandomInt(0, total - 1);
+                loadNextQuestion();
             }
 
             function handleIdentation(event) {
@@ -385,7 +422,7 @@ Rectangle {
             }
 
             function loadNextQuestion() {
-                questionLabel.text = (currentQuestionIndex + 1) + ". Implement a " + QuestionsHandler.getQuestion(questionsData, currentQuestionIndex)
+                questionLabel.text = (currentQuestionIndex + 1) + ". " + QuestionsHandler.getQuestion(questionsData, currentQuestionIndex)
                 userAnswer = ""
                 answerInput.text = ""
                 timerValue = QuestionsHandler.getQuestionDifficulty(questionsData, currentQuestionIndex) === "Hard" ? 2*timeLimit : timeLimit
@@ -401,7 +438,7 @@ Rectangle {
                 countdownTimer.start()
                 quizComplete = false
                 resultsModel.clear()
-                sessionObject.visitedNumbers = []
+                sessionObject.visitedNumbers[sessionObject.topic] = []
                 correctAnswers = 0
                 currentQuestionIndex = 0
                 questionLabel.text = (currentQuestionIndex + 1) + ". Implement a " + QuestionsHandler.getQuestion(questionsData, currentQuestionIndex)
@@ -558,7 +595,7 @@ Rectangle {
                         height: 25
                         width: 70
                         radius: 10
-                        visible: isCurrentAnswerCorrect
+                        visible: isCurrentAnswerCorrect && !quizComplete
 
                         Image {
                             source: "x-twitter.svg"
@@ -584,6 +621,7 @@ Rectangle {
                         id: clock
                         height: 25
                         width: clockText.width + 20
+                        visible: !quizComplete
                         opacity: countdownTimer.running ? 1 : 0.5
                         color: {
                             if (timerValue < 30) {
@@ -598,7 +636,8 @@ Rectangle {
 
                         Text {
                             id: clockText
-                            text: (sessionObject.visitedNumbers.length + 1) + "/" + QuestionsHandler.getTotalQuestions(questionsData) + " Time left: " + (
+                            text: (
+                                sessionObject.visitedNumbers[sessionObject.topic] && sessionObject.visitedNumbers[sessionObject.topic].length + 1 || 0) + "/" + QuestionsHandler.getTotalQuestions(questionsData) + " Time left: " + (
                                 QuestionsHandler.getQuestionDifficulty(questionsData, currentQuestionIndex) === "Hard" ? timerValue : timerValue
                             ) + "s"
                             Layout.alignment: Qt.AlignRight
@@ -627,7 +666,7 @@ Rectangle {
                             return value
                         }
                         enabled: !submitted
-                        visible: !quizComplete
+                        visible: !quizComplete && sessionObject.topic === "Programming"
                         Layout.alignment: Qt.AlignRight
 
                         MouseArea {
@@ -672,6 +711,7 @@ Rectangle {
                     border.width: 1
                     border.color: themeObject.textAreaBorderColor
                     radius: 10
+                    visible: !quizComplete && (answerInput.visible || aiOutput.visible)
 
                     ScrollView {
                         anchors.fill: parent
@@ -681,7 +721,7 @@ Rectangle {
                             id: answerInput
                             anchors.fill: backgroundRect
                             readOnly: submitted
-                            placeholderText: QuestionsHandler.getQuestionPlaceHolder(questionsData, sessionObject.language, currentQuestionIndex, sessionObject.selectedCategories)
+                            placeholderText: QuestionsHandler.getQuestionPlaceHolder(questionsData, sessionObject.language, currentQuestionIndex, sessionObject.selectedCategories[sessionObject.topic])
                             font.family: "Courier New"
                             font.pixelSize: 16
                             font.bold: sessionObject.isFontBold
@@ -725,7 +765,7 @@ Rectangle {
                             padding: 10
                             antialiasing: true
                             wrapMode: Text.Wrap
-                            visible: !answerInput.visible
+                            visible: !quizComplete && !answerInput.visible
                             textFormat: TextEdit.RichText
 
                             palette {
@@ -1000,7 +1040,7 @@ Rectangle {
                             border.width: 1
                             border.color: themeObject.buttonBorderColor
                             color: {
-                                return validate.hovered ? themeObject.buttonSubmitHoveredColor : themeObject.buttonSubmitColor
+                                return themeObject.buttonSubmitColor
                             }
                         }
                     }
