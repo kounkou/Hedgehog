@@ -7,53 +7,89 @@ Rectangle {
     width: parent.width
     height: parent.height
     property string theme: "light"
+    property string currentTopic: "Computer Science"
+
     color: themeObject.backgroundColor
 
     property bool isCategorySelected: false
     property ListModel categoryModel: ListModel {}
 
     Component.onCompleted: {
-        categoryModel.append({ name: "Backtracking",         selected: false, enabled: true });
-        categoryModel.append({ name: "Graph",                selected: false, enabled: true });
-        categoryModel.append({ name: "Binary Search",        selected: false, enabled: true });
-        categoryModel.append({ name: "Bit Manipulation",     selected: false, enabled: true });
-        categoryModel.append({ name: "Combinatorics",        selected: false, enabled: true });
-        categoryModel.append({ name: "Div. Conq.",   selected: false, enabled: true });
-        categoryModel.append({ name: "Disjoint Set",         selected: false, enabled: true });
-        categoryModel.append({ name: "DP",                   selected: false, enabled: true });
-        categoryModel.append({ name: "Game Theory",          selected: false, enabled: false });
-        categoryModel.append({ name: "Geometry",             selected: false, enabled: true });
-        categoryModel.append({ name: "Greedy",               selected: false, enabled: true });
-        categoryModel.append({ name: "Heap",                 selected: false, enabled: true });
-        categoryModel.append({ name: "Intervals",            selected: false, enabled: true });
-        categoryModel.append({ name: "Linked List",          selected: false, enabled: true });
-        categoryModel.append({ name: "Mathematics",          selected: false, enabled: true });
-        categoryModel.append({ name: "Pigeonhole",           selected: false, enabled: false });
-        categoryModel.append({ name: "Recursion",            selected: false, enabled: true });
-        categoryModel.append({ name: "Searching",            selected: false, enabled: true });
-        categoryModel.append({ name: "Segment Tree",         selected: false, enabled: true });
-        categoryModel.append({ name: "Sliding Window",       selected: false, enabled: true });
-        categoryModel.append({ name: "Sorting",              selected: false, enabled: false });
-        categoryModel.append({ name: "String",               selected: false, enabled: true });
-        categoryModel.append({ name: "Topo. Sort",           selected: false, enabled: true });
-        categoryModel.append({ name: "Tree",                 selected: false, enabled: false });
-        categoryModel.append({ name: "Trie",                 selected: false, enabled: true });
-        categoryModel.append({ name: "Two Pointers",         selected: false, enabled: false });
-        categoryModel.append({ name: "Union-Find",           selected: false, enabled: false });
-        categoryModel.append({ name: "Matrix",               selected: false, enabled: false });
-        categoryModel.append({ name: "Database",             selected: false, enabled: false });
-        categoryModel.append({ name: "Shell",                selected: false, enabled: false });
+    }
 
+    QtObject {
+        id: d
 
-        for (let i = 0; i < sessionObject.selectedCategories.length; i++) {
-            let category = sessionObject.selectedCategories[i];
+        function updateComputerScienceModel() {
+            categoryModel.clear();
 
-            for (let j = 0; j < categoryModel.count; j++) {
-                if (categoryModel.get(j).name === category) {
-                    categoryModel.setProperty(j, "selected", categoryModel.get(j).enabled);
-                    isCategorySelected = true;
+            categoryModel.append({ name: "Backtracking",         selected: false, enabled: true,  type: "Programming" });
+            categoryModel.append({ name: "Graph",                selected: false, enabled: true,  type: "Programming" });
+            categoryModel.append({ name: "Binary Search",        selected: false, enabled: true,  type: "Programming" });
+            categoryModel.append({ name: "Bit Manipulation",     selected: false, enabled: true,  type: "Programming" });
+            categoryModel.append({ name: "Combinatorics",        selected: false, enabled: true,  type: "Programming" });
+            categoryModel.append({ name: "Div. Conq.",           selected: false, enabled: true,  type: "Programming" });
+            categoryModel.append({ name: "Disjoint Set",         selected: false, enabled: true,  type: "Programming" });
+            categoryModel.append({ name: "DP",                   selected: false, enabled: true,  type: "Programming" });
+            categoryModel.append({ name: "Game Theory",          selected: false, enabled: false, type: "Programming" });
+            categoryModel.append({ name: "Geometry",             selected: false, enabled: true,  type: "Programming" });
+            categoryModel.append({ name: "Greedy",               selected: false, enabled: true,  type: "Programming" });
+            categoryModel.append({ name: "Heap",                 selected: false, enabled: true,  type: "Programming" });
+            categoryModel.append({ name: "Intervals",            selected: false, enabled: true,  type: "Programming" });
+            categoryModel.append({ name: "Linked List",          selected: false, enabled: true,  type: "Programming" });
+            categoryModel.append({ name: "Mathematics",          selected: false, enabled: true,  type: "Programming" });
+            categoryModel.append({ name: "Pigeonhole",           selected: false, enabled: false, type: "Programming" });
+            categoryModel.append({ name: "Recursion",            selected: false, enabled: true,  type: "Programming" });
+            categoryModel.append({ name: "Searching",            selected: false, enabled: true,  type: "Programming" });
+            categoryModel.append({ name: "Segment Tree",         selected: false, enabled: true,  type: "Programming" });
+            categoryModel.append({ name: "Sliding Window",       selected: false, enabled: true,  type: "Programming" });
+            categoryModel.append({ name: "Sorting",              selected: false, enabled: false, type: "Programming" });
+            categoryModel.append({ name: "String",               selected: false, enabled: true,  type: "Programming" });
+            categoryModel.append({ name: "Topo. Sort",           selected: false, enabled: true,  type: "Programming" });
+            categoryModel.append({ name: "Tree",                 selected: false, enabled: false, type: "Programming" });
+            categoryModel.append({ name: "Trie",                 selected: false, enabled: true,  type: "Programming" });
+            categoryModel.append({ name: "Two Pointers",         selected: false, enabled: false, type: "Programming" });
+            categoryModel.append({ name: "Union-Find",           selected: false, enabled: false, type: "Programming" });
+            categoryModel.append({ name: "Matrix",               selected: false, enabled: false, type: "Programming" });
+            categoryModel.append({ name: "Database",             selected: false, enabled: false, type: "Programming" });
+            categoryModel.append({ name: "Shell",                selected: false, enabled: false, type: "Programming" });
+        }
+
+        function updateSystemDesignModel() {
+            categoryModel.clear();
+
+            categoryModel.append({ name: "Load balancer", selected: false, enabled: true, type: "System Design" });
+            categoryModel.append({ name: "Cache",         selected: false, enabled: true, type: "System Design" });
+        }
+
+        function updateSelectedCategories() {
+            for (let categoryType in sessionObject.selectedCategories) {
+                let categories = sessionObject.selectedCategories[categoryType];
+                for (let i = 0; i < categories.length; i++) {
+                    let category = categories[i];
+                    for (let j = 0; j < categoryModel.count; j++) {
+                        if (categoryModel.get(j).name === category) {
+                            categoryModel.setProperty(j, "selected", categoryModel.get(j).enabled);
+                            isCategorySelected = true;
+                        }
+                    }
                 }
             }
+        }
+
+        function updateTopic(currentTopic) {
+            switch (currentTopic) {
+                case "Programming":
+                    d.updateComputerScienceModel();
+                    break;
+                case "System Design":
+                    d.updateSystemDesignModel();
+                    break;
+            }
+
+            sessionObject.topic = currentTopic
+            sessionObject.saveSession();
+            d.updateSelectedCategories(currentTopic);
         }
     }
 
@@ -81,28 +117,122 @@ Rectangle {
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 Text {
-                    text: "Select algorithm categories"
+                    text: "Select a topic"
                     font.pixelSize: 24
                     anchors.centerIn: parent
                     color: themeObject.textColor
                     anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.horizontalCenterOffset: -15
                 }
             }
 
             Text {
                 anchors.top: title.bottom
                 anchors.topMargin: 10
-                text: "Each category contains a set of questions to solve, focused on a specific topic."
+                text: "Each topic contains a set of sub-topics, containing questions to solve."
                 font.pixelSize: 14
                 font.bold: sessionObject.isFontBold
                 color: themeObject.textColor
                 anchors.horizontalCenter: parent.horizontalCenter
             }
 
+            ComboBox {
+                id: topicComboBox
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.horizontalCenterOffset: -15
+
+                model: ["Programming", "System Design"]
+
+                currentIndex: {
+                    // Default to 0 if the session object has no valid topic
+                    var value = 0;
+                    if (sessionObject.topic === "Programming") {
+                        value = 0;
+                    } else if (sessionObject.topic === "System Design") { // Corrected condition
+                        value = 1;
+                    }
+                    currentTopic = sessionObject.topic; // Sync currentTopic with the session object
+                    return value;
+                }
+
+                Component.onCompleted: {
+                    // Set the currentIndex and update the model based on the session topic
+                    if (sessionObject.topic === "Programming") {
+                        topicComboBox.currentIndex = 0;
+                        d.updateComputerScienceModel();
+                    } else if (sessionObject.topic === "System Design") {
+                        topicComboBox.currentIndex = 1;
+                        d.updateSystemDesignModel();
+                    } else {
+                        topicComboBox.currentIndex = 0; // Fallback default
+                    }
+                    currentTopic = sessionObject.topic;
+                    d.updateSelectedCategories(); // Update selected categories after setting the topic
+                }
+
+                MouseArea {
+                    id: comboBoxMouseArea
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    acceptedButtons: Qt.NoButton
+                }
+
+                background: Rectangle {
+                    radius: 10
+                    color: comboBoxMouseArea.containsMouse ? themeObject.buttonHoveredColor : themeObject.buttonColor
+                    border.color: themeObject.buttonBorderColor
+                    border.width: 1
+                }
+
+                contentItem: Text {
+                    text: topicComboBox.currentText
+                    font.bold: sessionObject.isFontBold
+                    elide: Text.ElideRight
+                    horizontalAlignment: Text.AlignLeft
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.fill: parent
+                    anchors.margins: 10
+                    color: themeObject.textColor
+                }
+
+                onActivated: {
+                    currentTopic = topicComboBox.currentText;
+                    sessionObject.topic = currentTopic;
+                    sessionObject.saveSession();
+                    d.updateTopic(currentTopic);
+                }
+
+                popup: Popup{
+                    y: topicComboBox.height + 2
+                    x: topicComboBox.x - 2.65 * topicComboBox.width
+                    width: topicComboBox.implicitWidth * 1.26
+                    implicitHeight: contentItem.implicitHeight > 250 ? 250 : contentItem.implicitHeight
+                    padding: 4
+                    contentItem: ListView {
+                        implicitHeight: contentHeight
+                        keyNavigationEnabled: true
+                        model:topicComboBox.popup.visible ? topicComboBox.delegateModel : null
+                        clip: true
+                        focus: true
+                        currentIndex: topicComboBox.highlightedIndex
+                    }
+
+                    background: Rectangle {
+                        anchors.fill: parent
+                        radius: 6
+                        border.width: 0.6
+                        border.color: themeObject.buttonBorderColor
+                        clip: true
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+                }
+            }
+
             Flow {
                 id: categoriesFlow
                 width: parent.width
                 spacing: 5
+                anchors.horizontalCenterOffset: 15
 
                 Repeater {
                     model: categoryModel
@@ -156,21 +286,28 @@ Rectangle {
                             onClicked: {
                                 model.selected = !model.selected;
 
+                                let categoryType = model.type;
+                                if (!sessionObject.selectedCategories[categoryType]) {
+                                    sessionObject.selectedCategories[categoryType] = [];
+                                }
+
                                 if (model.selected) {
-                                    sessionObject.selectedCategories.push(model.name);
-                                    isCategorySelected = true
+                                    if (!sessionObject.selectedCategories[categoryType].includes(model.name)) {
+                                        sessionObject.selectedCategories[categoryType].push(model.name);
+                                    }
+                                    isCategorySelected = true;
                                 } else {
-                                    const index = sessionObject.selectedCategories.indexOf(model.name);
+                                    const index = sessionObject.selectedCategories[categoryType].indexOf(model.name);
                                     if (index > -1) {
-                                        sessionObject.selectedCategories.splice(index, 1);
+                                        sessionObject.selectedCategories[categoryType].splice(index, 1);
+
+                                        if (sessionObject.selectedCategories[categoryType].length === 0) {
+                                            delete sessionObject.selectedCategories[categoryType];
+                                        }
                                     }
                                 }
 
-                                if (sessionObject.selectedCategories.length === 0) {
-                                    isCategorySelected = false
-                                }
-
-                                sessionObject.saveSession()
+                                sessionObject.saveSession();
                             }
                         }
                     }

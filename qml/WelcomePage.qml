@@ -47,7 +47,7 @@ Rectangle {
             id: questionSelection
             anchors.horizontalCenter: parent.horizontalCenter
             
-            buttonText: "Select category"
+            buttonText: "Select Topic"
             page: categoryPage
         }
 

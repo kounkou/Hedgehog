@@ -3,14 +3,15 @@ import QtQuick 2.15
 QtObject {
     id: sessionObject
 
-    property var    selectedCategories: []
+    property var    selectedCategories: ({})
     property string theme: "white"
     property var    successfulImplementations: ({})
     property string performanceRating: "N/A"
     property string lastPerformanceUpdateDate: ""
     property int    attempted: 0
-    property var    visitedNumbers: []
+    property var    visitedNumbers: ({})
     property string language: "C++"
+    property string topic: "Programming"
     property bool   automaticThemeSetting: false
     property bool   fontSetting: false
     property int    todayVisitedNumbers: 0
@@ -47,6 +48,7 @@ QtObject {
             attempted: attempted,
             visitedNumbers: visitedNumbers,
             language: language,
+            topic: topic,
             automaticThemeSetting: automaticThemeSetting,
             theme: getTheme(),
             fontSetting: fontSetting,
@@ -66,14 +68,15 @@ QtObject {
         if (content) {
             try {
                 var data = JSON.parse(content);
-                selectedCategories = data.selectedCategories || [];                
+                selectedCategories = data.selectedCategories || {};                
                 successfulImplementations = data.successfulImplementations || {};
                 performanceRating = data.performanceRating || "N/A";
                 lastPerformanceUpdateDate = data.lastPerformanceUpdateDate || "";
                 themeObject.theme = theme;
                 attempted = data.attempted || 0;
-                visitedNumbers = data.visitedNumbers || [];
+                visitedNumbers = data.visitedNumbers || {};
                 language = data.language || "";
+                topic = data.topic || "";
                 automaticThemeSetting = data.automaticThemeSetting || false;
                 theme = getThemeToLoad(data) || theme;
                 fontSetting = data.fontSetting || false;
@@ -127,9 +130,9 @@ QtObject {
                             questionData.count = 0;
                             questionData.age = 0;
 
-                            var index = visitedNumbers.indexOf(questionId);
+                            var index = visitedNumbers[sessionObject.topic].indexOf(questionId);
                             if (index > -1) {
-                                visitedNumbers.splice(index, 1);
+                                visitedNumbers[sessionObject.topic].splice(index, 1);
                             }
                         }
                     }
