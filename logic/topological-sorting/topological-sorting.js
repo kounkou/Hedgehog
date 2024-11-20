@@ -18,7 +18,7 @@ var question = [
     stk.push(node);
 }
 
-void topoSortGraph(vector<int> nodes, vector<int> graph[], int V) {
+void topoSortGraph(vector<int> nodes, vector<int> graph[]) {
     map<int, bool> visited;
     stack<int> stk;
     
