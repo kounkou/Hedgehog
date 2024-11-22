@@ -11,7 +11,9 @@ Rectangle {
     property string lastUpdateTime: ""
     property var questionColorMap: {}
     property bool detailsButtonCheckedState: false
+    property bool previousWeekCheckedState: false
     property bool dataReady: false
+    property var today: null
 
     Layout.fillWidth: true
     Layout.fillHeight: true
@@ -25,18 +27,21 @@ Rectangle {
 
         onTriggered: {
             if (speedCanvas.visible) {
-                d.populateGraphSpentTimeData();
+                statsPage.today = d.parseDate(d.getCurrentDate())
+                d.populateGraphSpentTimeData(statsPage.today);
             } else if (successCanvas.visible) {
                 d.populateGraphGaussianData();
             } else {
-                d.populateGraphDetailedSpentTimeData();
+                d.populateGraphDetailedSpentTimeData(statsPage.today);
             }
         }
     }
 
     Component.onCompleted: {
         d.populateGraphGaussianData();
-        d.populateGraphSpentTimeData();
+
+        statsPage.today = d.parseDate(d.getCurrentDate())
+        d.populateGraphSpentTimeData(statsPage.today);
 
         sessionObject.loadSession();
         statsPage.fluctuation = d.getFluctuation();
@@ -56,6 +61,36 @@ Rectangle {
 
     QtObject {
         id: d
+
+        function calculateCurrentWeekStart(today) {
+            const { startOfWeek } = d.getCurrentWeekRange(today);
+            const currentWeekStartDate = new Date(startOfWeek);
+
+            if (isNaN(currentWeekStartDate)) {
+                console.error("Invalid startOfWeek date:", startOfWeek);
+                return null;
+            }
+            
+            currentWeekStartDate.setDate(currentWeekStartDate.getDate());
+            const currentWeekStart = currentWeekStartDate.toISOString().split("T")[0];
+
+            return currentWeekStart;
+        }
+
+        function calculatePreviousWeekStart(today) {
+            const { startOfWeek } = d.getCurrentWeekRange(today);
+            const currentWeekStartDate = new Date(startOfWeek);
+
+            if (isNaN(currentWeekStartDate)) {
+                console.error("Invalid startOfWeek date:", startOfWeek);
+                return null;
+            }
+
+            currentWeekStartDate.setDate(currentWeekStartDate.getDate() - 7);
+            const previousWeekStart = currentWeekStartDate.toISOString().split("T")[0];
+
+            return previousWeekStart;
+        }
 
         function getBarColor(barHeight, yAxisMax) {
             let baseRed = 0.4;  // Slightly muted red
@@ -137,7 +172,14 @@ Rectangle {
             return new Date(year, month - 1, day);
         }
 
-        function getCurrentWeekRange(today) {
+        function getCurrentWeekRange(todayString) {
+            const today = new Date(todayString);
+
+            if (isNaN(today)) {
+                console.error("Invalid date:", todayString);
+                return null;
+            }
+            
             const dayOfWeek = today.getDay();
             const startOfWeek = new Date(today);
             const endOfWeek = new Date(today);
@@ -148,7 +190,7 @@ Rectangle {
             return { startOfWeek, endOfWeek };
         }
 
-        function populateGraphSpentTimeData() {
+        function populateGraphSpentTimeData(today) {
             graphData.clear();
 
             var daySpentTimes = {
@@ -161,7 +203,6 @@ Rectangle {
                 "Sunday":    { total: 0, count: 0 },
             };
 
-            const today = d.parseDate(d.getCurrentDate());
             const { startOfWeek, endOfWeek } = d.getCurrentWeekRange(today);
 
             for (var question in sessionObject.successfulImplementations) {
@@ -197,7 +238,7 @@ Rectangle {
             statsPage.lastUpdateTime = d.getCurrentTime();
         }
 
-        function populateGraphDetailedSpentTimeData() {
+        function populateGraphDetailedSpentTimeData(today) {
             graphData.clear();
 
             const daySpentTimes = {
@@ -210,7 +251,6 @@ Rectangle {
                 "Sunday": []
             };
 
-            const today = d.parseDate(d.getCurrentDate());
             const { startOfWeek, endOfWeek } = d.getCurrentWeekRange(today);
 
             for (const question in sessionObject.successfulImplementations) {
@@ -298,7 +338,7 @@ Rectangle {
 
         function formatTime(seconds) {
             const minutes = String(Math.floor(seconds / 60)).padStart(2, '0');
-            const remainingSeconds = String((seconds % 60)).padStart(2, '0');
+            const remainingSeconds = String((seconds % 60).toFixed(2, 0)).padStart(2, '0');
             return `${minutes}m${remainingSeconds}`;
         }
 
@@ -436,7 +476,8 @@ Rectangle {
         enabled: !detailsButtonCheckedState
 
         onToggled: {
-            speedCanvas.visible ? d.populateGraphSpentTimeData() : d.populateGraphGaussianData()
+            statsPage.today = d.parseDate(d.getCurrentDate())
+            speedCanvas.visible ? d.populateGraphSpentTimeData(statsPage.today) : d.populateGraphGaussianData()
         }
     }
 
@@ -673,7 +714,7 @@ Rectangle {
                 ctx.save();
                 ctx.translate(xPos, yPos);
                 var textWidth = d.formatTime(point.time).length
-                ctx.fillText(point.time.toFixed(2, 0).padStart(2, '0'), 0, 0)
+                ctx.fillText(d.formatTime(point.time.toFixed(2, 0)).padStart(2, '0'), 0, 0)
                 ctx.restore();
             }
 
@@ -922,10 +963,19 @@ Rectangle {
                 onClicked: {
                     detailsButtonCheckedState = !detailsButtonCheckedState
 
-                    if (detailsButtonCheckedState) {
-                        d.populateGraphDetailedSpentTimeData()
+                    var today = null
+
+                    if (!previousWeekCheckedState) {
+                        today = d.parseDate(d.getCurrentDate())
                     } else {
-                        d.populateGraphSpentTimeData()
+                        let currentDay = d.parseDate(d.getCurrentDate())
+                        today = d.calculatePreviousWeekStart(currentDay)
+                    }
+
+                    if (detailsButtonCheckedState) {
+                        d.populateGraphDetailedSpentTimeData(today)
+                    } else {
+                        d.populateGraphSpentTimeData(today)
                     }
                 }
                 Layout.alignment: Qt.AlignHCenter
@@ -949,6 +999,54 @@ Rectangle {
                     border.color: themeObject.buttonBorderColor
                     color: {
                         return !detailsButtonCheckedState ? themeObject.buttonColor : themeObject.buttonActionColor
+                    }
+                }
+            }
+
+            Button {
+                id: previousWeek
+                enabled: !control.checked
+                text: qsTr("Previous week")
+                onClicked: {
+                    previousWeekCheckedState = !previousWeekCheckedState
+
+                    var today = null
+
+                    if (!previousWeekCheckedState) {
+                        today = d.parseDate(d.getCurrentDate())
+                    } else {
+                        let currentDay = d.parseDate(d.getCurrentDate())
+                        today = d.calculatePreviousWeekStart(currentDay)
+                    }
+
+                    if (detailsButtonCheckedState) {
+                        d.populateGraphDetailedSpentTimeData(today)
+                    } else {
+                        d.populateGraphSpentTimeData(today)
+                    }
+                }
+
+                Layout.alignment: Qt.AlignHCenter
+                width: 100
+                height: 30
+                font.bold: sessionObject.isFontBold
+
+                contentItem: Text {
+                    text: previousWeek.text
+                    font: previousWeek.font
+                    opacity: enabled ? 1.0 : 0.3
+                    color: previousWeekCheckedState ? "#F7F7F7" : themeObject.textColor
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    elide: Text.ElideRight
+                }
+
+                background: Rectangle {
+                    radius: 10
+                    border.width: 1
+                    border.color: themeObject.buttonBorderColor
+                    color: {
+                        return !previousWeekCheckedState ? themeObject.buttonColor : themeObject.buttonActionColor
                     }
                 }
             }

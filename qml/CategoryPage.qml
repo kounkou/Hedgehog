@@ -58,8 +58,36 @@ Rectangle {
         function updateSystemDesignModel() {
             categoryModel.clear();
 
-            categoryModel.append({ name: "Load balancer", selected: false, enabled: true, type: "System Design" });
-            categoryModel.append({ name: "Cache",         selected: false, enabled: true, type: "System Design" });
+            categoryModel.append({ name: "Load balancer",        selected: false, enabled: true,   type: "System Design" });
+            categoryModel.append({ name: "Binary Search",        selected: false, enabled: false,  type: "System Design" });
+            categoryModel.append({ name: "Bit Manipulation",     selected: false, enabled: false,  type: "System Design" });
+            categoryModel.append({ name: "Combinatorics",        selected: false, enabled: false,  type: "System Design" });
+            categoryModel.append({ name: "Div. Conq.",           selected: false, enabled: false,  type: "System Design" });
+            categoryModel.append({ name: "Disjoint Set",         selected: false, enabled: false,  type: "System Design" });
+            categoryModel.append({ name: "DP",                   selected: false, enabled: false,  type: "System Design" });
+            categoryModel.append({ name: "Game Theory",          selected: false, enabled: false,  type: "System Design" });
+            categoryModel.append({ name: "Geometry",             selected: false, enabled: false,  type: "System Design" });
+            categoryModel.append({ name: "Cache",                selected: false, enabled: true,   type: "System Design" });
+            categoryModel.append({ name: "Greedy",               selected: false, enabled: false,  type: "System Design" });
+            categoryModel.append({ name: "Heap",                 selected: false, enabled: false,  type: "System Design" });
+            categoryModel.append({ name: "Intervals",            selected: false, enabled: false,  type: "System Design" });
+            categoryModel.append({ name: "Linked List",          selected: false, enabled: false,  type: "System Design" });
+            categoryModel.append({ name: "Mathematics",          selected: false, enabled: false,  type: "System Design" });
+            categoryModel.append({ name: "Pigeonhole",           selected: false, enabled: false,  type: "System Design" });
+            categoryModel.append({ name: "Recursion",            selected: false, enabled: false,  type: "System Design" });
+            categoryModel.append({ name: "Searching",            selected: false, enabled: false,  type: "System Design" });
+            categoryModel.append({ name: "Segment Tree",         selected: false, enabled: false,  type: "System Design" });
+            categoryModel.append({ name: "Sliding Window",       selected: false, enabled: false,  type: "System Design" });
+            categoryModel.append({ name: "Sorting",              selected: false, enabled: false,  type: "System Design" });
+            categoryModel.append({ name: "String",               selected: false, enabled: false,  type: "System Design" });
+            categoryModel.append({ name: "Topo. Sort",           selected: false, enabled: false,  type: "System Design" });
+            categoryModel.append({ name: "Tree",                 selected: false, enabled: false,  type: "System Design" });
+            categoryModel.append({ name: "Trie",                 selected: false, enabled: false,  type: "System Design" });
+            categoryModel.append({ name: "Two Pointers",         selected: false, enabled: false,  type: "System Design" });
+            categoryModel.append({ name: "Union-Find",           selected: false, enabled: false,  type: "System Design" });
+            categoryModel.append({ name: "Matrix",               selected: false, enabled: false,  type: "System Design" });
+            categoryModel.append({ name: "Database",             selected: false, enabled: false,  type: "System Design" });
+            categoryModel.append({ name: "Shell",                selected: false, enabled: false,  type: "System Design" });
         }
 
         function updateSelectedCategories() {
