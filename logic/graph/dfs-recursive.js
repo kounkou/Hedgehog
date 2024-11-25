@@ -18,29 +18,17 @@ var question = [
         dfs(nei);
     }
 }`,
-        answerGo: `func dfs(start int) {
-    visited:= make(map[int]bool)
-    stk:= []int{ start }
-
-    for len(stk) > 0 {
-        node:= stk[len(stk) - 1]
-		stk = stk[: len(stk)- 1]
-
-    if visited[node] {
-        continue
-    }
-
-    fmt.Println(node)
+        answerGo: `func dfs(node int) {
     visited[node] = true
+    fmt.Println(node)
 
-    for x := len(graph[node]) - 1; x >= 0; x-- {
-        nextNode:= graph[node][x]
-        
-        if !visited[nextNode] {
-            stk = append(stk, nextNode)
-        }
+    for _, nei := range graph[node] {
+        if visited[nei] {
+	    continue
+	}
+
+        dfs(nei)
     }
-}
 }
 `},
 ]
