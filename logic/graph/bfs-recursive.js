@@ -28,23 +28,23 @@ var question = [
 }`,
         answerGo: `func bfs(level []int, visited map[int]bool) {
     if len(level) == 0 {
-		return
+        return
     }
 
-	var nlevel []int
+    var nlevel []int
 
-	for _, node := range level {
-		fmt.Println(node)
+    for _, node := range level {
+        fmt.Println(node)
 
-		for _, nei := range graph[node] {
-			if visited[nei] {
-				continue
+	for _, nei := range graph[node] {
+	    if visited[nei] {
+	        continue
             }
-			visited[nei] = true
-			nlevel = append(nlevel, nei)
+	    visited[nei] = true
+	    nlevel = append(nlevel, nei)
         }
     }
 
-	bfs(nlevel, visited)
+    bfs(nlevel, visited)
 }`}
 ]
