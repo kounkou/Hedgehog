@@ -33,21 +33,27 @@ var question = [
     return rooms;
 }
 `,
-        answerGo: `func minMeetingRooms(intervals [][]int) int {
-    if len(intervals) == 0 {
-        return 0
+        answerGo: `type Interval struct {
+    start int
+    end   int
+}
+
+func minMeetingRooms(intervals []Interval) int {
+    startTimes := make([]int, 0)
+    endTimes   := make([]int, 0)
+
+    for _, v := range intervals {
+        startTimes = append(startTimes, v.start)
+        endTimes = append(endTimes, v.end)
     }
 
-    startTimes := make([]int, len(intervals))
-    endTimes := make([]int, len(intervals))
+    sort.Slice(startTimes, func(i, j int) bool {
+        return startTimes[i] > startTimes[j]
+    })
 
-    for i, interval := range intervals {
-        startTimes[i] = interval[0]
-        endTimes[i] = interval[1]
-    }
-
-    sort.Ints(startTimes)
-    sort.Ints(endTimes)
+    sort.Slice(endTimes, func(i, j int) bool {
+        return endTimes[i] > endTimes[j]
+    })
 
     rooms := 0
     j := 0
