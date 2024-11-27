@@ -10,7 +10,7 @@ var question = [
         answerCpp: `struct ListNode {
     int val;
     ListNode* next;
-    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int v) : val(v), next(nullptr) {}
 };
 
 ListNode* findAncestor(ListNode* head, int v) {
