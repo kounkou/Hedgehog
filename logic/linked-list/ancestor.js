@@ -20,6 +20,7 @@ ListNode* findAncestor(ListNode* head, int t) {
         if (head->val == t) {
             return prev;
         }
+        
         prev = head;
         head = head->next;
     }
