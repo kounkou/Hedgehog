@@ -13,11 +13,11 @@ var question = [
     ListNode(int x) : val(x), next(nullptr) {}
 };
 
-ListNode* findAncestor(ListNode* head, int target) {
+ListNode* findAncestor(ListNode* head, int v) {
     ListNode* prev = nullptr;
 
     while (head != nullptr) {
-        if (head->val == target) {
+        if (head->val == v) {
             return prev;
         }
         prev = head;
