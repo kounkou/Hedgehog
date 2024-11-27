@@ -2,7 +2,7 @@ var question = [
     {
         id: "Ancestor",
         category: "Linked List",
-        placeHolderCpp: `struct ListNode {\n    int data;\n    ListNode* next;\n};\n\nListNode* findAncestor(ListNode* head, int target) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
+        placeHolderCpp: `struct ListNode {\n    int data;\n    ListNode* next;\n};\n\nListNode* findAncestor(ListNode* head, int t) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func findAncestor(head *ListNode, target int) *ListNode {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         difficulty: "Medium",
         question: "Find the Ancestor Element in Linked List",
@@ -13,11 +13,11 @@ var question = [
     ListNode(int v) : val(v), next(nullptr) {}
 };
 
-ListNode* findAncestor(ListNode* head, int v) {
+ListNode* findAncestor(ListNode* head, int t) {
     ListNode* prev = nullptr;
 
     while (head != nullptr) {
-        if (head->val == v) {
+        if (head->val == t) {
             return prev;
         }
         prev = head;
