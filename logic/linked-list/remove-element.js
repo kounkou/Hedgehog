@@ -10,17 +10,17 @@ var question = [
         answerCpp: `struct ListNode {
     int val;
     ListNode* next;
-    ListNode(int x) : val(x), next(NULL) {}
+    ListNode(int v) : val(v), next(nullptr) {}
 };
 
-ListNode* removeElements(ListNode* head, int val) {
+ListNode* removeElements(ListNode* head, int v) {
     ListNode* dummy = new ListNode(0);
     dummy->next = head;
     ListNode* prev = dummy;
     ListNode* curr = head;
 
-    while (curr != NULL) {
-        if (curr->val == val) {
+    while (curr != nullptr) {
+        if (curr->val == v) {
             prev->next = curr->next;
         } else {
             prev = curr;
