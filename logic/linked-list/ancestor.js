@@ -2,7 +2,7 @@ var question = [
     {
         id: "Ancestor",
         category: "Linked List",
-        placeHolderCpp: `ListNode* findAncestor(ListNode* head, int target) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
+        placeHolderCpp: `struct ListNode {\n    int data;\n    ListNode* next;\n};\n\nListNode* findAncestor(ListNode* head, int target) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func findAncestor(head *ListNode, target int) *ListNode {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         difficulty: "Medium",
         question: "Find the Ancestor Element in Linked List",
