@@ -7,31 +7,32 @@ var question = [
         difficulty: "Medium",
         question: "Insert and Print Linked List",
         answerImage: "",
-        answerCpp: `struct Node {
-    int data;
-    Node* next;
+        answerCpp: `struct ListNode {
+    int val;
+    ListNode* next;
+    ListNode(int v) : val(v), next(nullptr) {}
 };
 
-void insertAtEnd(Node** head, int newData) {
-    Node* newNode = new Node();
-    newNode->data = newData;
-    newNode->next = nullptr;
+void insertAtEnd(ListNode** head, int v) {
+    ListNode* dummy = new ListNode();
+    dummy->val = v;
+    dummy->next = nullptr;
 
     if (*head == nullptr) {
-        *head = newNode;
+        *head = dummy;
         return;
     }
 
-    Node* temp = *head;
+    ListNode* temp = *head;
     while (temp->next != nullptr)
         temp = temp->next;
 
     temp->next = newNode;
 }
 
-void printList(Node* head) {
+void printList(ListNode* head) {
     while (head != nullptr) {
-        cout << head->data << " ";
+        cout << head->val << " ";
         head = head->next;
     }
 }`,
