@@ -14,9 +14,7 @@ var question = [
 };
 
 void insertAtEnd(ListNode** head, int v) {
-    ListNode* dummy = new ListNode();
-    dummy->val = v;
-    dummy->next = nullptr;
+    ListNode* dummy = new ListNode(v);
 
     if (*head == nullptr) {
         *head = dummy;
@@ -24,10 +22,11 @@ void insertAtEnd(ListNode** head, int v) {
     }
 
     ListNode* temp = *head;
-    while (temp->next != nullptr)
+    while (temp->next != nullptr) {
         temp = temp->next;
+    }
 
-    temp->next = newNode;
+    temp->next = dummy;
 }
 
 void printList(ListNode* head) {
