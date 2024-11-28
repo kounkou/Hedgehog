@@ -1,6 +1,6 @@
 var question = [
     {
-        id: "print list",
+        id: "Print list",
         category: "Linked List",
         placeHolderCpp: `void printList(ListNode* head) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `{\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
