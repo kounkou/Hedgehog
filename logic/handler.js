@@ -2,7 +2,7 @@
 
 function getQuestionPlaceHolder(questionsData, currentLanguage, questionIndex, selectedCategories) {
     // If no category is selected, assume all categories are selected
-    const categories = selectedCategories.length === 0
+    const categories = !selectedCategories || selectedCategories.length === 0
         ? questionsData.map(question => question.category) // Take all categories
         : selectedCategories;
 

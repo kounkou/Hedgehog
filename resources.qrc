@@ -77,6 +77,9 @@
         <file alias="insert-at-end.js">logic/linked-list/insert-at-end.js</file>
         <file alias="remove-element.js">logic/linked-list/remove-element.js</file>
         <file alias="ancestor.js">logic/linked-list/ancestor.js</file>
+        <file alias="print-list.js">logic/linked-list/print-list.js</file>
+        <file alias="list-node.js">logic/linked-list/list-node.js</file>
+        <file alias="reverse-linked-list.js">logic/linked-list/reverse-linked-list.js</file>
 
         <file alias="sieve.js">logic/mathematics/sieve.js</file>
         <file alias="gcd.js">logic/mathematics/gcd.js</file>

@@ -2,18 +2,12 @@ var question = [
     {
         id: "Remove element",
         category: "Linked List",
-        placeHolderCpp: `struct ListNode {\n    int data;\n    ListNode* next;\n};\n\nListNode* removeElements(ListNode* head, int t) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
+        placeHolderCpp: `ListNode* removeElements(ListNode* head, int t) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         placeHolderGo: `func removeElements(head *ListNode, val int) *ListNode {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
         difficulty: "Medium",
         question: "Remove all elements from a linked list that have a specific value.",
         answerImage: "",
-        answerCpp: `struct ListNode {
-    int val;
-    ListNode* next;
-    ListNode(int v) : val(v), next(nullptr) {}
-};
-
-ListNode* removeElements(ListNode* head, int t) {
+        answerCpp: `ListNode* removeElements(ListNode* head, int t) {
     ListNode* dummy = new ListNode(0);
     dummy->next = head;
     ListNode* prev = dummy;

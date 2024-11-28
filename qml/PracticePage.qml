@@ -35,9 +35,14 @@ import "fractional-knapsack.js" as FractionalKnapsack
 import "sieve.js" as Sieve
 import "gcd.js" as GCD
 import "fast-exponentiation.js" as FastExponentiation
+
 import "insert-at-end.js" as InsertAtEnd
 import "remove-element.js" as RemoveElement
 import "ancestor.js" as Ancestor
+import "list-node.js" as ListNode
+import "print-list.js" as PrintList
+import "reverse-linked-list.js" as ReverseList
+
 import "factorial.js" as Factorial
 import "heap-sort.js" as HeapSort
 import "insert-heap.js" as InsertHeap
@@ -137,7 +142,11 @@ Rectangle {
                 ...CountCombinations.question,
                 ...MergeSort.question,
                 ...QuickSort.question,
-                ...LinearSearch.question
+                ...LinearSearch.question,
+                ...ListNode.question,
+                ...PrintList.question,
+                ...RemoveElement.question,
+                ...ReverseList.question
             ],
             SystemDesign: [
                 ...LoadBalancing.question,
