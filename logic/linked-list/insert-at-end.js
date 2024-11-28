@@ -2,7 +2,7 @@ var question = [
     {
         id: "Insert at end",
         category: "Linked List",
-        placeHolderCpp: `void insertAtEnd(ListNode** head, int v) {\n    ...\n}\n\nvoid printList(ListNode* head) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n`,
+        placeHolderCpp: `void insertAtEnd(ListNode** head, int v) {\n    ...\n}`,
         placeHolderGo: `func insertAtEnd(head **Node, newData int) {\n    ...\n}\n\nfunc printList(head *Node) {\n    ...\n}\n\n\n\n\n\n\n\n\n\n\n`,
         difficulty: "Medium",
         question: "Insert at Linked List end",
