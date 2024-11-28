@@ -19,6 +19,7 @@ var question = [
         } else {
             prev = curr;
         }
+        
         curr = curr->next;
     }
 
