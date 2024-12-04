@@ -22,75 +22,75 @@
         
         <!-- <file alias="icon.icns">images/app_icon.icns</file> -->
 
-        <file alias="bfs-recursive.js">logic/graph/bfs-recursive.js</file>
-        <file alias="dfs-recursive.js">logic/graph/dfs-recursive.js</file>
-        <file alias="bfs-iterative.js">logic/graph/bfs-iterative.js</file>
-        <file alias="dfs-iterative.js">logic/graph/dfs-iterative.js</file>
-        <file alias="dijkstra.js">logic/graph/dijkstra.js</file>
+        <file alias="bfs-recursive.js">logic/programming/graph/bfs-recursive.js</file>
+        <file alias="dfs-recursive.js">logic/programming/graph/dfs-recursive.js</file>
+        <file alias="bfs-iterative.js">logic/programming/graph/bfs-iterative.js</file>
+        <file alias="dfs-iterative.js">logic/programming/graph/dfs-iterative.js</file>
+        <file alias="dijkstra.js">logic/programming/graph/dijkstra.js</file>
 
-        <file alias="backtracking.js">logic/backtracking/nqueens.js</file>
+        <file alias="backtracking.js">logic/programming/backtracking/nqueens.js</file>
 
-        <file alias="dsu.js">logic/disjoint-set/dsu.js</file>
+        <file alias="dsu.js">logic/programming/disjoint-set/dsu.js</file>
 
-        <file alias="kadane.js">logic/dp/kadane.js</file>
+        <file alias="kadane.js">logic/programming/dp/kadane.js</file>
 
-        <file alias="topological-sorting.js">logic/topological-sorting/topological-sorting.js</file>
+        <file alias="topological-sorting.js">logic/programming/topological-sorting/topological-sorting.js</file>
 
-        <file alias="merge-interval.js">logic/intervals/merge-interval.js</file>
-        <file alias="insert-interval.js">logic/intervals/insert-interval.js</file>
-        <file alias="min-meeting-room.js">logic/intervals/min-meeting-room.js</file>
+        <file alias="merge-interval.js">logic/programming/intervals/merge-interval.js</file>
+        <file alias="insert-interval.js">logic/programming/intervals/insert-interval.js</file>
+        <file alias="min-meeting-room.js">logic/programming/intervals/min-meeting-room.js</file>
 
-        <file alias="binary-search.js">logic/binary-search/binary-search.js</file>
+        <file alias="binary-search.js">logic/programming/binary-search/binary-search.js</file>
 
-        <file alias="linear-search.js">logic/searching/linear-search.js</file>
-        <file alias="jump-search.js">logic/searching/jump-search.js</file>
-        <file alias="interpolation-search.js">logic/searching/interpolation-search.js</file>
+        <file alias="linear-search.js">logic/programming/searching/linear-search.js</file>
+        <file alias="jump-search.js">logic/programming/searching/jump-search.js</file>
+        <file alias="interpolation-search.js">logic/programming/searching/interpolation-search.js</file>
 
-        <file alias="trie.js">logic/trie/trie.js</file>
+        <file alias="trie.js">logic/programming/trie/trie.js</file>
 
-        <file alias="kmp.js">logic/string/kmp.js</file>
-        <file alias="lcp.js">logic/string/lcp.js</file>
-        <file alias="rabin-karp.js">logic/string/rabin-karp.js</file>
-        <file alias="split-sentence.js">logic/string/split-sentence.js</file>
+        <file alias="kmp.js">logic/programming/string/kmp.js</file>
+        <file alias="lcp.js">logic/programming/string/lcp.js</file>
+        <file alias="rabin-karp.js">logic/programming/string/rabin-karp.js</file>
+        <file alias="split-sentence.js">logic/programming/string/split-sentence.js</file>
 
-        <file alias="unique-paths.js">logic/combinatorics/unique-paths.js</file>
-        <file alias="count-permutations.js">logic/combinatorics/count-permutations.js</file>
-        <file alias="generate-subsets.js">logic/combinatorics/generate-subsets.js</file>
-        <file alias="count-combinations.js">logic/combinatorics/count-combinations.js</file>
+        <file alias="unique-paths.js">logic/programming/combinatorics/unique-paths.js</file>
+        <file alias="count-permutations.js">logic/programming/combinatorics/count-permutations.js</file>
+        <file alias="generate-subsets.js">logic/programming/combinatorics/generate-subsets.js</file>
+        <file alias="count-combinations.js">logic/programming/combinatorics/count-combinations.js</file>
 
-        <file alias="merge-sort.js">logic/divide-and-conquer/merge-sort.js</file>
-        <file alias="quick-sort.js">logic/divide-and-conquer/quick-sort.js</file>
+        <file alias="merge-sort.js">logic/programming/divide-and-conquer/merge-sort.js</file>
+        <file alias="quick-sort.js">logic/programming/divide-and-conquer/quick-sort.js</file>
 
-        <file alias="factorial.js">logic/recursion/factorial.js</file>
+        <file alias="factorial.js">logic/programming/recursion/factorial.js</file>
 
-        <file alias="fractional-knapsack.js">logic/greedy/fractional-knapsack.js</file>
+        <file alias="fractional-knapsack.js">logic/programming/greedy/fractional-knapsack.js</file>
 
-        <file alias="check-power-of-two.js">logic/bit-manipulation/check-power-of-two.js</file>
-        <file alias="count-set-bit.js">logic/bit-manipulation/count-set-bit.js</file>
-        <file alias="reverse-bits.js">logic/bit-manipulation/reverse-bits.js</file>
+        <file alias="check-power-of-two.js">logic/programming/bit-manipulation/check-power-of-two.js</file>
+        <file alias="count-set-bit.js">logic/programming/bit-manipulation/count-set-bit.js</file>
+        <file alias="reverse-bits.js">logic/programming/bit-manipulation/reverse-bits.js</file>
 
-        <file alias="max-sub-array.js">logic/sliding-window/max-sub-array.js</file>
+        <file alias="max-sub-array.js">logic/programming/sliding-window/max-sub-array.js</file>
 
-        <file alias="heap-sort.js">logic/heap/heap-sort.js</file>
-        <file alias="insert-heap.js">logic/heap/insert-heap.js</file>
+        <file alias="heap-sort.js">logic/programming/heap/heap-sort.js</file>
+        <file alias="insert-heap.js">logic/programming/heap/insert-heap.js</file>
 
-        <file alias="insert-at-end.js">logic/linked-list/insert-at-end.js</file>
-        <file alias="remove-element.js">logic/linked-list/remove-element.js</file>
-        <file alias="ancestor.js">logic/linked-list/ancestor.js</file>
-        <file alias="print-list.js">logic/linked-list/print-list.js</file>
-        <file alias="list-node.js">logic/linked-list/list-node.js</file>
-        <file alias="reverse-linked-list.js">logic/linked-list/reverse-linked-list.js</file>
+        <file alias="insert-at-end.js">logic/programming/linked-list/insert-at-end.js</file>
+        <file alias="remove-element.js">logic/programming/linked-list/remove-element.js</file>
+        <file alias="ancestor.js">logic/programming/linked-list/ancestor.js</file>
+        <file alias="print-list.js">logic/programming/linked-list/print-list.js</file>
+        <file alias="list-node.js">logic/programming/linked-list/list-node.js</file>
+        <file alias="reverse-linked-list.js">logic/programming/linked-list/reverse-linked-list.js</file>
 
-        <file alias="sieve.js">logic/mathematics/sieve.js</file>
-        <file alias="gcd.js">logic/mathematics/gcd.js</file>
-        <file alias="fast-exponentiation.js">logic/mathematics/fast-exponentiation.js</file>
+        <file alias="sieve.js">logic/programming/mathematics/sieve.js</file>
+        <file alias="gcd.js">logic/programming/mathematics/gcd.js</file>
+        <file alias="fast-exponentiation.js">logic/programming/mathematics/fast-exponentiation.js</file>
 
-        <file alias="convex-hull.js">logic/geometry/convex-hull.js</file>
-        <file alias="line-intersection.js">logic/geometry/line-intersection.js</file>
-        <file alias="area-triangle-heron.js">logic/geometry/area-triangle-heron.js</file>
+        <file alias="convex-hull.js">logic/programming/geometry/convex-hull.js</file>
+        <file alias="line-intersection.js">logic/programming/geometry/line-intersection.js</file>
+        <file alias="area-triangle-heron.js">logic/programming/geometry/area-triangle-heron.js</file>
 
-        <file alias="lazy-propagation.js">logic/segment-tree/lazy-propagation.js</file>
-        <file alias="range-sum-queries.js">logic/segment-tree/range-sum-queries.js</file>
+        <file alias="lazy-propagation.js">logic/programming/segment-tree/lazy-propagation.js</file>
+        <file alias="range-sum-queries.js">logic/programming/segment-tree/range-sum-queries.js</file>
 
         <file alias="load-balancer-types.js">logic/system-design/load-balancing/load-balancer-types.js</file>
         <file alias="cache-types.js">logic/system-design/caching/cache-types.js</file>
