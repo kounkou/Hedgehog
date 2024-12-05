@@ -1,5 +1,8 @@
 <div align="center">
     <img src="https://github.com/kounkou/Hedgehog/actions/workflows/build.yml/badge.svg"  alt="Hedgehog workflow">
+	<a href="https://github.com/kounkou/hedgehog/graphs/contributors">
+		<img src="https://img.shields.io/github/contributors/kounkou/hedgehog.svg?style=flat">
+	</a>
 </div>
 
 ----
