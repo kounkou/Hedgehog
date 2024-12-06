@@ -89,6 +89,7 @@ Rectangle {
     property var questionsData: []
     property string aiComment: ""
     property var localVisitedNumbers: ({})
+    property var allQuestionsData: {}
     
     property var session: null
 
@@ -96,78 +97,65 @@ Rectangle {
 
     Component.onCompleted: {
         // Organize questions into categories
-        var allQuestionsData = {
-            Programming: [
-                ...BfsRecursive.question,
-                ...DfsRecursive.question,
-                ...BfsIterative.question,
-                ...Dsu.question,
-                ...Dijkstra.question,
-                ...Kadane.question,
-                ...LineIntersection.question,
-                ...AreaTriangleHeron.question,
-                ...ConvexHull.question,
-                ...MergeIntervals.question,
-                ...InsertInterval.question,
-                ...MinMeetingRoom.question,
-                ...Kmp.question,
-                ...LCP.question,
-                ...RabinKarp.question,
-                ...SplitSentence.question,
-                ...BinarySearch.question,
-                ...JumpSearch.question,
-                ...InterpolationSearch.question,
-                ...Trie.question,
-                ...FractionalKnapsack.question,
-                ...InsertAtEnd.question,
-                ...RemoveElement.question,
-                ...Ancestor.question,
-                ...Factorial.question,
-                ...Sieve.question,
-                ...GCD.question,
-                ...FastExponentiation.question,
-                ...HeapSort.question,
-                ...InsertHeap.question,
-                ...MaxSubArray.question,
-                ...CheckPowerOfTwo.question,
-                ...CountSetBit.question,
-                ...ReverseBits.question,
-                ...TopologicalSorting.question,
-                ...BackTracking.question,
-                ...LazyPropag.question,
-                ...RangeSumQueries.question,
-                ...UniquePaths.question,
-                ...CountPermutations.question,
-                ...GenerateSubsets.question,
-                ...CountCombinations.question,
-                ...MergeSort.question,
-                ...QuickSort.question,
-                ...LinearSearch.question,
-                ...ListNode.question,
-                ...PrintList.question,
-                ...RemoveElement.question,
-                ...ReverseList.question
-            ],
-            SystemDesign: [
-                ...LoadBalancing.question,
-                ...Cache.question
-            ]
-        };
+        // var allQuestionsData = {
+        //     Programming: [
+        //         ...BfsRecursive.question,
+        //         ...DfsRecursive.question,
+        //         ...BfsIterative.question,
+        //         ...Dsu.question,
+        //         ...Dijkstra.question,
+        //         ...Kadane.question,
+        //         ...LineIntersection.question,
+        //         ...AreaTriangleHeron.question,
+        //         ...ConvexHull.question,
+        //         ...MergeIntervals.question,
+        //         ...InsertInterval.question,
+        //         ...MinMeetingRoom.question,
+        //         ...Kmp.question,
+        //         ...LCP.question,
+        //         ...RabinKarp.question,
+        //         ...SplitSentence.question,
+        //         ...BinarySearch.question,
+        //         ...JumpSearch.question,
+        //         ...InterpolationSearch.question,
+        //         ...Trie.question,
+        //         ...FractionalKnapsack.question,
+        //         ...InsertAtEnd.question,
+        //         ...RemoveElement.question,
+        //         ...Ancestor.question,
+        //         ...Factorial.question,
+        //         ...Sieve.question,
+        //         ...GCD.question,
+        //         ...FastExponentiation.question,
+        //         ...HeapSort.question,
+        //         ...InsertHeap.question,
+        //         ...MaxSubArray.question,
+        //         ...CheckPowerOfTwo.question,
+        //         ...CountSetBit.question,
+        //         ...ReverseBits.question,
+        //         ...TopologicalSorting.question,
+        //         ...BackTracking.question,
+        //         ...LazyPropag.question,
+        //         ...RangeSumQueries.question,
+        //         ...UniquePaths.question,
+        //         ...CountPermutations.question,
+        //         ...GenerateSubsets.question,
+        //         ...CountCombinations.question,
+        //         ...MergeSort.question,
+        //         ...QuickSort.question,
+        //         ...LinearSearch.question,
+        //         ...ListNode.question,
+        //         ...PrintList.question,
+        //         ...RemoveElement.question,
+        //         ...ReverseList.question
+        //     ],
+        //     SystemDesign: [
+        //         ...LoadBalancing.question,
+        //         ...Cache.question
+        //     ]
+        // };
 
-        // Filter questions based on selected categories
-        var selectedCategories = sessionObject.selectedCategories[sessionObject.topic] || {};
-
-        if (selectedCategories.length > 0) {
-            questionsData = allQuestionsData.Programming.concat(allQuestionsData.SystemDesign).filter(function(question) {
-                return selectedCategories.includes(question.category);
-            });
-        } else {
-            questionsData = allQuestionsData.Programming.concat(allQuestionsData.SystemDesign);
-        }
-
-        // Set questions and navigate to the next question
-        sessionObject.selectedCategories[sessionObject.topic] = selectedCategories;
-        d.goToNextQuestion();
+        d.retrieveAllQuestions();
     }
 
     Rectangle {
@@ -179,6 +167,50 @@ Rectangle {
 
         QtObject {
             id: d
+
+            function retrieveAllQuestions() {
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "http://localhost:8080/questions");
+
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            try {
+                                allQuestionsData = JSON.parse(xhr.responseText);
+
+                                var selectedCategories = Array.isArray(sessionObject.selectedCategories[sessionObject.topic]) ?
+                                    sessionObject.selectedCategories[sessionObject.topic] : [];
+
+                                if (allQuestionsData.Programming || allQuestionsData.SystemDesign) {
+                                    const programmingQuestions = allQuestionsData.Programming || [];
+                                    const systemDesignQuestions = allQuestionsData.SystemDesign || [];
+
+                                    if (selectedCategories && selectedCategories.length > 0) {
+                                        questionsData = programmingQuestions.concat(systemDesignQuestions).filter(function(question) {
+                                            return question.category && selectedCategories.includes(question.category);
+                                        });
+                                    } else {
+                                        questionsData = programmingQuestions.concat(systemDesignQuestions);
+                                    }
+                                } else {
+                                    console.error("Programming or SystemDesign categories are missing in the data");
+                                    return;
+                                }
+
+                                sessionObject.selectedCategories[sessionObject.topic] = selectedCategories;
+                                d.goToNextQuestion();
+
+                            } catch (e) {
+                                console.error("Failed to parse response:", e);
+                            }
+                        } else {
+                            console.error("Failed to fetch questions:", xhr.status, xhr.responseText);
+                        }
+                    }
+                };
+
+                xhr.send();
+            }
 
             function openContextMenu(x, y) {
                 console.log("---> in openContextMenu")
