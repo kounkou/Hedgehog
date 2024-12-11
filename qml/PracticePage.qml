@@ -91,6 +91,7 @@ Rectangle {
     property var localVisitedNumbers: ({})
     property var allQuestionsData: {}
     property string hedghogServerEndpoint: "http://localhost:8080/questions"
+    property int indentSpaces: 3
     
     property var session: null
 
@@ -109,6 +110,51 @@ Rectangle {
 
         QtObject {
             id: d
+
+            function indentCode(code) {
+                var indentLevel = 0;
+                var result = "";
+                var i = 0;
+
+                while (i < code.length) {
+                    var c = code[i];
+
+                    if (c === '{') {
+                        result += c + "   ".repeat(indentLevel) + "\n";
+                        indentLevel++;
+                        result += "   ".repeat(indentLevel);
+                    } else if (c === '}') {
+                        result = removeTrailingSpaces(result); // Remove trailing spaces
+                        indentLevel = Math.max(indentLevel - 1, 0);
+                        result += "\n" + "    ".repeat(indentLevel) + c + "\n";
+                        result += "   ".repeat(indentLevel);
+                    } else if (c === ';') {
+                        result += c + "\n";
+                        result += "   ".repeat(indentLevel);
+                    } else {
+                        result += c;
+                    }
+                    i++;
+                }
+
+                return result.trim();
+            }
+
+            function removeTrailingSpaces(str) {
+                var trimmed = str;
+                while (trimmed.endsWith(" ")) {
+                    trimmed = trimmed.slice(0, -1);
+                }
+                return trimmed;
+            }
+
+            function repeatSpaces(count) {
+                var spaces = "";
+                for (var j = 0; j < count * 4; j++) {
+                    spaces += " ";
+                }
+                return spaces;
+            }
 
             function retrieveAllQuestions() {
                 var xhr = new XMLHttpRequest();
@@ -190,7 +236,9 @@ Rectangle {
             }
 
             function updateLanguage(currentLanguage) {
-                answerInput.placeholderText = QuestionsHandler.getQuestionPlaceHolder(questionsData, currentLanguage, currentQuestionIndex)
+                answerInput.placeholderText = d.indentCode(
+                    QuestionsHandler.getQuestionPlaceHolder(questionsData, currentLanguage, currentQuestionIndex)
+                )
             }
 
             function submitPrompt(prompt) {
@@ -246,7 +294,7 @@ Rectangle {
                     if (aiComment.length === 0) {
                         // console.debug("---> LLM not available")
 
-                        result = QuestionsHandler.getLevenshteinDistance(userAnswer.trim(), expectedAnswer)
+                        result = QuestionsHandler.getLevenshteinDistance(userAnswer.trim(), d.indentCode(expectedAnswer))
                     } else {
                         // console.debug("---> LLM available!")
 
@@ -272,7 +320,7 @@ Rectangle {
                             timeLimit - timerValue);
                         sessionObject.todayVisitedNumbers += 1;
                     } else {
-                        answerInput.text = expectedAnswer;
+                        answerInput.text = d.indentCode(expectedAnswer);
                         answerInput.readOnly = true;
                         resultsModel.append({
                             similarity: "Not Similar", 
@@ -293,12 +341,12 @@ Rectangle {
             }
 
             function showSolution() {
-                answerInput.text = root.expectedAnswer
+                answerInput.text = d.indentCode(root.expectedAnswer)
                 aiOutput.text = root.aiComment
             }
 
             function showSubmission() {
-                answerInput.text = root.submittedAnswer
+                answerInput.text = d.indentCode(root.submittedAnswer)
             }
 
             function getRandomInt(min, max) {
@@ -726,7 +774,10 @@ Rectangle {
                             id: answerInput
                             anchors.fill: backgroundRect
                             readOnly: submitted
-                            placeholderText: QuestionsHandler.getQuestionPlaceHolder(questionsData, sessionObject.language, currentQuestionIndex, sessionObject.selectedCategories[sessionObject.topic])
+                            placeholderText: d.indentCode(
+                                QuestionsHandler.getQuestionPlaceHolder(questionsData, sessionObject.language, currentQuestionIndex,
+                                sessionObject.selectedCategories[sessionObject.topic])
+                            )
                             font.family: "Courier New"
                             font.pixelSize: 16
                             font.bold: sessionObject.isFontBold
