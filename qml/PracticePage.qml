@@ -6,66 +6,6 @@ import Hedgehog 1.0
 
 import "handler.js" as QuestionsHandler
 
-import "bfs-recursive.js" as BfsRecursive
-import "dfs-recursive.js" as DfsRecursive
-import "bfs-iterative.js" as BfsIterative
-import "dsu.js" as Dsu
-import "dfs-iterative.js" as DfsIterative
-import "dijkstra.js" as Dijkstra
-import "kadane.js" as Kadane
-
-import "kmp.js" as Kmp
-import "lcp.js" as LCP
-import "rabin-karp.js" as RabinKarp
-import "split-sentence.js" as SplitSentence
-
-import "binary-search.js" as BinarySearch
-import "linear-search.js" as LinearSearch
-import "jump-search.js" as JumpSearch
-import "interpolation-search.js" as InterpolationSearch
-
-import "line-intersection.js" as LineIntersection
-import "area-triangle-heron.js" as AreaTriangleHeron
-import "convex-hull.js" as ConvexHull
-import "merge-interval.js" as MergeIntervals
-import "insert-interval.js" as InsertInterval
-import "min-meeting-room.js" as MinMeetingRoom
-import "trie.js" as Trie
-import "fractional-knapsack.js" as FractionalKnapsack
-import "sieve.js" as Sieve
-import "gcd.js" as GCD
-import "fast-exponentiation.js" as FastExponentiation
-
-import "insert-at-end.js" as InsertAtEnd
-import "remove-element.js" as RemoveElement
-import "ancestor.js" as Ancestor
-import "list-node.js" as ListNode
-import "print-list.js" as PrintList
-import "reverse-linked-list.js" as ReverseList
-
-import "factorial.js" as Factorial
-import "heap-sort.js" as HeapSort
-import "insert-heap.js" as InsertHeap
-import "check-power-of-two.js" as CheckPowerOfTwo
-import "count-set-bit.js" as CountSetBit
-import "reverse-bits.js" as ReverseBits
-import "max-sub-array.js" as MaxSubArray
-import "topological-sorting.js" as TopologicalSorting
-import "backtracking.js" as BackTracking
-import "lazy-propagation.js" as LazyPropag
-import "range-sum-queries.js" as RangeSumQueries
-
-import "unique-paths.js" as UniquePaths
-import "count-permutations.js" as CountPermutations
-import "generate-subsets.js" as GenerateSubsets
-import "count-combinations.js" as CountCombinations 
-
-import "merge-sort.js" as MergeSort
-import "quick-sort.js" as QuickSort
-
-import "load-balancer-types.js" as LoadBalancing
-import "cache-types.js" as Cache
-
 Rectangle {
     id: root
 
@@ -89,85 +29,16 @@ Rectangle {
     property var questionsData: []
     property string aiComment: ""
     property var localVisitedNumbers: ({})
+    property var allQuestionsData: {}
+    property string hedghogServerEndpoint: "http://localhost:8080/questions"
+    property int indentSpaces: 3
     
     property var session: null
 
     color: themeObject.backgroundColor
 
     Component.onCompleted: {
-        // Organize questions into categories
-        var allQuestionsData = {
-            Programming: [
-                ...BfsRecursive.question,
-                ...DfsRecursive.question,
-                ...BfsIterative.question,
-                ...Dsu.question,
-                ...Dijkstra.question,
-                ...Kadane.question,
-                ...LineIntersection.question,
-                ...AreaTriangleHeron.question,
-                ...ConvexHull.question,
-                ...MergeIntervals.question,
-                ...InsertInterval.question,
-                ...MinMeetingRoom.question,
-                ...Kmp.question,
-                ...LCP.question,
-                ...RabinKarp.question,
-                ...SplitSentence.question,
-                ...BinarySearch.question,
-                ...JumpSearch.question,
-                ...InterpolationSearch.question,
-                ...Trie.question,
-                ...FractionalKnapsack.question,
-                ...InsertAtEnd.question,
-                ...RemoveElement.question,
-                ...Ancestor.question,
-                ...Factorial.question,
-                ...Sieve.question,
-                ...GCD.question,
-                ...FastExponentiation.question,
-                ...HeapSort.question,
-                ...InsertHeap.question,
-                ...MaxSubArray.question,
-                ...CheckPowerOfTwo.question,
-                ...CountSetBit.question,
-                ...ReverseBits.question,
-                ...TopologicalSorting.question,
-                ...BackTracking.question,
-                ...LazyPropag.question,
-                ...RangeSumQueries.question,
-                ...UniquePaths.question,
-                ...CountPermutations.question,
-                ...GenerateSubsets.question,
-                ...CountCombinations.question,
-                ...MergeSort.question,
-                ...QuickSort.question,
-                ...LinearSearch.question,
-                ...ListNode.question,
-                ...PrintList.question,
-                ...RemoveElement.question,
-                ...ReverseList.question
-            ],
-            SystemDesign: [
-                ...LoadBalancing.question,
-                ...Cache.question
-            ]
-        };
-
-        // Filter questions based on selected categories
-        var selectedCategories = sessionObject.selectedCategories[sessionObject.topic] || {};
-
-        if (selectedCategories.length > 0) {
-            questionsData = allQuestionsData.Programming.concat(allQuestionsData.SystemDesign).filter(function(question) {
-                return selectedCategories.includes(question.category);
-            });
-        } else {
-            questionsData = allQuestionsData.Programming.concat(allQuestionsData.SystemDesign);
-        }
-
-        // Set questions and navigate to the next question
-        sessionObject.selectedCategories[sessionObject.topic] = selectedCategories;
-        d.goToNextQuestion();
+        d.retrieveAllQuestions();
     }
 
     Rectangle {
@@ -179,6 +50,117 @@ Rectangle {
 
         QtObject {
             id: d
+
+            function indentCode(code) {
+                var indentLevel = 0;
+                var result = "";
+                var i = 0;
+
+                while (i < code.length) {
+                    var c = code[i];
+
+                    if (c === '{') {
+                        result += c + "   ".repeat(indentLevel) + "\n";
+                        indentLevel++;
+                        result += "   ".repeat(indentLevel);
+                    } else if (c === '}') {
+                        result = removeTrailingSpaces(result); // Remove trailing spaces
+                        indentLevel = Math.max(indentLevel - 1, 0);
+                        result += "\n" + "    ".repeat(indentLevel) + c + "\n";
+                        result += "   ".repeat(indentLevel);
+                    } else if (c === ';') {
+                        result += c + "\n";
+                        result += "   ".repeat(indentLevel);
+                    } else {
+                        result += c;
+                    }
+                    i++;
+                }
+
+                return result.trim();
+            }
+
+            function removeTrailingSpaces(str) {
+                var trimmed = str;
+                while (trimmed.endsWith(" ")) {
+                    trimmed = trimmed.slice(0, -1);
+                }
+                return trimmed;
+            }
+
+            function repeatSpaces(count) {
+                var spaces = "";
+                for (var j = 0; j < count * 4; j++) {
+                    spaces += " ";
+                }
+                return spaces;
+            }
+
+            function retrieveAllQuestions() {
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", hedghogServerEndpoint);
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            handleResponse(xhr.responseText);
+                        } else {
+                            logFetchError(xhr.status, xhr.responseText);
+                        }
+                    }
+                };
+
+                xhr.send();
+            }
+
+            function handleResponse(responseText) {
+                try {
+                    const allQuestionsData = parseResponse(responseText);
+                    const selectedCategories = getSelectedCategories();
+                    questionsData = processQuestions(allQuestionsData, selectedCategories);
+                    updateSession(selectedCategories);
+                    d.goToNextQuestion();
+                } catch (e) {
+                    console.error("Failed to parse response:", e);
+                }
+            }
+
+            function parseResponse(responseText) {
+                return JSON.parse(responseText);
+            }
+
+            function getSelectedCategories() {
+                return Array.isArray(sessionObject.selectedCategories[sessionObject.topic])
+                    ? sessionObject.selectedCategories[sessionObject.topic]
+                    : [];
+            }
+
+            function processQuestions(allQuestionsData, selectedCategories) {
+                if (!allQuestionsData.Programming && !allQuestionsData.SystemDesign) {
+                    console.error("Programming or SystemDesign categories are missing in the data");
+                    return [];
+                }
+
+                const programmingQuestions = allQuestionsData.Programming || [];
+                const systemDesignQuestions = allQuestionsData.SystemDesign || [];
+                const allQuestions = programmingQuestions.concat(systemDesignQuestions);
+
+                if (selectedCategories.length > 0) {
+                    return allQuestions.filter(question =>
+                        question.category && selectedCategories.includes(question.category)
+                    );
+                }
+
+                return allQuestions;
+            }
+
+            function updateSession(selectedCategories) {
+                sessionObject.selectedCategories[sessionObject.topic] = selectedCategories;
+            }
+
+            function logFetchError(status, responseText) {
+                console.error("Failed to fetch questions:", status, responseText);
+            }
 
             function openContextMenu(x, y) {
                 console.log("---> in openContextMenu")
@@ -194,7 +176,9 @@ Rectangle {
             }
 
             function updateLanguage(currentLanguage) {
-                answerInput.placeholderText = QuestionsHandler.getQuestionPlaceHolder(questionsData, currentLanguage, currentQuestionIndex)
+                answerInput.placeholderText = d.indentCode(
+                    QuestionsHandler.getQuestionPlaceHolder(questionsData, currentLanguage, currentQuestionIndex)
+                )
             }
 
             function submitPrompt(prompt) {
@@ -250,7 +234,7 @@ Rectangle {
                     if (aiComment.length === 0) {
                         // console.debug("---> LLM not available")
 
-                        result = QuestionsHandler.getLevenshteinDistance(userAnswer.trim(), expectedAnswer)
+                        result = QuestionsHandler.getLevenshteinDistance(userAnswer.trim(), d.indentCode(expectedAnswer))
                     } else {
                         // console.debug("---> LLM available!")
 
@@ -276,7 +260,7 @@ Rectangle {
                             timeLimit - timerValue);
                         sessionObject.todayVisitedNumbers += 1;
                     } else {
-                        answerInput.text = expectedAnswer;
+                        answerInput.text = d.indentCode(expectedAnswer);
                         answerInput.readOnly = true;
                         resultsModel.append({
                             similarity: "Not Similar", 
@@ -297,12 +281,12 @@ Rectangle {
             }
 
             function showSolution() {
-                answerInput.text = root.expectedAnswer
+                answerInput.text = d.indentCode(root.expectedAnswer)
                 aiOutput.text = root.aiComment
             }
 
             function showSubmission() {
-                answerInput.text = root.submittedAnswer
+                answerInput.text = d.indentCode(root.submittedAnswer)
             }
 
             function getRandomInt(min, max) {
@@ -730,7 +714,10 @@ Rectangle {
                             id: answerInput
                             anchors.fill: backgroundRect
                             readOnly: submitted
-                            placeholderText: QuestionsHandler.getQuestionPlaceHolder(questionsData, sessionObject.language, currentQuestionIndex, sessionObject.selectedCategories[sessionObject.topic])
+                            placeholderText: d.indentCode(
+                                QuestionsHandler.getQuestionPlaceHolder(questionsData, sessionObject.language, currentQuestionIndex,
+                                sessionObject.selectedCategories[sessionObject.topic])
+                            )
                             font.family: "Courier New"
                             font.pixelSize: 16
                             font.bold: sessionObject.isFontBold
