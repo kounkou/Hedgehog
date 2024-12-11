@@ -6,66 +6,6 @@ import Hedgehog 1.0
 
 import "handler.js" as QuestionsHandler
 
-import "bfs-recursive.js" as BfsRecursive
-import "dfs-recursive.js" as DfsRecursive
-import "bfs-iterative.js" as BfsIterative
-import "dsu.js" as Dsu
-import "dfs-iterative.js" as DfsIterative
-import "dijkstra.js" as Dijkstra
-import "kadane.js" as Kadane
-
-import "kmp.js" as Kmp
-import "lcp.js" as LCP
-import "rabin-karp.js" as RabinKarp
-import "split-sentence.js" as SplitSentence
-
-import "binary-search.js" as BinarySearch
-import "linear-search.js" as LinearSearch
-import "jump-search.js" as JumpSearch
-import "interpolation-search.js" as InterpolationSearch
-
-import "line-intersection.js" as LineIntersection
-import "area-triangle-heron.js" as AreaTriangleHeron
-import "convex-hull.js" as ConvexHull
-import "merge-interval.js" as MergeIntervals
-import "insert-interval.js" as InsertInterval
-import "min-meeting-room.js" as MinMeetingRoom
-import "trie.js" as Trie
-import "fractional-knapsack.js" as FractionalKnapsack
-import "sieve.js" as Sieve
-import "gcd.js" as GCD
-import "fast-exponentiation.js" as FastExponentiation
-
-import "insert-at-end.js" as InsertAtEnd
-import "remove-element.js" as RemoveElement
-import "ancestor.js" as Ancestor
-import "list-node.js" as ListNode
-import "print-list.js" as PrintList
-import "reverse-linked-list.js" as ReverseList
-
-import "factorial.js" as Factorial
-import "heap-sort.js" as HeapSort
-import "insert-heap.js" as InsertHeap
-import "check-power-of-two.js" as CheckPowerOfTwo
-import "count-set-bit.js" as CountSetBit
-import "reverse-bits.js" as ReverseBits
-import "max-sub-array.js" as MaxSubArray
-import "topological-sorting.js" as TopologicalSorting
-import "backtracking.js" as BackTracking
-import "lazy-propagation.js" as LazyPropag
-import "range-sum-queries.js" as RangeSumQueries
-
-import "unique-paths.js" as UniquePaths
-import "count-permutations.js" as CountPermutations
-import "generate-subsets.js" as GenerateSubsets
-import "count-combinations.js" as CountCombinations 
-
-import "merge-sort.js" as MergeSort
-import "quick-sort.js" as QuickSort
-
-import "load-balancer-types.js" as LoadBalancing
-import "cache-types.js" as Cache
-
 Rectangle {
     id: root
 
