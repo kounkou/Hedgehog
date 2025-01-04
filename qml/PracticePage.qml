@@ -51,33 +51,9 @@ Rectangle {
         QtObject {
             id: d
 
+            // do nothing for now
             function indentCode(code) {
-                var indentLevel = 0;
-                var result = "";
-                var i = 0;
-
-                while (i < code.length) {
-                    var c = code[i];
-
-                    if (c === '{') {
-                        result += c + "   ".repeat(indentLevel) + "\n";
-                        indentLevel++;
-                        result += "   ".repeat(indentLevel);
-                    } else if (c === '}') {
-                        result = removeTrailingSpaces(result); // Remove trailing spaces
-                        indentLevel = Math.max(indentLevel - 1, 0);
-                        result += "\n" + "    ".repeat(indentLevel) + c + "\n";
-                        result += "   ".repeat(indentLevel);
-                    } else if (c === ';') {
-                        result += c + "\n";
-                        result += "   ".repeat(indentLevel);
-                    } else {
-                        result += c;
-                    }
-                    i++;
-                }
-
-                return result.trim();
+               return code
             }
 
             function removeTrailingSpaces(str) {
