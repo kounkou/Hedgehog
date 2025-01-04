@@ -30,7 +30,7 @@ Rectangle {
     property string aiComment: ""
     property var localVisitedNumbers: ({})
     property var allQuestionsData: {}
-    property string hedghogServerEndpoint: "http://localhost:8080/questions"
+    property string hedghogServerEndpoint: "http://<HEDGEHOG-SERVER-ADDRESS>:8080/questions"
     property int indentSpaces: 3
     
     property var session: null
@@ -53,7 +53,7 @@ Rectangle {
 
             // do nothing for now
             function indentCode(code) {
-               return code
+                return code
             }
 
             function removeTrailingSpaces(str) {
@@ -196,7 +196,7 @@ Rectangle {
                 countdownTimer.stop()
                 expectedAnswer = QuestionsHandler.getAnswer(questionsData, language, currentQuestionIndex).trim()
 
-                root.submittedAnswer = userAnswer
+                root.submittedAnswer = d.indentCode(userAnswer)
 
                 if (sessionObject.apiKey.length > 0) {
                     submitPrompt(userAnswer);
