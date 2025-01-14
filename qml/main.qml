@@ -27,6 +27,7 @@ ApplicationWindow {
 
     StackView {
         id: stackView
+        objectName: "stackView"
         anchors.fill: parent
         initialItem: WelcomePage{
             theme: root.themeObject || "light"
@@ -36,6 +37,7 @@ ApplicationWindow {
     Component {
         id: login
         LoginPage{
+            objectName: "loginPage"
         }
     }
 
