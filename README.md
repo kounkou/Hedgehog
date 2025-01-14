@@ -66,6 +66,7 @@ Key features of Hedgehog include:
 # Installation instructions
 
 Hedgehog relies on Qt to provide you with the amazing user interface
+Hedgehog-server is accessible at https://github.com/kounkou/Hedgehog-server
 
 **MacOS**
 ```bash
